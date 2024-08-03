@@ -19,18 +19,20 @@ class _GetTextLabelState extends State<GetTextLabel> {
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: '$widget.head: ',
+        text: widget.head + ': ',
         style: TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.w600,
+          fontSize: 18,
+          fontWeight: FontWeight.w400,
+          fontStyle: FontStyle.italic,
           color: Colors.white,
         ),
         children: <TextSpan>[
           TextSpan(
             text: widget.value,
             style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w400,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.normal,
               color: Colors.white,
             ),
           ),

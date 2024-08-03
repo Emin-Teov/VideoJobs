@@ -40,28 +40,40 @@ class _VideoItemState extends State<VideoItem> {
 
   void showResume() {
     showDialog(
-        context: context,
-        builder: (context) {
-          return AboutDialog(
-            children: <Widget>[
-              GetTextField(
-                text: widget.username,
-              ),
-              Container(
-                width: 450,
-                height: 450,
-                child: Padding(
-                  padding: EdgeInsets.zero,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            width: 450,
+            height: 600,
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(Icons.close)
+                    ),
+                  ],
+                ),
+                GetTextField(
+                  text: widget.username,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
                   child: Image.asset(
                     'lib/resumes/cv_resume-${widget.id}.png',
                     width: 450,
                     height: 450,
                   ),
                 ),
-              ),
-            ],
-          );
-        });
+              ],
+            ),
+          ),
+        );
+      }
+    );
   }
 
   @override

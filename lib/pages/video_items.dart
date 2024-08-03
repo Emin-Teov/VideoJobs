@@ -38,36 +38,19 @@ class _VideoItemsState extends State<VideoItems> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        const SizedBox(
-          width: 400,
-          child: TextField(
-            scrollPadding: EdgeInsets.all(25),
-            decoration: InputDecoration(
-              hintText: "Search",
-              contentPadding: EdgeInsets.all(12),
-              icon: Icon(Icons.search),
-              border: OutlineInputBorder(),
-            ),
+    return ListView.builder(
+      itemCount: _video_items.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.all(25),
+          child: VideoItem(
+            id: _video_items[index][0],
+            url: _video_items[index][1],
+            username: _video_items[index][2],
+            title: _video_items[index][3],
           ),
-        ),
-        Expanded(
-            child: ListView.builder(
-                itemCount: _video_items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: VideoItem(
-                      id: _video_items[index][0],
-                      url: _video_items[index][1],
-                      username: _video_items[index][2],
-                      title: _video_items[index][3],
-                    ),
-                  );
-                }))
-      ],
+        );
+      }
     );
   }
 }
