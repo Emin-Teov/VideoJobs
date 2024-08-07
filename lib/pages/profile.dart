@@ -7,8 +7,14 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: GetTextField(text: "Profile",),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.person),
+            GetTextField(text: "Profile",),
+          ],
+        ),
       ),
     );
   }

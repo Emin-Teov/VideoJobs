@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blueAccent,
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
         ),
         textTheme: TextTheme(
           displayLarge: const TextStyle(
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-
         useMaterial3: true,
       ),
       home: HomePage(title: 'JobTube'),

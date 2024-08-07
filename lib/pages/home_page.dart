@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     Connectivity()
-        .onConnectivityChanged
+      .onConnectivityChanged
         .listen((ConnectivityResult result) => setState(() {
               _connectivityResult = result;
             }));
@@ -40,7 +40,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool get_connect_context = (_connectivityResult == ConnectivityResult.none) ? false : true;
+    bool get_connect_context =
+        (_connectivityResult == ConnectivityResult.none) ? false : true;
 
     return Scaffold(
       key: scaffoldKey,
@@ -57,12 +58,15 @@ class _HomePageState extends State<HomePage> {
               : null,
         ),
       ),
-      drawer: 
-        get_connect_context ? Drawer(
-          backgroundColor: Colors.blueAccent,
-          child: TabList(),
-        ): null,
-      body: get_connect_context ? widget._pages[_select_page_index] : NoInternet(),
+      drawer: get_connect_context
+          ? Drawer(
+              backgroundColor: Colors.blueAccent,
+              child: TabList(),
+            )
+          : null,
+      body: get_connect_context
+          ? widget._pages[_select_page_index]
+          : NoInternet(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _select_page_index,
         onTap: selectPage,
@@ -77,7 +81,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Setting',
+            label: 'Settings',
           ),
         ],
       ),

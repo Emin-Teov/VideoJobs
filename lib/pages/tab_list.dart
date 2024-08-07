@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_elevated_button/button_style.dart';
 import 'package:gradient_elevated_button/gradient_elevated_button.dart';
+import 'package:video_list/pages/category_items.dart';
+import 'package:video_list/pages/country_items.dart';
 import 'package:video_list/pages/get_text_field.dart';
+import 'package:public_ip_address/public_ip_address.dart';
+
+Future<String> getCountryIp() async {
+  String country = await IpAddress().getCountryCode();
+  return country;
+}
 
 class TabList extends StatefulWidget {
   const TabList({super.key});
@@ -12,141 +20,64 @@ class TabList extends StatefulWidget {
 
 class _TabListState extends State<TabList> {
   bool get_remote_context = false;
-  List _category_items = [
-    'All',
-    'Administration, business and management',
-    'Financial services',
-    'Retail and customer services',
-    'Engineering',
-    'Computing and ICT',
-    'Marketing and advertising, print and publishing',
-    'Transport, distribution and logistics',
-    'Hospitality, catering and tourism',
-    'Education and training',
-    'Legal and court services',
-    'Facilities and property services',
-    'Design, arts and crafts',
-    'Healthcare',
-    'Construction and building',
-    'Security, uniformed and protective services',
-    'Science, mathematics and statistics',
-    'Manufacturing and production',
-  ];
-  List _countries = [
-    'All',
-    'Azerbaijan',
-    'Georgia',
-    'Iran',
-    'Kazakhstan',
-    'Kyrgyzstan',
-    'Turkey',
-    'Uzbekistan',
-  ];
+  late Future<String> getCountry;
 
-  void showCategories() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.close)
-                    ),
-                  ],
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Container(
-                  width: 450,
-                  height: 550,
-                  child: ListView.builder(
-                    itemCount: _category_items.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Checkbox(value: true, onChanged: null),
-                            ],
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              child: GetTextField(text: _category_items[index]),
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+  @override
+  void initState() {
+    super.initState();
+    getCountry = getCountryIp();
   }
 
-  void showCountries() {
+  void setDialog(bool category) {
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Column(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Column(
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.close)
-                    ),
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.close)),
                   ],
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                  child: Container(
-                  width: 450,
-                  height: 550,
-                  child: ListView.builder(
-                    itemCount: _countries.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
+                  child: FutureBuilder<String>(
+                    future: getCountry,
+                    builder: (context, snaps) {
+                      if (snaps.hasError) {
+                        return const Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Checkbox(value: true, onChanged: null),
+                              Icon(Icons.error),
+                              GetTextField(
+                                text: "An error has occurred!",
+                              ),
                             ],
                           ),
-                          Expanded(
-                            child: SizedBox(
-                              child: GetTextField(text: _countries[index]),
-                            ),
-                          ),
-                        ],
-                      );
-                    }
+                        );
+                      } else if (snaps.hasData) {
+                        return Container(
+                          width: 450,
+                          height: 550,
+                          child: category ? CategoryItems() : CountryItems(code: snaps.data!),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+              ],
+            ),
+          );
+        });
   }
 
   @override
@@ -155,7 +86,10 @@ class _TabListState extends State<TabList> {
       children: <Widget>[
         DrawerHeader(
           padding: EdgeInsets.only(top: 85.0),
-          child: GetTextField(text: "Job types"),
+          child: GetTextField(
+            text: "Job types",
+            light: true,
+          ),
         ),
         SizedBox(
           width: 300,
@@ -181,35 +115,49 @@ class _TabListState extends State<TabList> {
               ),
             ),
             child: GetTextField(
-                text: get_remote_context ? "Remote Job" : "Local Job"),
+              text: get_remote_context ? "Freelancer" : "Local Job",
+              light: true,
+            ),
           ),
         ),
         SizedBox(
           width: 300,
           child: GradientElevatedButton(
-            onPressed: showCategories,
+            onPressed: () => setDialog(true),
             style: GradientButtonStyle(
               gradient: LinearGradient(
-                colors: [Colors.cyanAccent, Colors.blueGrey,],
+                colors: [
+                  Colors.cyanAccent,
+                  Colors.blueGrey,
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
             ),
-            child: GetTextField(text: "Job Categories"),
+            child: GetTextField(
+              text: "Job Categories",
+              light: true,
+            ),
           ),
         ),
         SizedBox(
           width: 300,
           child: GradientElevatedButton(
-            onPressed: showCountries,
+            onPressed: () => setDialog(false),
             style: GradientButtonStyle(
               gradient: LinearGradient(
-                colors: [Colors.cyanAccent, Colors.blueGrey,],
+                colors: [
+                  Colors.cyanAccent,
+                  Colors.blueGrey,
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
             ),
-            child: GetTextField(text: "Select Countries"),
+            child: GetTextField(
+              text: "Select Countries",
+              light: true,
+            ),
           ),
         ),
       ],

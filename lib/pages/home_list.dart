@@ -34,7 +34,7 @@ class _HomeListState extends State<HomeList> {
           height: 5,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             ElevatedButton(
               style: ButtonStyle(
@@ -52,7 +52,7 @@ class _HomeListState extends State<HomeList> {
                     Icons.person_pin_rounded,
                     color: Colors.white,
                   ),
-                  GetTextField(text: 'Job seekers'),
+                  GetTextField(text: 'Job seekers', light: true,),
                 ],
               ),
             ),
@@ -73,7 +73,7 @@ class _HomeListState extends State<HomeList> {
                     Icons.local_offer,
                     color: Colors.white,
                   ),
-                  GetTextField(text: 'Job offers'),
+                  GetTextField(text: 'Job offers', light: true,),
                 ],
               ),
             ),

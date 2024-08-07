@@ -1,5 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:video_list/models/video_model.dart';
+import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/video_item.dart';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
+Future<List<VideoModel>> fetchVideos(http.Client client) async {
+  final response = await client
+      .get(Uri.parse('https://emin-teov.github.io/api/json/job_seekers.json'));
+
+  return compute(parseVideos, response.body);
+}
+
+List<VideoModel> parseVideos(String responseBody) {
+  final parsed =
+      (jsonDecode(responseBody) as List).cast<Map<String, dynamic>>();
+
+  return parsed.map<VideoModel>((json) => VideoModel.fromJson(json)).toList();
+}
 
 class VideoItems extends StatefulWidget {
   const VideoItems({super.key});
@@ -9,48 +29,56 @@ class VideoItems extends StatefulWidget {
 }
 
 class _VideoItemsState extends State<VideoItems> {
-  final List _video_items = [
-    [
-      0,
-      "https://videos.pexels.com/video-files/4994033/4994033-uhd_2560_1440_25fps.mp4",
-      "Check Martin",
-      "Graphics Designer"
-    ],
-    [
-      0,
-      "https://videos.pexels.com/video-files/4962719/4962719-uhd_2560_1440_25fps.mp4",
-      "Anna Ova",
-      "IT Developer"
-    ],
-    [
-      0,
-      "https://videos.pexels.com/video-files/4962731/4962731-uhd_2560_1440_25fps.mp4",
-      "Irina Sena",
-      "Engineer"
-    ],
-    [
-      0,
-      "https://videos.pexels.com/video-files/3253737/3253737-uhd_2560_1440_25fps.mp4",
-      "Antony Carters",
-      "Manager"
-    ],
-  ];
+  late Future<List<VideoModel>> futureVideos;
+
+  @override
+  void initState() {
+    super.initState();
+    futureVideos = fetchVideos(http.Client());
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _video_items.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(25),
-          child: VideoItem(
-            id: _video_items[index][0],
-            url: _video_items[index][1],
-            username: _video_items[index][2],
-            title: _video_items[index][3],
-          ),
-        );
-      }
+    return Scaffold(
+      body: FutureBuilder<List<VideoModel>>(
+        future: futureVideos,
+        builder: (context, snaps) {
+          if (snaps.hasError) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.error),
+                  GetTextField(
+                    text: "An error has occurred!",
+                  ),
+                ],
+              ),
+            );
+          } else if (snaps.hasData) {
+            return Expanded(
+              child: ListView.builder(
+                itemCount: snaps.data!.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(25),
+                    child: VideoItem(
+                      id: snaps.data![index].id,
+                      url: snaps.data![index].url,
+                      username: snaps.data![index].name + ' ' +snaps.data![index].surname,
+                      title: snaps.data![index].title,
+                    ),
+                  );
+                }
+              ),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
     );
   }
 }

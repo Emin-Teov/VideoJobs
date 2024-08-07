@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class GetTextField extends StatefulWidget {
   final String text;
+  final bool light;
 
-  const GetTextField({super.key, required this.text});
+  const GetTextField({
+    super.key, 
+    required this.text, 
+    this.light = false,
+  });
 
   @override
   State<GetTextField> createState() => _GetTextFieldState();
@@ -17,7 +22,7 @@ class _GetTextFieldState extends State<GetTextField> {
       style: TextStyle(
         fontSize: 25,
         fontStyle: FontStyle.italic,
-        color: Colors.white,
+        color: widget.light ? Colors.white : Colors.black87,
       ),
     );
   }

@@ -3,14 +3,14 @@ import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/get_text_label.dart';
 
 class OfferItem extends StatefulWidget {
-  final String logo;
+  final int id;
   final String tittle;
   final String employer;
   final String description;
 
   const OfferItem({
     super.key,
-    required this.logo,
+    required this.id,
     required this.tittle,
     required this.employer,
     required this.description,
@@ -81,7 +81,7 @@ class _OfferItemState extends State<OfferItem> {
             IconButton(
               onPressed: showDescription,
               icon: Image.network(
-                widget.logo,
+                'https://emin-teov.github.io/api/logo/photo-logo-${widget.id}.png',
                 width: 100,
                 height: 100,
               ),

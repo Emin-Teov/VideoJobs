@@ -8,7 +8,13 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: const Center(
-        child: GetTextField(text: "Setting",),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.settings),
+            GetTextField(text: "Settings",),
+          ],
+        ),
       ),
     );
   }

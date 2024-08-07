@@ -62,8 +62,8 @@ class _VideoItemState extends State<VideoItem> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(10),
-                  child: Image.asset(
-                    'lib/resumes/cv_resume-${widget.id}.png',
+                  child: Image.network(
+                    'https://emin-teov.github.io/api/resume/cv_resume-${widget.id}.png',
                     width: 450,
                     height: 450,
                   ),
