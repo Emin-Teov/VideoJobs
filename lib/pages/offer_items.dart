@@ -42,8 +42,8 @@ class _OfferItemsState extends State<OfferItems> {
     return Scaffold(
       body: FutureBuilder<List<OfferModel>>(
         future: futureOffers,
-        builder: (context, snaps) {
-          if (snaps.hasError) {
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -55,18 +55,18 @@ class _OfferItemsState extends State<OfferItems> {
                 ],
               ),
             );
-          } else if (snaps.hasData) {
+          } else if (snapshot.hasData) {
             return Expanded(
               child: ListView.builder(
-                itemCount: snaps.data!.length,
+                itemCount: snapshot.data!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(25),
                     child: OfferItem(
-                      id: snaps.data![index].id,
-                      tittle: snaps.data![index].title,
-                      employer: snaps.data![index].ceo,
-                      description: snaps.data![index].description,
+                      id: snapshot.data![index].id,
+                      tittle: snapshot.data![index].title,
+                      employer: snapshot.data![index].ceo,
+                      description: snapshot.data![index].description,
                     ),
                   );
                 }

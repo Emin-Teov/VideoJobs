@@ -30,54 +30,55 @@ class _TabListState extends State<TabList> {
 
   void setDialog(bool category) {
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(Icons.close)),
-                  ],
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(Icons.close)),
+                ],
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: FutureBuilder<String>(
+                  future: getCountry,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.error),
+                            GetTextField(
+                              text: "An error has occurred!",
+                            ),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasData) {
+                      return Container(
+                        width: 450,
+                        height: 550,
+                        child: category ? CategoryItems() : CountryItems(code: snapshot.data!),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: FutureBuilder<String>(
-                    future: getCountry,
-                    builder: (context, snaps) {
-                      if (snaps.hasError) {
-                        return const Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.error),
-                              GetTextField(
-                                text: "An error has occurred!",
-                              ),
-                            ],
-                          ),
-                        );
-                      } else if (snaps.hasData) {
-                        return Container(
-                          width: 450,
-                          height: 550,
-                          child: category ? CategoryItems() : CountryItems(code: snaps.data!),
-                        );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        );
+      }
+    );
   }
 
   @override

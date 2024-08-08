@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/offer_items.dart';
-import 'package:video_list/pages/video_items.dart';
+import 'package:video_list/pages/video_lists.dart';
 
 class HomeList extends StatefulWidget {
   const HomeList({super.key});
@@ -83,7 +83,7 @@ class _HomeListState extends State<HomeList> {
           height: 5,
         ),
         Expanded(
-          child: _set_video_list ? VideoItems() : OfferItems(),
+          child: _set_video_list ? VideoLists() : OfferItems(),
         ),
       ],
     );

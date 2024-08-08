@@ -1,83 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:video_list/models/video_model.dart';
-import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/video_item.dart';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'dart:convert';
-
-Future<List<VideoModel>> fetchVideos(http.Client client) async {
-  final response = await client
-      .get(Uri.parse('https://emin-teov.github.io/api/json/job_seekers.json'));
-
-  return compute(parseVideos, response.body);
-}
-
-List<VideoModel> parseVideos(String responseBody) {
-  final parsed =
-      (jsonDecode(responseBody) as List).cast<Map<String, dynamic>>();
-
-  return parsed.map<VideoModel>((json) => VideoModel.fromJson(json)).toList();
-}
 
 class VideoItems extends StatefulWidget {
-  const VideoItems({super.key});
+  final List<VideoModel> data;
+
+  const VideoItems({
+    super.key,
+    required this.data
+  });
 
   @override
   State<VideoItems> createState() => _VideoItemsState();
 }
 
 class _VideoItemsState extends State<VideoItems> {
-  late Future<List<VideoModel>> futureVideos;
+  late PageController _controller;
 
   @override
   void initState() {
     super.initState();
-    futureVideos = fetchVideos(http.Client());
+    _controller = PageController(initialPage: 0);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<VideoModel>>(
-        future: futureVideos,
-        builder: (context, snaps) {
-          if (snaps.hasError) {
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.error),
-                  GetTextField(
-                    text: "An error has occurred!",
-                  ),
-                ],
-              ),
-            );
-          } else if (snaps.hasData) {
-            return Expanded(
-              child: ListView.builder(
-                itemCount: snaps.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: VideoItem(
-                      id: snaps.data![index].id,
-                      url: snaps.data![index].url,
-                      username: snaps.data![index].name + ' ' +snaps.data![index].surname,
-                      title: snaps.data![index].title,
-                    ),
-                  );
-                }
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+      body: PageView(
+        scrollDirection: Axis.vertical,
+        controller: _controller,
+        children: [
+          ListView.builder(
+            itemCount: widget.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              var size = MediaQuery.of(context).size;
+              return Container(
+                width: size.width,
+                height: size.height,
+                child: VideoItem(url: widget.data[index].url, name: widget.data[index].name, surname: widget.data[index].surname, title: widget.data[index].title),
+              );
+            }
+          ),
+        ],
       ),
     );
   }

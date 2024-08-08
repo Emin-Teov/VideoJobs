@@ -54,7 +54,7 @@ class _OfferItemState extends State<OfferItem> {
                           style: TextStyle(
                             fontSize: 12,
                             fontStyle: FontStyle.normal,
-                            color: Colors.white,
+                            color: Colors.black87,
                           ),
                         ),
                       ),

@@ -50,8 +50,8 @@ class _CountryItemsState extends State<CountryItems> {
     return Scaffold(
       body: FutureBuilder<List<CountryModel>>(
         future: futureCountries,
-        builder: (context, snaps) {
-          if (snaps.hasError) {
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +63,7 @@ class _CountryItemsState extends State<CountryItems> {
                 ],
               ),
             );
-          } else if (snaps.hasData) {
+          } else if (snapshot.hasData) {
             return Column(
               children: [
                 Row(
@@ -93,13 +93,13 @@ class _CountryItemsState extends State<CountryItems> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: snaps.data!.length,
+                      itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.only(left: 25.0),
                           child: CountryItem(
-                            title: snaps.data![index].title,
-                            located: (snaps.data![index].code != widget.code),
+                            title: snapshot.data![index].title,
+                            located: (snapshot.data![index].code != widget.code),
                             selected: _set_items,
                           ),
                         );

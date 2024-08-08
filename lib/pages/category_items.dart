@@ -49,8 +49,8 @@ class _CategoryItemsState extends State<CategoryItems> {
     return Scaffold(
       body: FutureBuilder<List<CategoryModel>>(
         future: futureCategories,
-        builder: (context, snaps) {
-          if (snaps.hasError) {
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +62,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                 ],
               ),
             );
-          } else if (snaps.hasData) {
+          } else if (snapshot.hasData) {
             return Column(
               children: [
                 Row(
@@ -92,19 +92,19 @@ class _CategoryItemsState extends State<CategoryItems> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: snaps.data!.length,
+                      itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.only(left: 25.0),
-                          child: snaps.data![index].children.isEmpty ? CategoryItem(
-                            index: snaps.data![index].index,
-                            title: snaps.data![index].title,
+                          child: snapshot.data![index].children.isEmpty ? CategoryItem(
+                            index: snapshot.data![index].index,
+                            title: snapshot.data![index].title,
                             selected: _set_items,
                           ) : SubCategoryItems(
-                            index: snaps.data![index].index,
-                            title: snaps.data![index].title,
+                            index: snapshot.data![index].index,
+                            title: snapshot.data![index].title,
                             selected: _set_items,
-                            data: snaps.data![index].children
+                            data: snapshot.data![index].children
                           ),
                         );
                       }),
