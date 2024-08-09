@@ -5,10 +5,7 @@ import 'package:video_list/pages/video_item.dart';
 class VideoItems extends StatefulWidget {
   final List<VideoModel> data;
 
-  const VideoItems({
-    super.key,
-    required this.data
-  });
+  const VideoItems({super.key, required this.data});
 
   @override
   State<VideoItems> createState() => _VideoItemsState();
@@ -16,6 +13,7 @@ class VideoItems extends StatefulWidget {
 
 class _VideoItemsState extends State<VideoItems> {
   late PageController _controller;
+  late List<Widget> reel = [];
 
   @override
   void initState() {
@@ -25,23 +23,27 @@ class _VideoItemsState extends State<VideoItems> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        scrollDirection: Axis.vertical,
-        controller: _controller,
-        children: [
-          ListView.builder(
-            itemCount: widget.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              var size = MediaQuery.of(context).size;
-              return Container(
-                width: size.width,
-                height: size.height,
-                child: VideoItem(url: widget.data[index].url, name: widget.data[index].name, surname: widget.data[index].surname, title: widget.data[index].title),
-              );
-            }
+    for (int i = 0; i < widget.data.length; i++) {
+      reel.add(
+        Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: VideoItem(
+            url: widget.data[i].url,
+            name: widget.data[i].name,
+            surname: widget.data[i].surname,
+            title: widget.data[i].title
           ),
-        ],
+        ),
+      );
+    }
+    return Scaffold(
+      body: Container(
+        child: PageView(
+          scrollDirection: Axis.vertical,
+          controller: _controller,
+          children: reel,
+        ),
       ),
     );
   }

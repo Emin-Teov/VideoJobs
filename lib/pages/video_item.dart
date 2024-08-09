@@ -9,13 +9,12 @@ class VideoItem extends StatefulWidget {
   final String surname;
   final String title;
 
-  const VideoItem({
-    super.key,
-    required this.url,
-    required this.name,
-    required this.surname,
-    required this.title
-  });
+  const VideoItem(
+      {super.key,
+      required this.url,
+      required this.name,
+      required this.surname,
+      required this.title});
 
   @override
   State<VideoItem> createState() => _VideoItemState();
@@ -26,41 +25,47 @@ class _VideoItemState extends State<VideoItem> {
 
   void showResume() {
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.close)),
-                ],
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GetTextField(text: '${widget.name} ${widget.surname}'),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Image.network(
-                        'https://emin-teov.github.io/api/resume/cv_resume-0.png',
-                        width: 450,
-                        height: 450,
-                      ),
-                    ),
+        context: context,
+        builder: (context) {
+          var size = MediaQuery.of(context).size.width;
+          return AlertDialog(
+            content: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.close)),
                   ],
                 ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GetTextField(text: '${widget.name} ${widget.surname}'),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Image.network(
+                          'https://emin-teov.github.io/api/resume/cv_resume-0.png',
+                          width: size,
+                          height: size,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  void liked() {
+    setState(() {
+      _like_clicked = !_like_clicked;
+    });
   }
 
   @override
@@ -68,55 +73,51 @@ class _VideoItemState extends State<VideoItem> {
     return Scaffold(
       body: Stack(
         children: [
-        VideoWidget(url: widget.url),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  SizedBox(
-                    width: 200,
-                    child: GetTextLabel(
-                      head: widget.title,
-                      value: '${widget.name} ${widget.surname}',
-                      ligth: true,
+          VideoWidget(url: widget.url),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width / 2),
+                      child: GetTextLabel(
+                        head: widget.title,
+                        value: '${widget.name} ${widget.surname}',
+                        ligth: true,
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                          _like_clicked = !_like_clicked;
-                          });
-                        },
-                        icon: Icon(
-                          Icons.handshake,
-                          size: 36,
-                          color: _like_clicked ? Colors.red : Colors.black87,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: liked,
+                          icon: Icon(
+                            Icons.handshake,
+                            size: 36,
+                            color: _like_clicked ? Colors.red : Colors.blueGrey,
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: showResume,
-                        icon: const Icon(
-                          Icons.attach_file,
-                          size: 36,
-                          color: Colors.black54,
+                        IconButton(
+                          onPressed: showResume,
+                          icon: const Icon(
+                            Icons.attach_file,
+                            size: 36,
+                            color: Colors.amberAccent,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        )
-      ]
+            ],
+          ),
+        ],
       ),
     );
   }

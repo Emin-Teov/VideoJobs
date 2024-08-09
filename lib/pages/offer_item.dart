@@ -25,6 +25,7 @@ class _OfferItemState extends State<OfferItem> {
     showDialog(
       context: context,
       builder: (context) {
+        var size = MediaQuery.of(context).size.width;
         return AlertDialog(
           content: Column(
               children: <Widget>[
@@ -40,8 +41,8 @@ class _OfferItemState extends State<OfferItem> {
                 SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Container(
-                  width: 450,
-                  height: 550,
+                  width: size,
+                  height: size,
                   child: Column(
                     children: <Widget>[
                       GetTextField(
@@ -71,6 +72,7 @@ class _OfferItemState extends State<OfferItem> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size.width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -82,8 +84,8 @@ class _OfferItemState extends State<OfferItem> {
               onPressed: showDescription,
               icon: Image.network(
                 'https://emin-teov.github.io/api/logo/photo-logo-${widget.id}.png',
-                width: 100,
-                height: 100,
+                width: (size/4),
+                height: (size/4),
               ),
             ),
 
