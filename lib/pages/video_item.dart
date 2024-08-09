@@ -102,12 +102,12 @@ class _VideoItemState extends State<VideoItem> {
                             color: _like_clicked ? Colors.red : Colors.blueGrey,
                           ),
                         ),
-                        IconButton(
-                          onPressed: showResume,
-                          icon: const Icon(
-                            Icons.attach_file,
-                            size: 36,
+                        GestureDetector(
+                          onTap: showResume,
+                          child: ImageIcon(
+                            AssetImage("assets/icons/cv.png"),
                             color: Colors.amberAccent,
+                            size: 36,
                           ),
                         ),
                       ],

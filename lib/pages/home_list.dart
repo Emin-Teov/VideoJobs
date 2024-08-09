@@ -25,7 +25,13 @@ class _HomeListState extends State<HomeList> {
             decoration: InputDecoration(
               hintText: "Search",
               contentPadding: EdgeInsets.all(12),
-              icon: Icon(Icons.search),
+              icon: IconButton(
+                onPressed: null,
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.amberAccent,
+                ),
+              ),
               border: OutlineInputBorder(),
             ),
           ),
