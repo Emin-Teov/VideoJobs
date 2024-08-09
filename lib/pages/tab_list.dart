@@ -64,7 +64,7 @@ class _TabListState extends State<TabList> {
                       var size = MediaQuery.of(context).size.width;
                       return Container(
                         width: size,
-                        height: size,
+                        height: size + kToolbarHeight,
                         child: category ? CategoryItems() : CountryItems(code: snapshot.data!),
                       );
                     } else {
