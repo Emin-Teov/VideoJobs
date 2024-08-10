@@ -45,7 +45,6 @@ class _OfferItemState extends State<OfferItem> {
     showDialog(
       context: context,
       builder: (context) {
-        var size = MediaQuery.of(context).size;
         return AlertDialog(
           content: Column(
             children: <Widget>[
