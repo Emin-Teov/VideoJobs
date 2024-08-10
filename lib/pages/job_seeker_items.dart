@@ -4,33 +4,33 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:video_list/models/video_model.dart';
+import 'package:video_list/models/job_seeker_model.dart';
 import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/video_list.dart';
+import 'package:video_list/pages/job_seeker_item.dart';
 
-Future<List<VideoModel>> fetchVideos(http.Client client) async {
+Future<List<JobSeekerModel>> fetchVideos(http.Client client) async {
   final response = await client
       .get(Uri.parse('https://emin-teov.github.io/api/json/job_seekers.json'));
 
   return compute(parseVideos, response.body);
 }
 
-List<VideoModel> parseVideos(String responseBody) {
+List<JobSeekerModel> parseVideos(String responseBody) {
   final parsed =
       (jsonDecode(responseBody) as List).cast<Map<String, dynamic>>();
 
-  return parsed.map<VideoModel>((json) => VideoModel.fromJson(json)).toList();
+  return parsed.map<JobSeekerModel>((json) => JobSeekerModel.fromJson(json)).toList();
 }
 
-class VideoLists extends StatefulWidget {
-  const VideoLists({super.key});
+class JobSeekerItems extends StatefulWidget {
+  const JobSeekerItems({super.key});
 
   @override
-  State<VideoLists> createState() => _VideoListsState();
+  State<JobSeekerItems> createState() => _JobSeekerItemsState();
 }
 
-class _VideoListsState extends State<VideoLists> {
-  late Future<List<VideoModel>> futureVideos;
+class _JobSeekerItemsState extends State<JobSeekerItems> {
+  late Future<List<JobSeekerModel>> futureVideos;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _VideoListsState extends State<VideoLists> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<VideoModel>>(
+      body: FutureBuilder<List<JobSeekerModel>>(
         future: futureVideos,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -67,7 +67,7 @@ class _VideoListsState extends State<VideoLists> {
                     crossAxisSpacing: 0,
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    return VideoList(
+                    return JobSeekerItem(
                       url: snapshot.data![index].url,
                       data: snapshot.data!.sublist(index, snapshot.data!.length),
                     );

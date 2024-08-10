@@ -1,11 +1,11 @@
-class VideoModel {
+class JobSeekerModel {
   final int id;
   final String url;
   final String name;
   final String surname;
   final String title;
 
-  const VideoModel({
+  const JobSeekerModel({
     required this.id,
     required this.url,
     required this.name,
@@ -13,8 +13,8 @@ class VideoModel {
     required this.title,
   });
 
-  factory VideoModel.fromJson(Map<String, dynamic> json) {
-    return VideoModel(
+  factory JobSeekerModel.fromJson(Map<String, dynamic> json) {
+    return JobSeekerModel(
       id: json['id'] as int,
       title: json['title'] as String,
       name: json['name'] as String,

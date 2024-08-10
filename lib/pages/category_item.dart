@@ -47,16 +47,6 @@ class _CategoryItemState extends State<CategoryItem> {
             ),
           ],
         ),
-        // Padding(
-        //   padding: EdgeInsets.only(left: 10),
-        //   child: widget.children.isEmpty
-        //       ? ListTile()
-        //       : ListView.builder(
-        //           itemCount: widget.children.length,
-        //           itemBuilder: (BuildContext context, int index) {
-        //             return SubCategoryItems(data: widget.children);
-        //           }),
-        // ),
       ],
     );
   }

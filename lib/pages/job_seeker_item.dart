@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_thumbnail_video/index.dart';
 import 'package:get_thumbnail_video/video_thumbnail.dart';
-import 'package:video_list/models/video_model.dart';
+import 'package:video_list/models/job_seeker_model.dart';
 import 'dart:typed_data';
 
 import 'package:video_list/pages/get_text_field.dart';
@@ -13,21 +13,21 @@ Future<Uint8List> getThumbnailImage(String url) async {
   return thumbnail;
 }
 
-class VideoList extends StatefulWidget {
+class JobSeekerItem extends StatefulWidget {
   final String url;
-  final List<VideoModel> data;
+  final List<JobSeekerModel> data;
 
-  const VideoList({
+  const JobSeekerItem({
     super.key,
     required this.url,
     required this.data,
   });
 
   @override
-  State<VideoList> createState() => _VideoListState();
+  State<JobSeekerItem> createState() => _JobSeekerItemState();
 }
 
-class _VideoListState extends State<VideoList> {
+class _JobSeekerItemState extends State<JobSeekerItem> {
   late Future<Uint8List> thumbnail;
 
   @override
@@ -56,9 +56,7 @@ class _VideoListState extends State<VideoList> {
             return GestureDetector(
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context)=>VideoItems(
-                  data: widget.data,
-                ))
+                MaterialPageRoute(builder: (context)=>VideoItems(data: widget.data))
               ),
               child: Container(
                 margin: EdgeInsets.all(5.0),

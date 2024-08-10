@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:video_list/models/video_model.dart';
 import 'package:video_list/pages/video_item.dart';
 
 class VideoItems extends StatefulWidget {
-  final List<VideoModel> data;
+  final List data;
+  final bool ceo;
 
-  const VideoItems({super.key, required this.data});
+  const VideoItems({
+    super.key,
+    required this.data,
+    this.ceo = false,
+  });
 
   @override
   State<VideoItems> createState() => _VideoItemsState();
@@ -29,10 +33,12 @@ class _VideoItemsState extends State<VideoItems> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: VideoItem(
+            id: widget.ceo ? widget.data[i].employer_id : widget.data[i].id,
             url: widget.data[i].url,
-            name: widget.data[i].name,
-            surname: widget.data[i].surname,
-            title: widget.data[i].title
+            user: widget.ceo ? widget.data[i].ceo : '${widget.data[i].name} ${widget.data[i].surname}',
+            title: widget.data[i].title, 
+            ceo: widget.ceo,
+            description: widget.ceo ? widget.data[i].description : "",
           ),
         ),
       );

@@ -61,10 +61,10 @@ class _TabListState extends State<TabList> {
                         ),
                       );
                     } else if (snapshot.hasData) {
-                      var size = MediaQuery.of(context).size.width;
+                      var size = MediaQuery.of(context).size;
                       return Container(
-                        width: size,
-                        height: size + kToolbarHeight,
+                        width: size.width,
+                        height: size.height/2,
                         child: category ? CategoryItems() : CountryItems(code: snapshot.data!),
                       );
                     } else {

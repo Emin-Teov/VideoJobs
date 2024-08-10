@@ -65,8 +65,11 @@ class _OfferItemsState extends State<OfferItems> {
                     child: OfferItem(
                       id: snapshot.data![index].id,
                       tittle: snapshot.data![index].title,
+                      employer_id: snapshot.data![index].employer_id,
                       employer: snapshot.data![index].ceo,
+                      url: snapshot.data![index].url,
                       description: snapshot.data![index].description,
+                      data: snapshot.data!.sublist(index, snapshot.data!.length),
                     ),
                   );
                 }
