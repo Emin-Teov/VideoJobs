@@ -28,11 +28,11 @@ class VideoItem extends StatefulWidget {
 class _VideoItemState extends State<VideoItem> {
   bool _like_clicked = false;
 
-  void showDescription() {
+  void setDialog() {
     showDialog(
       context: context,
       builder: (context) {
-        var size = MediaQuery.of(context).size;
+        // var size = MediaQuery.of(context).size;
         return AlertDialog(
           content: Column(
             children: <Widget>[
@@ -47,66 +47,25 @@ class _VideoItemState extends State<VideoItem> {
               ),
               Center(
                 child:  GetTextField(
-                  text: 'Description:',
+                  text: widget.ceo ? 'Description:' : widget.user,
                 ),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  width: size.width,
-                  height: size.height / 2,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: widget.ceo
+                    ? Text(
                       widget.description,
                       style: TextStyle(
                         fontSize: 12,
                         fontStyle: FontStyle.normal,
                         color: Colors.black87,
                       ),
+                    )
+                    : Image.network(
+                      'https://emin-teov.github.io/api/resume/cv_resume-0.png',
+                      fit: BoxFit.cover,
                     ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
-  }
-
-  void showResume() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        var size = MediaQuery.of(context).size;
-        return AlertDialog(
-          content: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(Icons.close)
-                  ),
-                ],
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GetTextField(text: widget.user),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Image.network(
-                        'https://emin-teov.github.io/api/resume/cv_resume-${widget.id}.png',
-                        width: size.width,
-                        height: size.height / 2.5,
-                      ),
-                    ),
-                  ],
                 ),
               ),
             ],
@@ -141,8 +100,8 @@ class _VideoItemState extends State<VideoItem> {
                       width: 50,
                       height: 50,
                       widget.ceo
-                          ? 'https://emin-teov.github.io/api/logo/photo-logo-${widget.id}.png'
-                          : 'https://emin-teov.github.io/api/profile/profile-image-${widget.id}.png',
+                        ? 'https://emin-teov.github.io/api/logo/photo_logo-${widget.id}.png'
+                        : 'https://emin-teov.github.io/api/profile/profile_image-${widget.id}.png',
                       errorBuilder: (BuildContext context,
                           Object exception, StackTrace? stackTrace) {
                         return const Icon(
@@ -172,14 +131,14 @@ class _VideoItemState extends State<VideoItem> {
                           ),
                         ),
                         widget.ceo ? IconButton(
-                          onPressed: showDescription,
+                          onPressed: setDialog,
                           icon: Icon(
                             Icons.attach_file,
                             size: 36,
                             color: Colors.amberAccent,
                           ),
                         ): GestureDetector(
-                          onTap: showResume,
+                          onTap: setDialog,
                           child: ImageIcon(
                             AssetImage("assets/icons/cv.png"),
                             color: Colors.amberAccent,

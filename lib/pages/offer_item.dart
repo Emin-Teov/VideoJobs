@@ -41,7 +41,7 @@ class _OfferItemState extends State<OfferItem> {
     }
   }
 
-  void showDescription() {
+  void setDialog() {
     showDialog(
       context: context,
       builder: (context) {
@@ -63,20 +63,15 @@ class _OfferItemState extends State<OfferItem> {
                   text: 'Description:',
                 ),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  width: size.width,
-                  height: size.height / 2,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      widget.description,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontStyle: FontStyle.normal,
-                        color: Colors.black87,
-                      ),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Text(
+                    widget.description,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.black87,
                     ),
                   ),
                 ),
@@ -100,18 +95,18 @@ class _OfferItemState extends State<OfferItem> {
           children: <Widget>[
             IconButton(
               onPressed: widget.url.isEmpty
-                  ? showDescription
-                  : () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => VideoItems(
-                            data: _get_data,
-                            ceo: true,
-                          ),
-                        ),
+                ? setDialog
+                : () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoItems(
+                        data: _get_data,
+                        ceo: true,
                       ),
+                    ),
+                  ),
               icon: Image.network(
-                'https://emin-teov.github.io/api/logo/photo-logo-${widget.employer_id}.png',
+                'https://emin-teov.github.io/api/logo/photo_logo-${widget.employer_id}.png',
                 width: (size / 4),
                 height: (size / 4),
               ),
