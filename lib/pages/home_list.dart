@@ -16,7 +16,6 @@ class _HomeListState extends State<HomeList> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         const SizedBox(
           width: 400,

@@ -34,9 +34,11 @@ class _TabListState extends State<TabList> {
       builder: (context) {
         return AlertDialog(
           content: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   IconButton(
                       onPressed: () => Navigator.of(context).pop(),
@@ -63,8 +65,9 @@ class _TabListState extends State<TabList> {
                     } else if (snapshot.hasData) {
                       var size = MediaQuery.of(context).size;
                       return Container(
+                        alignment:Alignment.center, 
                         width: size.width,
-                        height: size.height * 0.75,
+                        height: size.height / 2,
                         child: category ? CategoryItems() : CountryItems(code: snapshot.data!),
                       );
                     } else {
@@ -75,6 +78,7 @@ class _TabListState extends State<TabList> {
                   },
                 ),
               ),
+              SizedBox(),
             ],
           ),
         );

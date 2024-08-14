@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_list/pages/cv_resume.dart';
 import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/get_text_label.dart';
 import 'package:video_list/pages/video_widget.dart';
@@ -32,9 +33,10 @@ class _VideoItemState extends State<VideoItem> {
     showDialog(
       context: context,
       builder: (context) {
-        // var size = MediaQuery.of(context).size;
         return AlertDialog(
-          content: Column(
+          backgroundColor: widget.ceo ? Colors.white : Theme.of(context).colorScheme.inversePrimary,
+          content: widget.ceo 
+          ? Column(
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -53,23 +55,19 @@ class _VideoItemState extends State<VideoItem> {
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                  child: widget.ceo
-                    ? Text(
-                      widget.description,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontStyle: FontStyle.normal,
-                        color: Colors.black87,
-                      ),
-                    )
-                    : Image.network(
-                      'https://emin-teov.github.io/api/resume/cv_resume-0.png',
-                      fit: BoxFit.cover,
+                  child: Text(
+                    widget.description,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.black87,
                     ),
+                  )
                 ),
-              ),
+              )
             ],
-          ),
+          )
+          : CVResume(id: widget.id, job_seeker: widget.user,),
         );
       }
     );

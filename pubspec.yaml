@@ -39,9 +39,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   video_player: ^2.8.2
-  # flick_video_player: ^0.7.0
   flutter_launcher_icons: ^0.13.1
   http: ^1.2.2
+  syncfusion_flutter_pdfviewer: ^26.2.9
+  path_provider: ^2.1.4
+  open_file: ^3.3.2
 
 dev_dependencies:
   flutter_test:
