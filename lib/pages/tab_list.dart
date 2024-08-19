@@ -1,18 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_elevated_button/button_style.dart';
 import 'package:gradient_elevated_button/gradient_elevated_button.dart';
+
+import 'package:video_list/models/category_model.dart';
+import 'package:video_list/models/country_model.dart';
 import 'package:video_list/pages/category_items.dart';
 import 'package:video_list/pages/country_items.dart';
 import 'package:video_list/pages/get_text_field.dart';
-import 'package:public_ip_address/public_ip_address.dart';
 
-Future<String> getCountryIp() async {
-  String country = await IpAddress().getCountryCode();
-  return country;
+List<CategoryModel> parseCategories(List<dynamic> responseBody) {
+  List<CategoryModel> parsed = [];
+  for (dynamic body in responseBody) {
+    parsed.add(CategoryModel.fromJson(body));
+  }
+  return parsed;
+}
+
+List<CountryModel> parseCountries(List<dynamic> responseBody) {
+  List<CountryModel> parsed = [];
+  for (dynamic body in responseBody) {
+    parsed.add(CountryModel.fromJson(body));
+  }
+  return parsed;
 }
 
 class TabList extends StatefulWidget {
-  const TabList({super.key});
+  final List categories;
+  final List countries;
+
+  const TabList({super.key, required this.categories, required this.countries});
 
   @override
   State<TabList> createState() => _TabListState();
@@ -20,70 +36,55 @@ class TabList extends StatefulWidget {
 
 class _TabListState extends State<TabList> {
   bool get_remote_context = false;
-  late Future<String> getCountry;
+  late List<CategoryModel> categories;
+  late List<CountryModel> countries;
 
   @override
   void initState() {
     super.initState();
-    getCountry = getCountryIp();
+
+    categories = parseCategories(widget.categories);
+    countries = parseCountries(widget.countries);
   }
 
   void setDialog(bool category) {
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.close)),
-                ],
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: FutureBuilder<String>(
-                  future: getCountry,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(Icons.error),
-                            GetTextField(
-                              text: "An error has occurred!",
-                            ),
-                          ],
-                        ),
-                      );
-                    } else if (snapshot.hasData) {
-                      var size = MediaQuery.of(context).size;
-                      return Container(
-                        alignment:Alignment.center, 
-                        width: size.width,
-                        height: size.height / 2,
-                        child: category ? CategoryItems() : CountryItems(code: snapshot.data!),
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
+        context: context,
+        builder: (context) {
+          var size = MediaQuery.of(context).size;
+          return AlertDialog(
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.close)),
+                  ],
                 ),
-              ),
-              SizedBox(),
-            ],
-          ),
-        );
-      }
-    );
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: size.width,
+                    height: size.height / 2,
+                    child: category
+                        ? CategoryItems(
+                            items: categories,
+                          )
+                        : CountryItems(
+                          items: countries,
+                        ),
+                  ),
+                ),
+                SizedBox(),
+              ],
+            ),
+          );
+        });
   }
 
   @override
@@ -121,7 +122,7 @@ class _TabListState extends State<TabList> {
               ),
             ),
             child: GetTextField(
-              text: get_remote_context ? "Freelancer" : "Local Job",
+              text: get_remote_context ? "Service" : "Local Job",
               light: true,
             ),
           ),
@@ -161,7 +162,7 @@ class _TabListState extends State<TabList> {
               ),
             ),
             child: GetTextField(
-              text: "Select Countries",
+              text: "Countries",
               light: true,
             ),
           ),

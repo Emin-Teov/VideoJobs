@@ -33,8 +33,8 @@ class _VideoItemsState extends State<VideoItems> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: VideoItem(
-            id: widget.ceo ? widget.data[i].employer_id : widget.data[i].id,
-            url: widget.data[i].url,
+            id: widget.data[i].id,
+            employer_id: widget.ceo ? widget.data[i].employer_id : 0,
             user: widget.ceo ? widget.data[i].ceo : '${widget.data[i].name} ${widget.data[i].surname}',
             title: widget.data[i].title, 
             ceo: widget.ceo,

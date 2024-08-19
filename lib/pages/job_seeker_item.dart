@@ -14,12 +14,12 @@ Future<Uint8List> getThumbnailImage(String url) async {
 }
 
 class JobSeekerItem extends StatefulWidget {
-  final String url;
+  final int id;
   final List<JobSeekerModel> data;
 
   const JobSeekerItem({
     super.key,
-    required this.url,
+    required this.id,
     required this.data,
   });
 
@@ -33,7 +33,7 @@ class _JobSeekerItemState extends State<JobSeekerItem> {
   @override
   void initState() {
     super.initState();
-    thumbnail = getThumbnailImage(widget.url);
+    thumbnail = getThumbnailImage('https://emin-teov.github.io/api/video/job_seeker_${widget.id}.mp4');
   }
 
   @override
@@ -55,9 +55,9 @@ class _JobSeekerItemState extends State<JobSeekerItem> {
           } else if (snapshot.hasData) {
             return GestureDetector(
               onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context)=>VideoItems(data: widget.data))
-              ),
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VideoItems(data: widget.data))),
               child: Container(
                 margin: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(

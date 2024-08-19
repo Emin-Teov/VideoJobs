@@ -3,7 +3,7 @@ class OfferModel {
   final int employer_id;
   final String title;
   final String ceo;
-  final String url;
+  final bool video;
   final String description;
 
   const OfferModel({
@@ -11,7 +11,7 @@ class OfferModel {
     required this.employer_id,
     required this.title,
     required this.ceo,
-    required this.url,
+    required this.video,
     required this.description,
   });
 
@@ -21,7 +21,7 @@ class OfferModel {
       employer_id: json['employer_id'] as int,
       title: json['title'] as String,
       ceo: json['ceo'] as String,
-      url: json['url'] as String,
+      video: json['video'] as bool,
       description: json['description'] as String,
     );
   }

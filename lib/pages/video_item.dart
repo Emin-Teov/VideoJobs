@@ -6,7 +6,7 @@ import 'package:video_list/pages/video_widget.dart';
 
 class VideoItem extends StatefulWidget {
   final int id;
-  final String url;
+  final int employer_id;
   final String user;
   final String title;
   final bool ceo;
@@ -15,7 +15,7 @@ class VideoItem extends StatefulWidget {
   const VideoItem({
     super.key,
     required this.id,
-    required this.url,
+    required this.employer_id,
     required this.user,
     required this.title,
     required this.ceo,
@@ -84,7 +84,7 @@ class _VideoItemState extends State<VideoItem> {
     return Scaffold(
       body: Stack(
         children: [
-          VideoWidget(url: widget.url),
+          VideoWidget(url: widget.ceo ? 'https://emin-teov.github.io/api/video/job_offer_${widget.id}.mp4' : 'https://emin-teov.github.io/api/video/job_seeker_${widget.id}.mp4'),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -98,7 +98,7 @@ class _VideoItemState extends State<VideoItem> {
                       width: 50,
                       height: 50,
                       widget.ceo
-                        ? 'https://emin-teov.github.io/api/logo/photo_logo-${widget.id}.png'
+                        ? 'https://emin-teov.github.io/api/logo/photo_logo-${widget.employer_id}.png'
                         : 'https://emin-teov.github.io/api/profile/profile_image-${widget.id}.png',
                       errorBuilder: (BuildContext context,
                           Object exception, StackTrace? stackTrace) {

@@ -8,7 +8,7 @@ class OfferItem extends StatefulWidget {
   final String tittle;
   final int employer_id;
   final String employer;
-  final String url;
+  final bool video;
   final String description;
   final List data;
 
@@ -18,7 +18,7 @@ class OfferItem extends StatefulWidget {
     required this.tittle,
     required this.employer_id,
     required this.employer,
-    required this.url,
+    required this.video,
     required this.description,
     required this.data,
   });
@@ -35,7 +35,7 @@ class _OfferItemState extends State<OfferItem> {
     super.initState();
 
     for (int i = 0; i < widget.data.length; i++) {
-      if (!widget.data[i].url.isEmpty) {
+      if (widget.video) {
         _get_data.add(widget.data[i]);
       }
     }
@@ -93,9 +93,8 @@ class _OfferItemState extends State<OfferItem> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             IconButton(
-              onPressed: widget.url.isEmpty
-                ? setDialog
-                : () => Navigator.push(
+              onPressed: widget.video
+                ? () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => VideoItems(
@@ -103,7 +102,8 @@ class _OfferItemState extends State<OfferItem> {
                         ceo: true,
                       ),
                     ),
-                  ),
+                  )
+                : setDialog,
               icon: Image.network(
                 'https://emin-teov.github.io/api/logo/photo_logo-${widget.employer_id}.png',
                 width: (size / 4),
