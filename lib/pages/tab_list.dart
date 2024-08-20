@@ -55,43 +55,44 @@ class _TabListState extends State<TabList> {
 
   void setDialog(bool category) {
     showDialog(
-        context: context,
-        builder: (context) {
-          var size = MediaQuery.of(context).size;
-          return AlertDialog(
-            content: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(Icons.close)),
-                  ],
+      context: context,
+      builder: (context) {
+        var size = MediaQuery.of(context).size;
+        return AlertDialog(
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(Icons.close)),
+                ],
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: size.width,
+                  height: size.height / 2,
+                  child: category
+                      ? CategoryItems(
+                          items: categories,
+                        )
+                      : CountryItems(
+                          items: countries,
+                          code: widget.country_code,
+                        ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: size.width,
-                    height: size.height / 2,
-                    child: category
-                        ? CategoryItems(
-                            items: categories,
-                          )
-                        : CountryItems(
-                            items: countries,
-                            code: widget.country_code,
-                          ),
-                  ),
-                ),
-                SizedBox(),
-              ],
-            ),
-          );
-        });
+              ),
+              SizedBox(),
+            ],
+          ),
+        );
+      }
+    );
   }
 
   @override
@@ -129,7 +130,7 @@ class _TabListState extends State<TabList> {
               ),
             ),
             child: GetTextField(
-              text: get_remote_context ? "Service" : "Local Job",
+              text: get_remote_context ? "Services" : "Local Jobs",
               light: true,
             ),
           ),
