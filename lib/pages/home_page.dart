@@ -16,7 +16,7 @@ import 'package:video_list/models/data_model.dart';
 
 Future<DataModel> fetchData(http.Client client) async {
   final response = await client
-      .get(Uri.parse('https://emin-teov.github.io/api/json/data.json'));
+      .get(Uri.parse('https://eastern-candied-cafe.glitch.me/json/data.json'));
   final json = jsonDecode(response.body) as Map<String, dynamic>;
 
   return DataModel.fromJson(json);

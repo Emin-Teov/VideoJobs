@@ -33,7 +33,7 @@ class _JobSeekerItemState extends State<JobSeekerItem> {
   @override
   void initState() {
     super.initState();
-    thumbnail = getThumbnailImage('https://emin-teov.github.io/api/video/job_seeker_${widget.id}.mp4');
+    thumbnail = getThumbnailImage('https://eastern-candied-cafe.glitch.me/video/job_seeker_${widget.id}.mp4');
   }
 
   @override

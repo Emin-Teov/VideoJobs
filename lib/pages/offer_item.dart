@@ -105,7 +105,7 @@ class _OfferItemState extends State<OfferItem> {
                   )
                 : setDialog,
               icon: Image.network(
-                'https://emin-teov.github.io/api/logo/photo_logo-${widget.employer_id}.png',
+                'https://eastern-candied-cafe.glitch.me/logo/photo_logo-${widget.employer_id}.png',
                 width: (size / 4),
                 height: (size / 4),
               ),

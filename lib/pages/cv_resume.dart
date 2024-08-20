@@ -22,7 +22,7 @@ class _CVResumeState extends State<CVResume> {
     String _title = widget.job_seeker.split(' ')[0];
 
     Future<void> loadPdf() async {
-      final String url = 'https://emin-teov.github.io/api/resume/cv_resume-${widget.id}.pdf';
+      final String url = 'https://eastern-candied-cafe.glitch.me/resume/cv_resume-${widget.id}.pdf';
       final response = await http.get(Uri.parse(url));
       final bytes = response.bodyBytes;
       final Directory? _dir = await getDownloadsDirectory();
@@ -48,7 +48,7 @@ class _CVResumeState extends State<CVResume> {
       ),
       body: Container(
         child: SfPdfViewer.network(
-            'https://emin-teov.github.io/api/resume/cv_resume-${widget.id}.pdf'),
+            'https://eastern-candied-cafe.glitch.me/resume/cv_resume-${widget.id}.pdf'),
       ),
     );
   }
