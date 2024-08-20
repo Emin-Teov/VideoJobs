@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
+import 'package:public_ip_address/public_ip_address.dart';
 
 import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/home_list.dart';
@@ -21,6 +22,9 @@ Future<DataModel> fetchData(http.Client client) async {
   return DataModel.fromJson(json);
 }
 
+Future<String> getCountryIp() async => await IpAddress().getCountryCode();
+
+
 class HomePage extends StatefulWidget {
   final String title;
 
@@ -31,7 +35,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future<DataModel> futureData;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
   int _select_page_index = 0;
@@ -45,7 +48,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    futureData = fetchData(http.Client());
 
     Connectivity()
       .onConnectivityChanged
@@ -59,8 +61,8 @@ class _HomePageState extends State<HomePage> {
     bool get_connect_context =
         (_connectivityResult == ConnectivityResult.none) ? false : true;
     return Scaffold(
-      body: FutureBuilder<DataModel>(
-        future: futureData,
+      body: FutureBuilder<List>(
+        future: Future.wait([fetchData(http.Client()), getCountryIp()]),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -75,7 +77,14 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           } else if (snapshot.hasData) {
-            List _pages = [HomeList(job_seekers: snapshot.data!.job_seekers, offers: snapshot.data!.offers,), Profile(), Settings()];
+            List _pages = [
+              HomeList(
+                job_seekers: snapshot.data![0].job_seekers,
+                offers: snapshot.data![0].offers,
+              ),
+              Profile(),
+              Settings()
+            ];
             return Scaffold(
               key: scaffoldKey,
               appBar: AppBar(
@@ -95,8 +104,9 @@ class _HomePageState extends State<HomePage> {
                   ? Drawer(
                       backgroundColor: Colors.blueAccent,
                       child: TabList(
-                        categories: snapshot.data!.categories,
-                        countries: snapshot.data!.countries,
+                        categories: snapshot.data![0].categories,
+                        countries: snapshot.data![0].countries,
+                        country_code: snapshot.data![1],
                       ),
                     )
                   : null,

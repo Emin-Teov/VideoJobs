@@ -27,8 +27,14 @@ List<CountryModel> parseCountries(List<dynamic> responseBody) {
 class TabList extends StatefulWidget {
   final List categories;
   final List countries;
+  final String country_code;
 
-  const TabList({super.key, required this.categories, required this.countries});
+  const TabList({
+    super.key,
+    required this.categories,
+    required this.countries,
+    required this.country_code
+  });
 
   @override
   State<TabList> createState() => _TabListState();
@@ -76,8 +82,9 @@ class _TabListState extends State<TabList> {
                             items: categories,
                           )
                         : CountryItems(
-                          items: countries,
-                        ),
+                            items: countries,
+                            code: widget.country_code,
+                          ),
                   ),
                 ),
                 SizedBox(),
