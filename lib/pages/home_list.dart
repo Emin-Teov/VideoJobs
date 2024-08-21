@@ -1,10 +1,29 @@
+import 'dart:core';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:get_thumbnail_video/index.dart';
+import 'package:get_thumbnail_video/video_thumbnail.dart';
 
 import 'package:video_list/models/job_seeker_model.dart';
 import 'package:video_list/models/offer_model.dart';
+import 'package:video_list/models/freelancer_model.dart';
 import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/offer_items.dart';
-import 'package:video_list/pages/job_seeker_items.dart';
+import 'package:video_list/pages/shared_items.dart';
+
+Future<List<Uint8List>> getThumbnailImage(
+    List<dynamic> responseBody, int index) async {
+  List<String> url = ['job_seeker', 'job_offer', 'freelancer'];
+  List<Uint8List> thumbnails = [];
+  for (final response in responseBody) {
+    final thumbnail = await VideoThumbnail.thumbnailData(
+      video: 'https://emin-teov.github.io/api/video/${url[index]}_${response.id}.mp4',
+      imageFormat: ImageFormat.PNG
+    );
+    thumbnails.add(thumbnail);
+  }
+  return thumbnails;
+}
 
 List<JobSeekerModel> parseJobSeekers(List<dynamic> responseBody) {
   List<JobSeekerModel> parsed = [];
@@ -22,24 +41,35 @@ List<OfferModel> parseOffers(List<dynamic> responseBody) {
   return parsed;
 }
 
+List<FreelancerModel> parseFreelancers(List<dynamic> responseBody) {
+  List<FreelancerModel> parsed = [];
+  for (dynamic body in responseBody) {
+    parsed.add(FreelancerModel.fromJson(body));
+  }
+  return parsed;
+}
+
 class HomeList extends StatefulWidget {
   final List job_seekers;
   final List offers;
+  final List freelancers;
 
-  const HomeList({
-    super.key,
-    required this.job_seekers,
-    required this.offers
-  });
+  const HomeList(
+      {super.key,
+      required this.job_seekers,
+      required this.offers,
+      required this.freelancers});
 
   @override
   State<HomeList> createState() => _HomeListState();
 }
 
 class _HomeListState extends State<HomeList> {
-  bool _set_job_seekers_list = true;
+  int _tab_index = 0;
+
   late List<JobSeekerModel> job_seekers;
   late List<OfferModel> offers;
+  late List<FreelancerModel> freelancers;
 
   @override
   void initState() {
@@ -47,6 +77,7 @@ class _HomeListState extends State<HomeList> {
 
     job_seekers = parseJobSeekers(widget.job_seekers);
     offers = parseOffers(widget.offers);
+    freelancers = parseFreelancers(widget.freelancers);
   }
 
   @override
@@ -75,7 +106,7 @@ class _HomeListState extends State<HomeList> {
           height: 5,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             ElevatedButton(
               style: ButtonStyle(
@@ -84,7 +115,7 @@ class _HomeListState extends State<HomeList> {
               ),
               onPressed: () {
                 setState(() {
-                  _set_job_seekers_list = true;
+                  _tab_index = 0;
                 });
               },
               child: Row(
@@ -95,7 +126,7 @@ class _HomeListState extends State<HomeList> {
                     color: Colors.white,
                   ),
                   GetTextField(
-                    text: 'I need job',
+                    text: _tab_index == 0 ? 'I need job' : '',
                     light: true,
                   ),
                 ],
@@ -108,7 +139,7 @@ class _HomeListState extends State<HomeList> {
               ),
               onPressed: () {
                 setState(() {
-                  _set_job_seekers_list = false;
+                  _tab_index = 1;
                 });
               },
               child: Row(
@@ -119,7 +150,31 @@ class _HomeListState extends State<HomeList> {
                     color: Colors.white,
                   ),
                   GetTextField(
-                    text: 'Job offers',
+                    text: _tab_index == 1 ? 'Job offers' : '',
+                    light: true,
+                  ),
+                ],
+              ),
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    WidgetStateProperty.all<Color>(Colors.blueAccent),
+              ),
+              onPressed: () {
+                setState(() {
+                  _tab_index = 2;
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Icon(
+                    Icons.home_repair_service,
+                    color: Colors.white,
+                  ),
+                  GetTextField(
+                    text: _tab_index == 2 ? 'Services' : '',
                     light: true,
                   ),
                 ],
@@ -131,7 +186,42 @@ class _HomeListState extends State<HomeList> {
           height: 5,
         ),
         Expanded(
-          child: _set_job_seekers_list ? JobSeekerItems(items: job_seekers,) : OfferItems(items: offers,),
+          child: FutureBuilder<List>(
+            future: Future.wait([
+              getThumbnailImage(job_seekers, 0),
+              getThumbnailImage(offers, 1),
+              getThumbnailImage(freelancers, 2),
+            ]),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.error),
+                      GetTextField(
+                        text: "An error has occurred!",
+                      ),
+                    ],
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                return SharedItems(
+                  item_index: _tab_index,
+                  job_seekers: job_seekers,
+                  offers: offers,
+                  freelancers: freelancers,
+                  getThumbnailsJobSeekers: snapshot.data![0],
+                  getThumbnailsOffers: snapshot.data![1],
+                  getThumbnailsFreelancers: snapshot.data![2]
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ),
       ],
     );

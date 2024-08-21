@@ -6,19 +6,19 @@ import 'package:video_list/pages/video_widget.dart';
 
 class VideoItem extends StatefulWidget {
   final int id;
+  final int index;
   final int employer_id;
   final String user;
   final String title;
-  final bool ceo;
   final String description;
 
   const VideoItem({
     super.key,
     required this.id,
+    required this.index,
     required this.employer_id,
     required this.user,
     required this.title,
-    required this.ceo,
     required this.description,
   });
 
@@ -34,8 +34,8 @@ class _VideoItemState extends State<VideoItem> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: widget.ceo ? Colors.white : Theme.of(context).colorScheme.inversePrimary,
-          content: widget.ceo 
+          backgroundColor: widget.index == 1 ? Colors.white : Theme.of(context).colorScheme.inversePrimary,
+          content: widget.index == 1 
           ? Column(
             children: <Widget>[
               Row(
@@ -49,7 +49,7 @@ class _VideoItemState extends State<VideoItem> {
               ),
               Center(
                 child:  GetTextField(
-                  text: widget.ceo ? 'Description:' : widget.user,
+                  text: 'Description:',
                 ),
               ),
               Expanded(
@@ -67,7 +67,7 @@ class _VideoItemState extends State<VideoItem> {
               )
             ],
           )
-          : CVResume(id: widget.id, job_seeker: widget.user,),
+          : CVResume(id: widget.id, job_seeker: widget.user, freelancer: widget.index == 2),
         );
       }
     );
@@ -84,7 +84,7 @@ class _VideoItemState extends State<VideoItem> {
     return Scaffold(
       body: Stack(
         children: [
-          VideoWidget(url: widget.ceo ? 'https://eastern-candied-cafe.glitch.me/video/job_offer_${widget.id}.mp4' : 'https://eastern-candied-cafe.glitch.me/video/job_seeker_${widget.id}.mp4'),
+          VideoWidget(url: 'https://emin-teov.github.io/api/video/${widget.index == 2 ? 'freelancer' : 'job_${widget.index == 0 ? 'seeker' : 'offer'}'}_${widget.id}.mp4'),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -97,16 +97,19 @@ class _VideoItemState extends State<VideoItem> {
                     Image.network(
                       width: 50,
                       height: 50,
-                      widget.ceo
-                        ? 'https://eastern-candied-cafe.glitch.me/logo/photo_logo-${widget.employer_id}.png'
-                        : 'https://eastern-candied-cafe.glitch.me/profile/profile_image-${widget.id}.png',
-                      errorBuilder: (BuildContext context,
-                          Object exception, StackTrace? stackTrace) {
-                        return const Icon(
+                      'https://emin-teov.github.io/api/${widget.index == 1 ? 'logo/photo_logo' : 'profile/${widget.index == 0 ? 'profile_image' : 'freelancer_profile'}'}-${widget.index == 1 ? widget.employer_id : widget.id}.png',
+                      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                        return widget.index == 1
+                        ? const ImageIcon(
+                            AssetImage("assets/icons/ceo.png"),
+                            color: Colors.amberAccent,
+                            size: 36,
+                          )
+                        : const Icon(
                           Icons.person,
                           size: 50,
                           color: Colors.blueGrey,
-                        );
+                          );
                       },
                     ),
                     SizedBox(
@@ -128,14 +131,16 @@ class _VideoItemState extends State<VideoItem> {
                             color: _like_clicked ? Colors.red : Colors.blueGrey,
                           ),
                         ),
-                        widget.ceo ? IconButton(
+                        widget.index == 1 
+                        ? IconButton(
                           onPressed: setDialog,
                           icon: Icon(
                             Icons.attach_file,
                             size: 36,
                             color: Colors.amberAccent,
                           ),
-                        ): GestureDetector(
+                        )
+                        : GestureDetector(
                           onTap: setDialog,
                           child: ImageIcon(
                             AssetImage("assets/icons/cv.png"),

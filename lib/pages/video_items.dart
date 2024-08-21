@@ -3,12 +3,12 @@ import 'package:video_list/pages/video_item.dart';
 
 class VideoItems extends StatefulWidget {
   final List data;
-  final bool ceo;
+  final int index;
 
   const VideoItems({
     super.key,
     required this.data,
-    this.ceo = false,
+    required this.index,
   });
 
   @override
@@ -34,11 +34,11 @@ class _VideoItemsState extends State<VideoItems> {
           width: MediaQuery.of(context).size.width,
           child: VideoItem(
             id: widget.data[i].id,
-            employer_id: widget.ceo ? widget.data[i].employer_id : 0,
-            user: widget.ceo ? widget.data[i].ceo : '${widget.data[i].name} ${widget.data[i].surname}',
+            index: widget.index,
+            employer_id: widget.index == 1 ? widget.data[i].employer_id : 0,
+            user: widget.index == 2 ? widget.data[i].user : widget.index == 1 ? widget.data[i].ceo : '${widget.data[i].name} ${widget.data[i].surname}',
             title: widget.data[i].title, 
-            ceo: widget.ceo,
-            description: widget.ceo ? widget.data[i].description : "",
+            description: widget.index == 1 ? widget.data[i].description : '',
           ),
         ),
       );

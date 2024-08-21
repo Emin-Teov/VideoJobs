@@ -78,13 +78,13 @@ class _TabListState extends State<TabList> {
                   width: size.width,
                   height: size.height / 2,
                   child: category
-                      ? CategoryItems(
-                          items: categories,
-                        )
-                      : CountryItems(
-                          items: countries,
-                          code: widget.country_code,
-                        ),
+                  ? CategoryItems(
+                      items: categories,
+                    )
+                  : CountryItems(
+                      items: countries,
+                      code: widget.country_code,
+                    ),
                 ),
               ),
               SizedBox(),
@@ -104,35 +104,6 @@ class _TabListState extends State<TabList> {
           child: GetTextField(
             text: "Job types",
             light: true,
-          ),
-        ),
-        SizedBox(
-          width: 300,
-          child: GradientElevatedButton(
-            onPressed: () {
-              setState(() {
-                get_remote_context = !get_remote_context;
-              });
-            },
-            style: GradientButtonStyle(
-              gradient: LinearGradient(
-                colors: get_remote_context
-                    ? [
-                        Colors.cyanAccent,
-                        Colors.blueGrey,
-                      ]
-                    : [
-                        Colors.blueGrey,
-                        Colors.cyanAccent,
-                      ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: GetTextField(
-              text: get_remote_context ? "Services" : "Local Jobs",
-              light: true,
-            ),
           ),
         ),
         SizedBox(
