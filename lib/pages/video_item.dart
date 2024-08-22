@@ -83,7 +83,7 @@ class _VideoItemState extends State<VideoItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
+        children: <Widget>[
           VideoWidget(url: 'https://emin-teov.github.io/api/video/${widget.index == 2 ? 'freelancer' : 'job_${widget.index == 0 ? 'seeker' : 'offer'}'}_${widget.id}.mp4'),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -122,7 +122,7 @@ class _VideoItemState extends State<VideoItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         IconButton(
                           onPressed: liked,
                           icon: Icon(

@@ -89,7 +89,7 @@ class _SharedItemState extends State<SharedItem> {
                       padding: EdgeInsets.only(left: 5.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                        children: <Widget>[
                           Expanded(
                             child: GetTextLabel(
                               head: widget.user,

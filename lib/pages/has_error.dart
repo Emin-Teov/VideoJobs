@@ -26,7 +26,7 @@ class HasError extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Icon(no_internet ? Icons.signal_wifi_off_outlined : Icons.error),
             GetTextField(text: no_internet ? 'No interner' : 'An error has occurred!'),
           ],

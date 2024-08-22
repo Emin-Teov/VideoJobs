@@ -44,7 +44,7 @@ class _SubCategoryItemsState extends State<SubCategoryItems> {
     return  Expanded(
       // margin: EdgeInsets.all(10.0),
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
