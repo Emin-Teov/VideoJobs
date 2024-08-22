@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class GetTextLabel extends StatefulWidget {
   final String head;
   final String value;
-  final bool ligth;
+  final bool light;
 
   const GetTextLabel({
     super.key,
     required this.head,
     required this.value,
-    this.ligth = false,
+    this.light = false,
   });
 
   @override
@@ -26,7 +26,7 @@ class _GetTextLabelState extends State<GetTextLabel> {
           fontSize: 18,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.italic,
-          color: widget.ligth? Colors.white : Colors.black54,
+          color: widget.light? Colors.white : Colors.black54,
         ),
         children: <TextSpan>[
           TextSpan(
@@ -35,7 +35,7 @@ class _GetTextLabelState extends State<GetTextLabel> {
               fontSize: 20,
               fontWeight: FontWeight.w500,
               fontStyle: FontStyle.normal,
-              color: widget.ligth? Colors.white : Colors.black87,
+              color: widget.light ? Colors.white : Theme.of(context).brightness == Brightness.light ? Colors.black87 : Colors.white,
             ),
           ),
         ],

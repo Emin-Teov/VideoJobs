@@ -94,7 +94,7 @@ class _SharedItemState extends State<SharedItem> {
                             child: GetTextLabel(
                               head: widget.user,
                               value: widget.title,
-                              ligth: true,
+                              light: true,
                             ),
                           ),
                         ],

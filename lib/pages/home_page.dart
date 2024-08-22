@@ -81,7 +81,10 @@ class _HomePageState extends State<HomePage> {
               appBar: AppBar(
                 centerTitle: true,
                 backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                title: GetTextField(text: widget.title, light: true),
+                title: GetTextField(
+                  text: widget.title,
+                  light: true
+                ),
               ),
               drawer: Drawer(
                 backgroundColor: Colors.blueAccent,

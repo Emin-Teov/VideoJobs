@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
+import 'package:video_list/pages/get_text_field.dart';
 
 class CVResume extends StatefulWidget {
   final int id;
@@ -39,14 +40,13 @@ class _CVResumeState extends State<CVResume> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_title),
+        title: GetTextField(text: _title,),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: <Widget>[
           IconButton(
             icon: const Icon(
               Icons.download,
-              color: Colors.black,
             ),
             onPressed: loadPdf,
           ),

@@ -12,7 +12,7 @@ class Profile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.person),
-            GetTextField(text: "Profile",),
+            GetTextField(text: "Guest",),
           ],
         ),
       ),
