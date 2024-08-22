@@ -24,17 +24,13 @@ class _FreelanceItemsState extends State<FreelanceItems> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Expanded(
-        child: GridView.builder(
+        child: OrientationBuilder(builder: (context, orientation) {
+          return GridView.builder(
             itemCount: widget.items.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: ((size.width / 3) /
-                  ((size.height - kToolbarHeight - 24) / 2)),
-              mainAxisSpacing: 124.0,
-              crossAxisSpacing: 0,
+              crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
             ),
             itemBuilder: (BuildContext context, int index) {
               return SharedItem(
@@ -44,7 +40,9 @@ class _FreelanceItemsState extends State<FreelanceItems> {
                 title: widget.items[index].title,
                 data: widget.items.sublist(index, widget.items.length),
               );
-            }),
+            },
+          );
+        }),
       ),
     );
   }

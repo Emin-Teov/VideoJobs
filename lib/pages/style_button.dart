@@ -12,7 +12,6 @@ class StyleButton extends StatefulWidget {
 }
 
 class _StyleButtonState extends State<StyleButton> {
-  bool _is_clicked = false;
   bool isDarkmode = false;
 
   @override
@@ -27,49 +26,20 @@ class _StyleButtonState extends State<StyleButton> {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _is_clicked = !_is_clicked;
-                    });
-                  },
-                  child: GetTextField(text: 'Set style')),
+                onPressed: () {
+                  final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+                  setState(() {
+                    isDarkmode = !isDarkmode;
+                  });
+                  isDarkmode
+                      ? themeProvider.setDarkmode()
+                      : themeProvider.setLightMode();
+                },
+                child: GetTextField(text: 'Set ${Theme.of(context).brightness == Brightness.light ? 'dark' : 'light'} style'),
+              ),
             ),
           ],
         ),
-        _is_clicked
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: _is_clicked ? 24.0 : 0),
-                    child: TextButton(
-                      onPressed: () {
-                        final themeProvider =
-                            Provider.of<ThemeProvider>(context, listen: false);
-                        setState(() {
-                          isDarkmode = !isDarkmode;
-                        });
-                        isDarkmode
-                            ? themeProvider.setDarkmode()
-                            : themeProvider.setLightMode();
-                      },
-                      child: Text(
-                        Theme.of(context).brightness == Brightness.light ? 'Get dark mode' : 'Get light mode',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontStyle: FontStyle.italic,
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? Colors.black87
-                                  : Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : SizedBox(width: 0, height: 0),
         Divider(),
       ],
     );

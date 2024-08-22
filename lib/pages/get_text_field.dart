@@ -22,7 +22,7 @@ class _GetTextFieldState extends State<GetTextField> {
       style: TextStyle(
         fontSize: 25,
         fontStyle: FontStyle.italic,
-        color: widget.light ? Colors.white : Theme.of(context).brightness == Brightness.light ? Colors.black87 : Colors.white,
+        color: widget.light ? Colors.white70 : Theme.of(context).brightness == Brightness.light ? Colors.black87 : Colors.white70,
       ),
     );
   }

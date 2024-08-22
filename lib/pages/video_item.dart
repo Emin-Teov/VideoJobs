@@ -92,7 +92,7 @@ class _VideoItemState extends State<VideoItem> {
                 padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 12.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     Image.network(
                       width: 50,
@@ -112,18 +112,16 @@ class _VideoItemState extends State<VideoItem> {
                           );
                       },
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
-                      child: Expanded(
+                    Expanded(
                         child: GetTextLabel(
                           head: widget.user,
                           value: widget.title,
                           light: true,
                         ),
-                      )
-                    ),
+                      ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         IconButton(
                           onPressed: liked,

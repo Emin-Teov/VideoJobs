@@ -88,7 +88,7 @@ class _TabListState extends State<TabList> {
                     ),
                 ),
               ),
-              SizedBox(),
+              SizedBox(width: 0, height: 0,),
             ],
           ),
         );

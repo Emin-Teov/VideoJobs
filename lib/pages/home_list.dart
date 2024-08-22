@@ -108,7 +108,7 @@ class _HomeListState extends State<HomeList> {
                 children: <Widget>[
                   Icon(
                     Icons.person_pin_rounded,
-                    color: Colors.white,
+                    color: Colors.white70,
                   ),
                   GetTextField(
                     text: _tab_index == 0 ? 'I need job' : '',
@@ -132,7 +132,7 @@ class _HomeListState extends State<HomeList> {
                 children: <Widget>[
                   Icon(
                     Icons.local_offer,
-                    color: Colors.white,
+                    color: Colors.white70,
                   ),
                   GetTextField(
                     text: _tab_index == 1 ? 'Job offers' : '',
@@ -156,7 +156,7 @@ class _HomeListState extends State<HomeList> {
                 children: <Widget>[
                   Icon(
                     Icons.home_repair_service,
-                    color: Colors.white,
+                    color: Colors.white70,
                   ),
                   GetTextField(
                     text: _tab_index == 2 ? 'Services' : '',

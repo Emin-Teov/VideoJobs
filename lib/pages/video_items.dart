@@ -27,28 +27,39 @@ class _VideoItemsState extends State<VideoItems> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     for (int i = 0; i < widget.data.length; i++) {
       reel.add(
         Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: size.height,
+          width: size.width,
           child: VideoItem(
             id: widget.data[i].id,
             index: widget.index,
             employer_id: widget.index == 1 ? widget.data[i].employer_id : 0,
-            user: widget.index == 2 ? widget.data[i].user : widget.index == 1 ? widget.data[i].ceo : '${widget.data[i].name} ${widget.data[i].surname}',
-            title: widget.data[i].title, 
+            user: widget.index == 2
+              ? widget.data[i].user
+              : widget.index == 1
+                ? widget.data[i].ceo
+                : '${widget.data[i].name} ${widget.data[i].surname}',
+            title: widget.data[i].title,
             description: widget.index == 1 ? widget.data[i].description : '',
           ),
         ),
       );
     }
+    
     return Scaffold(
-      body: Container(
-        child: PageView(
-          scrollDirection: Axis.vertical,
-          controller: _controller,
-          children: reel,
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).orientation == Orientation.portrait ? size.width : size.width / 3,
+          height: size.height,
+          child: PageView(
+            scrollDirection: Axis.vertical,
+            controller: _controller,
+            children: reel,
+          ),
         ),
       ),
     );
