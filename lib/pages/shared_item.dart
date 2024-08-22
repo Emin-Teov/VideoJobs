@@ -2,11 +2,11 @@ import 'dart:typed_data';
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get_thumbnail_video/index.dart';
 import 'package:get_thumbnail_video/video_thumbnail.dart';
 
 import 'package:video_list/pages/get_text_field.dart';
+import 'package:video_list/pages/get_text_label.dart';
 import 'package:video_list/pages/video_items.dart';
 
 Future<Uint8List> getThumbnailImage(String url) async {
@@ -19,12 +19,16 @@ Future<Uint8List> getThumbnailImage(String url) async {
 class SharedItem extends StatefulWidget {
   final int id;
   final int index;
+  final String user;
+  final String title;
   final List data;
 
   const SharedItem({
     super.key,
     required this.id,
     required this.index,
+    required this.user,
+    required this.title,
     required this.data,
   });
 
@@ -76,6 +80,27 @@ class _SharedItemState extends State<SharedItem> {
                     image: MemoryImage(snapshot.data!),
                     fit: BoxFit.cover,
                   ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: GetTextLabel(
+                              head: widget.user,
+                              value: widget.title,
+                              ligth: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );

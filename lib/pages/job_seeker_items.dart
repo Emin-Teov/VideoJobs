@@ -40,6 +40,8 @@ class _JobSeekerItemsState extends State<JobSeekerItems> {
               return SharedItem(
                 id: widget.items[index].id,
                 index: widget.item_index,
+                user: '${widget.items[index].name} ${widget.items[index].surname}',
+                title: widget.items[index].title,
                 data: widget.items.sublist(index, widget.items.length),
               );
             }),

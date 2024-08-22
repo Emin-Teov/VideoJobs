@@ -114,11 +114,13 @@ class _VideoItemState extends State<VideoItem> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2,
-                      child: GetTextLabel(
-                        head: widget.user,
-                        value: widget.title,
-                        ligth: true,
-                      ),
+                      child: Expanded(
+                        child: GetTextLabel(
+                          head: widget.user,
+                          value: widget.title,
+                          ligth: true,
+                        ),
+                      )
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
