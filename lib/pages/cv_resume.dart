@@ -53,8 +53,7 @@ class _CVResumeState extends State<CVResume> {
         ],
       ),
       body: Container(
-        child: SfPdfViewer.network(
-            'https://emin-teov.github.io/api/resume/${ widget.freelancer ? 'freelancer' : 'cv'}_resume-${widget.id}.pdf'),
+        child: SfPdfViewer.network('https://emin-teov.github.io/api/resume/${ widget.freelancer ? 'freelancer' : 'cv'}_resume-${widget.id}.pdf'),
       ),
     );
   }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:video_list/pages/get_text_field.dart';
 
-class NoInternet extends StatelessWidget {
+class HasError extends StatelessWidget {
   final String title;
+  final bool no_internet;
 
-  const NoInternet({
+  const HasError({
     super.key,
-    required this.title
+    required this.title,
+    required this.no_internet,
   });
 
   @override
@@ -25,8 +27,8 @@ class NoInternet extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.signal_wifi_off_outlined),
-            GetTextField(text: "No interner"),
+            Icon(no_internet ? Icons.signal_wifi_off_outlined : Icons.error),
+            GetTextField(text: no_internet ? 'No interner' : 'An error has occurred!'),
           ],
         ),
       ),

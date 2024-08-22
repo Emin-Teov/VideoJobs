@@ -1,29 +1,14 @@
 import 'dart:core';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:get_thumbnail_video/index.dart';
-import 'package:get_thumbnail_video/video_thumbnail.dart';
 
 import 'package:video_list/models/job_seeker_model.dart';
 import 'package:video_list/models/offer_model.dart';
 import 'package:video_list/models/freelancer_model.dart';
+import 'package:video_list/pages/freelance_items.dart';
 import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/shared_items.dart';
-
-Future<List<Uint8List>> getThumbnailImage(
-    List<dynamic> responseBody, int index) async {
-  List<String> url = ['job_seeker', 'job_offer', 'freelancer'];
-  List<Uint8List> thumbnails = [];
-  for (final response in responseBody) {
-    final thumbnail = await VideoThumbnail.thumbnailData(
-      video: 'https://emin-teov.github.io/api/video/${url[index]}_${response.id}.mp4',
-      imageFormat: ImageFormat.PNG
-    );
-    thumbnails.add(thumbnail);
-  }
-  return thumbnails;
-}
+import 'package:video_list/pages/job_seeker_items.dart';
+import 'package:video_list/pages/offer_items.dart';
 
 List<JobSeekerModel> parseJobSeekers(List<dynamic> responseBody) {
   List<JobSeekerModel> parsed = [];
@@ -54,11 +39,12 @@ class HomeList extends StatefulWidget {
   final List offers;
   final List freelancers;
 
-  const HomeList(
-      {super.key,
-      required this.job_seekers,
-      required this.offers,
-      required this.freelancers});
+  const HomeList({
+    super.key,
+    required this.job_seekers,
+    required this.offers,
+    required this.freelancers
+  });
 
   @override
   State<HomeList> createState() => _HomeListState();
@@ -66,18 +52,17 @@ class HomeList extends StatefulWidget {
 
 class _HomeListState extends State<HomeList> {
   int _tab_index = 0;
-
-  late List<JobSeekerModel> job_seekers;
-  late List<OfferModel> offers;
-  late List<FreelancerModel> freelancers;
+  late List <Widget> _list_shared_items;
 
   @override
   void initState() {
     super.initState();
-
-    job_seekers = parseJobSeekers(widget.job_seekers);
-    offers = parseOffers(widget.offers);
-    freelancers = parseFreelancers(widget.freelancers);
+    
+    _list_shared_items = [
+      JobSeekerItems(item_index: 0, items: parseJobSeekers(widget.job_seekers)),
+      OfferItems(item_index: 1, items: parseOffers(widget.offers)),
+      FreelanceItems(item_index: 2, items: parseFreelancers(widget.freelancers)),
+    ];
   }
 
   @override
@@ -186,42 +171,7 @@ class _HomeListState extends State<HomeList> {
           height: 5,
         ),
         Expanded(
-          child: FutureBuilder<List>(
-            future: Future.wait([
-              getThumbnailImage(job_seekers, 0),
-              getThumbnailImage(offers, 1),
-              getThumbnailImage(freelancers, 2),
-            ]),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.error),
-                      GetTextField(
-                        text: "An error has occurred!",
-                      ),
-                    ],
-                  ),
-                );
-              } else if (snapshot.hasData) {
-                return SharedItems(
-                  item_index: _tab_index,
-                  job_seekers: job_seekers,
-                  offers: offers,
-                  freelancers: freelancers,
-                  getThumbnailsJobSeekers: snapshot.data![0],
-                  getThumbnailsOffers: snapshot.data![1],
-                  getThumbnailsFreelancers: snapshot.data![2]
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
+          child: _list_shared_items[_tab_index],
         ),
       ],
     );

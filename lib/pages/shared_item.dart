@@ -1,20 +1,30 @@
 import 'dart:typed_data';
+import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get_thumbnail_video/index.dart';
+import 'package:get_thumbnail_video/video_thumbnail.dart';
 
+import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/video_items.dart';
+
+Future<Uint8List> getThumbnailImage(String url) async {
+  final thumbnail = await VideoThumbnail.thumbnailData(
+      video: 'https://emin-teov.github.io/api/video/${url}.mp4',
+      imageFormat: ImageFormat.PNG);
+  return thumbnail;
+}
 
 class SharedItem extends StatefulWidget {
   final int id;
   final int index;
-  final Uint8List thumbnail;
   final List data;
 
   const SharedItem({
     super.key,
     required this.id,
     required this.index,
-    required this.thumbnail,
     required this.data,
   });
 
@@ -24,34 +34,61 @@ class SharedItem extends StatefulWidget {
 
 class _SharedItemState extends State<SharedItem> {
   List<String> url = ['job_seeker', 'job_offer', 'freelancer'];
+  late Future<Uint8List> thumbnail;
 
   @override
   void initState() {
     super.initState();
+    thumbnail = getThumbnailImage('${url[widget.index]}_${widget.id}');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VideoItems(
-              data: widget.data,
-              index: widget.index,
-            ),
-          ),
-        ),
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: MemoryImage(widget.thumbnail),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+      body: FutureBuilder<Uint8List>(
+        future: thumbnail,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.error),
+                  GetTextField(text: "An error has occurred!"),
+                ],
+              ),
+            );
+          } else if (snapshot.hasData) {
+            return GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VideoItems(
+                    data: widget.data,
+                    index: widget.index,
+                  ),
+                ),
+              ),
+              child: Container(
+                margin: EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: MemoryImage(snapshot.data!),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return Container(
+              margin: EdgeInsets.all(5.0),
+              color: Color(0x3A9E9E9E),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
       ),
     );
   }
