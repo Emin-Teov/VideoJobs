@@ -17,7 +17,6 @@ class VideoItems extends StatefulWidget {
 
 class _VideoItemsState extends State<VideoItems> {
   late PageController _controller;
-  late List<Widget> reel = [];
 
   @override
   void initState() {
@@ -25,9 +24,8 @@ class _VideoItemsState extends State<VideoItems> {
     _controller = PageController(initialPage: 0);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+  getReel(var size) {
+    List<Widget> reel = [];
     for (int i = 0; i < widget.data.length; i++) {
       reel.add(
         Container(
@@ -48,17 +46,24 @@ class _VideoItemsState extends State<VideoItems> {
         ),
       );
     }
-    
+    return reel;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
         child: Container(
-          width: MediaQuery.of(context).orientation == Orientation.portrait ? size.width : size.width / 3,
+          width: MediaQuery.of(context).orientation == Orientation.portrait
+            ? size.width
+            : size.width / 3,
           height: size.height,
           child: PageView(
             scrollDirection: Axis.vertical,
             controller: _controller,
-            children: reel,
+            children: getReel(size),
           ),
         ),
       ),

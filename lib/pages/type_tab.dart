@@ -24,12 +24,12 @@ List<CountryModel> parseCountries(List<dynamic> responseBody) {
   return parsed;
 }
 
-class TabList extends StatefulWidget {
+class TypeTab extends StatefulWidget {
   final List categories;
   final List countries;
   final String country_code;
 
-  const TabList({
+  const TypeTab({
     super.key,
     required this.categories,
     required this.countries,
@@ -37,10 +37,10 @@ class TabList extends StatefulWidget {
   });
 
   @override
-  State<TabList> createState() => _TabListState();
+  State<TypeTab> createState() => _TypeTabState();
 }
 
-class _TabListState extends State<TabList> {
+class _TypeTabState extends State<TypeTab> {
   bool get_remote_context = false;
   late List<CategoryModel> categories;
   late List<CountryModel> countries;
@@ -77,7 +77,7 @@ class _TabListState extends State<TabList> {
                 child: Container(
                   alignment: Alignment.center,
                   width: size.width,
-                  height: size.height / 2,
+                  height: MediaQuery.of(context).orientation == Orientation.portrait ? size.height * 0.75 : size.height / 2,
                   child: category
                   ? CategoryItems(
                       items: categories,
@@ -88,7 +88,7 @@ class _TabListState extends State<TabList> {
                     ),
                 ),
               ),
-              SizedBox(width: 0, height: 0,),
+              SizedBox.shrink(),
             ],
           ),
         );
@@ -101,49 +101,55 @@ class _TabListState extends State<TabList> {
     return Column(
       children: <Widget>[
         DrawerHeader(
-          padding: EdgeInsets.only(top: 85.0),
+          padding: EdgeInsets.only(top: 100.0),
           child: GetTextField(
-            text: "Job types",
+            text: "Set Job types",
             light: true,
           ),
         ),
-        SizedBox(
-          width: 300,
-          child: GradientElevatedButton(
-            onPressed: () => setDialog(true),
-            style: GradientButtonStyle(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.cyanAccent,
-                  Colors.blueGrey,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+        Padding(
+          padding: EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0),
+          child: SizedBox(
+            width: 300,
+            child: GradientElevatedButton(
+              onPressed: () => setDialog(true),
+              style: GradientButtonStyle(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.cyanAccent,
+                    Colors.blueGrey,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
-            ),
-            child: GetTextField(
-              text: "Job Categories",
-              light: true,
+              child: GetTextField(
+                text: "Job Categories",
+                light: true,
+              ),
             ),
           ),
         ),
-        SizedBox(
-          width: 300,
-          child: GradientElevatedButton(
-            onPressed: () => setDialog(false),
-            style: GradientButtonStyle(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.cyanAccent,
-                  Colors.blueGrey,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+        Padding(
+          padding: EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0),
+          child: SizedBox(
+            width: 300,
+            child: GradientElevatedButton(
+              onPressed: () => setDialog(false),
+              style: GradientButtonStyle(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.cyanAccent,
+                    Colors.blueGrey,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
-            ),
-            child: GetTextField(
-              text: "Countries",
-              light: true,
+              child: GetTextField(
+                text: "Countries",
+                light: true,
+              ),
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:video_list/pages/style_button.dart';
+
+import 'package:video_list/pages/get_text_field.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -9,9 +10,10 @@ class Settings extends StatelessWidget {
     return Scaffold(
       body: const Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            StyleButton(),
+            Icon(Icons.settings),
+            GetTextField(text: "Settings",),
           ],
         ),
       ),

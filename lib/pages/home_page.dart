@@ -10,8 +10,9 @@ import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/home_list.dart';
 import 'package:video_list/pages/has_error.dart';
 import 'package:video_list/pages/profile.dart';
+import 'package:video_list/pages/setting_tab.dart';
 import 'package:video_list/pages/settings.dart';
-import 'package:video_list/pages/tab_list.dart';
+import 'package:video_list/pages/type_tab.dart';
 import 'package:video_list/models/data_model.dart';
 
 Future<DataModel> fetchData(http.Client client) async {
@@ -48,10 +49,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) => setState(() {
-              _connectivityResult = result;
-            }));
+      .onConnectivityChanged
+      .listen((ConnectivityResult result) => setState(() {
+            _connectivityResult = result;
+          }));
   }
 
   @override
@@ -88,11 +89,15 @@ class _HomePageState extends State<HomePage> {
               ),
               drawer: Drawer(
                 backgroundColor: Colors.blueAccent,
-                child: TabList(
-                  categories: snapshot.data![1].categories,
-                  countries: snapshot.data![1].countries,
-                  country_code: snapshot.data![0],
-                ),
+                child: _select_page_index == 0
+                ? TypeTab(
+                    categories: snapshot.data![1].categories,
+                    countries: snapshot.data![1].countries,
+                    country_code: snapshot.data![0],
+                  )
+                : _select_page_index == 1
+                  ? ListTile()
+                  : SettingTab(),
               ),
               body: _pages[_select_page_index],
               bottomNavigationBar: BottomNavigationBar(
