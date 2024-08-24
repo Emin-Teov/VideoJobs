@@ -52,7 +52,7 @@ class _SettingTabState extends State<SettingTab> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(left: 12.0),
+                padding: EdgeInsets.only(left: 24.0),
                 child: TextButton(
                   onPressed: () {
                     final themeProvider =

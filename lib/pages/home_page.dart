@@ -10,6 +10,7 @@ import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/home_list.dart';
 import 'package:video_list/pages/has_error.dart';
 import 'package:video_list/pages/profile.dart';
+import 'package:video_list/pages/profile_tab.dart';
 import 'package:video_list/pages/setting_tab.dart';
 import 'package:video_list/pages/settings.dart';
 import 'package:video_list/pages/type_tab.dart';
@@ -96,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                     country_code: snapshot.data![0],
                   )
                 : _select_page_index == 1
-                  ? ListTile()
+                  ? ProfileTab()
                   : SettingTab(),
               ),
               body: _pages[_select_page_index],

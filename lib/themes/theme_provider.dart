@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeData? currentTheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.blueAccent,
-      brightness: Brightness.light,
-    ),
-    textTheme: TextTheme(
-      displayLarge: const TextStyle(
-        fontSize: 72,
-        fontWeight: FontWeight.bold,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.blueAccent,
+        brightness: Brightness.light,
       ),
-    ),
-    useMaterial3: true,
-  );
+      textTheme: TextTheme(
+        displayLarge: const TextStyle(
+          fontSize: 72,
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.italic,
+          color: Colors.black87,
+        ),
+      ),
+      useMaterial3: true,
+    );
 
   setLightMode() {
     currentTheme = ThemeData(
@@ -25,6 +27,8 @@ class ThemeProvider extends ChangeNotifier {
         displayLarge: const TextStyle(
           fontSize: 72,
           fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.italic,
+          color: Colors.black87,
         ),
       ),
       useMaterial3: true,
@@ -42,6 +46,8 @@ class ThemeProvider extends ChangeNotifier {
         displayLarge: const TextStyle(
           fontSize: 72,
           fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.italic,
+          color: Colors.white70,
         ),
       ),
       useMaterial3: true,

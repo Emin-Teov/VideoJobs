@@ -2,24 +2,23 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import 'package:video_list/models/offer_model.dart';
 import 'package:video_list/pages/shared_item.dart';
 
-class OfferItems extends StatefulWidget {
+class SharedItems extends StatefulWidget {
   final int item_index;
-  final List<OfferModel> items;
+  final List items;
 
-  const OfferItems({
+  const SharedItems({
     super.key,
     required this.item_index,
     required this.items,
   });
 
   @override
-  State<OfferItems> createState() => _OfferItemsState();
+  State<SharedItems> createState() => _SharedItemsState();
 }
 
-class _OfferItemsState extends State<OfferItems> {
+class _SharedItemsState extends State<SharedItems> {
   late List<List<Uint8List>> getThumbnails;
 
   @override
@@ -37,7 +36,11 @@ class _OfferItemsState extends State<OfferItems> {
                 return SharedItem(
                   id: widget.items[index].id,
                   index: widget.item_index,
-                  user: widget.items[index].ceo,
+                  user: widget.item_index == 0
+                    ? '${widget.items[index].name} ${widget.items[index].surname}'
+                    : widget.item_index == 1
+                      ? widget.items[index].ceo
+                      : widget.items[index].user,
                   title: widget.items[index].title,
                   data: widget.items.sublist(index, widget.items.length),
                 );

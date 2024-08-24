@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:video_list/models/job_seeker_model.dart';
 import 'package:video_list/models/offer_model.dart';
 import 'package:video_list/models/freelancer_model.dart';
-import 'package:video_list/pages/freelance_items.dart';
 import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/job_seeker_items.dart';
-import 'package:video_list/pages/offer_items.dart';
+import 'package:video_list/pages/shared_items.dart';
 
 List<JobSeekerModel> parseJobSeekers(List<dynamic> responseBody) {
   List<JobSeekerModel> parsed = [];
@@ -52,17 +50,10 @@ class HomeList extends StatefulWidget {
 
 class _HomeListState extends State<HomeList> {
   int _tab_index = 0;
-  late List <Widget> _list_shared_items;
 
   @override
   void initState() {
     super.initState();
-    
-    _list_shared_items = [
-      JobSeekerItems(item_index: 0, items: parseJobSeekers(widget.job_seekers)),
-      OfferItems(item_index: 1, items: parseOffers(widget.offers)),
-      FreelanceItems(item_index: 2, items: parseFreelancers(widget.freelancers)),
-    ];
   }
 
   @override
@@ -170,8 +161,23 @@ class _HomeListState extends State<HomeList> {
         SizedBox(
           height: 5,
         ),
-        Expanded(
-          child: _list_shared_items[_tab_index],
+        Visibility(
+          visible: _tab_index == 0,
+          child: Expanded(
+            child: SharedItems(item_index: 0, items: parseJobSeekers(widget.job_seekers)),
+          ),
+        ),
+        Visibility(
+          visible: _tab_index == 1,
+          child: Expanded(
+            child: SharedItems(item_index: 1, items: parseOffers(widget.offers)),
+          ),
+        ),
+        Visibility(
+          visible: _tab_index == 2,
+          child: Expanded(
+            child: SharedItems(item_index: 2, items: parseFreelancers(widget.freelancers)),
+          ),
         ),
       ],
     );

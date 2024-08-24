@@ -34,7 +34,7 @@ class _VideoItemState extends State<VideoItem> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: widget.index == 1 ? Colors.white : Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: widget.index == 1 ? Theme.of(context).dialogBackgroundColor : Theme.of(context).colorScheme.inversePrimary,
           content: widget.index == 1 
           ? Column(
             children: <Widget>[
@@ -48,10 +48,11 @@ class _VideoItemState extends State<VideoItem> {
                 ],
               ),
               Center(
-                child:  GetTextField(
+                child: GetTextField(
                   text: 'Description:',
                 ),
               ),
+              SizedBox(height: 20,),
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
@@ -60,7 +61,6 @@ class _VideoItemState extends State<VideoItem> {
                     style: TextStyle(
                       fontSize: 12,
                       fontStyle: FontStyle.normal,
-                      color: Colors.black87,
                     ),
                   )
                 ),

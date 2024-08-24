@@ -26,7 +26,7 @@ class _GetTextLabelState extends State<GetTextLabel> {
           fontSize: 18,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.italic,
-          color: widget.light? Colors.white70 : Colors.black54,
+          color: widget.light? Colors.white70 : Theme.of(context).textTheme.displayLarge?.color,
         ),
         children: <TextSpan>[
           TextSpan(
@@ -35,7 +35,7 @@ class _GetTextLabelState extends State<GetTextLabel> {
               fontSize: 20,
               fontWeight: FontWeight.w500,
               fontStyle: FontStyle.normal,
-              color: widget.light ? Colors.white70 : Theme.of(context).brightness == Brightness.light ? Colors.black87 : Colors.white70,
+              color: widget.light ? Colors.white70 : Theme.of(context).textTheme.displayLarge?.color,
             ),
           ),
         ],
