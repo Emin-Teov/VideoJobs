@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:video_list/models/job_seeker_model.dart';
 import 'package:video_list/models/offer_model.dart';
 import 'package:video_list/models/freelancer_model.dart';
+import 'package:video_list/models/talent_model.dart';
 import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/shared_items.dart';
 
@@ -32,16 +33,26 @@ List<FreelancerModel> parseFreelancers(List<dynamic> responseBody) {
   return parsed;
 }
 
+List<TalentModel> parseTalents(List<dynamic> responseBody) {
+  List<TalentModel> parsed = [];
+  for (dynamic body in responseBody) {
+    parsed.add(TalentModel.fromJson(body));
+  }
+  return parsed;
+}
+
 class HomeList extends StatefulWidget {
   final List job_seekers;
   final List offers;
   final List freelancers;
+  final List talents;
 
   const HomeList({
     super.key,
     required this.job_seekers,
     required this.offers,
-    required this.freelancers
+    required this.freelancers,
+    required this.talents
   });
 
   @override
@@ -100,10 +111,12 @@ class _HomeListState extends State<HomeList> {
                   Icon(
                     Icons.person_pin_rounded,
                     color: Colors.white70,
+                    size: 18,
                   ),
                   GetTextField(
                     text: _tab_index == 0 ? 'I need job' : '',
                     light: true,
+                    setLargeSize: false,
                   ),
                 ],
               ),
@@ -124,10 +137,12 @@ class _HomeListState extends State<HomeList> {
                   Icon(
                     Icons.local_offer,
                     color: Colors.white70,
+                    size: 18,
                   ),
                   GetTextField(
                     text: _tab_index == 1 ? 'Job offers' : '',
                     light: true,
+                    setLargeSize: false,
                   ),
                 ],
               ),
@@ -148,10 +163,38 @@ class _HomeListState extends State<HomeList> {
                   Icon(
                     Icons.home_repair_service,
                     color: Colors.white70,
+                    size: 18,
                   ),
                   GetTextField(
                     text: _tab_index == 2 ? 'Services' : '',
                     light: true,
+                    setLargeSize: false,
+                  ),
+                ],
+              ),
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    WidgetStateProperty.all<Color>(Colors.blueAccent),
+              ),
+              onPressed: () {
+                setState(() {
+                  _tab_index = 3;
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Icon(
+                    Icons.person_search,
+                    color: Colors.white70,
+                    size: 18,
+                  ),
+                  GetTextField(
+                    text: _tab_index == 3 ? 'I have talent' : '',
+                    light: true,
+                    setLargeSize: false,
                   ),
                 ],
               ),
@@ -164,19 +207,37 @@ class _HomeListState extends State<HomeList> {
         Visibility(
           visible: _tab_index == 0,
           child: Expanded(
-            child: SharedItems(item_index: 0, items: parseJobSeekers(widget.job_seekers)),
+            child: SharedItems(
+              item_index: 0,
+              items: parseJobSeekers(widget.job_seekers),
+            ),
           ),
         ),
         Visibility(
           visible: _tab_index == 1,
           child: Expanded(
-            child: SharedItems(item_index: 1, items: parseOffers(widget.offers)),
+            child:
+            SharedItems(item_index: 1,
+              items: parseOffers(widget.offers),
+            ),
           ),
         ),
         Visibility(
           visible: _tab_index == 2,
           child: Expanded(
-            child: SharedItems(item_index: 2, items: parseFreelancers(widget.freelancers)),
+            child: SharedItems(
+              item_index: 2,
+              items: parseFreelancers(widget.freelancers),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: _tab_index == 3,
+          child: Expanded(
+            child: SharedItems(
+              item_index: 3,
+              items: parseTalents(widget.talents),
+            ),
           ),
         ),
       ],

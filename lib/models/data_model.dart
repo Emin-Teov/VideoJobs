@@ -1,9 +1,10 @@
 class DataModel {
-  final List<dynamic> categories;
-  final List<dynamic> countries;
-  final List<dynamic> job_seekers;
-  final List<dynamic> offers;
-   final List<dynamic> freelancers;
+  final List categories;
+  final List countries;
+  final List job_seekers;
+  final List offers;
+  final List freelancers;
+  final List talents;
 
   const DataModel({
     required this.categories,
@@ -11,6 +12,7 @@ class DataModel {
     required this.job_seekers,
     required this.offers,
     required this.freelancers,
+    required this.talents,
   });
 
   factory DataModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class DataModel {
       job_seekers: json['job_seekers'] as List,
       offers: json['offers'] as List,
       freelancers: json['freelancers'] as List,
+      talents: json['talents'] as List,
     );
   }
 }

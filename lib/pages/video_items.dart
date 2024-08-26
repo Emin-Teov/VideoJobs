@@ -35,11 +35,11 @@ class _VideoItemsState extends State<VideoItems> {
             id: widget.data[i].id,
             index: widget.index,
             employer_id: widget.index == 1 ? widget.data[i].employer_id : 0,
-            user: widget.index == 2
-              ? widget.data[i].user
+            user: widget.index == 0
+              ? '${widget.data[i].name} ${widget.data[i].surname}'
               : widget.index == 1
                 ? widget.data[i].ceo
-                : '${widget.data[i].name} ${widget.data[i].surname}',
+                : widget.data[i].user,
             title: widget.data[i].title,
             description: widget.index == 1 ? widget.data[i].description : '',
           ),

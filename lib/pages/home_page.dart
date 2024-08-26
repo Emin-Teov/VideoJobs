@@ -75,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                 job_seekers: snapshot.data![1].job_seekers,
                 offers: snapshot.data![1].offers,
                 freelancers: snapshot.data![1].freelancers,
+                talents: snapshot.data![1].talents,
               ),
               Profile(),
               Settings()

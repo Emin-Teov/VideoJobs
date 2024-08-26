@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class GetTextField extends StatefulWidget {
   final String text;
   final bool light;
+  final bool setLargeSize;
 
   const GetTextField({
-    super.key, 
-    required this.text, 
+    super.key,
+    required this.text,
     this.light = false,
+    this.setLargeSize = true,
   });
 
   @override
@@ -20,9 +22,11 @@ class _GetTextFieldState extends State<GetTextField> {
     return Text(
       widget.text,
       style: TextStyle(
-        fontSize: 25,
+        fontSize: widget.setLargeSize ? 25 : 14,
         fontStyle: FontStyle.italic,
-        color: widget.light ? Colors.white70 : Theme.of(context).textTheme.displayLarge?.color,
+        color: widget.light
+          ? Colors.white70
+          : Theme.of(context).textTheme.displayLarge?.color,
       ),
     );
   }
