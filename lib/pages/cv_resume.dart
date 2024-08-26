@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:open_file/open_file.dart';
 import 'package:video_list/pages/get_text_field.dart';
 
 class CVResume extends StatefulWidget {
@@ -29,8 +28,7 @@ class _CVResumeState extends State<CVResume> {
     String _title = widget.job_seeker.split(' ')[0];
 
     Future<void> loadPdf() async {
-      final String url =
-          'https://emin-teov.github.io/api/resume/${widget.freelancer ? 'freelancer' : 'cv'}_resume-${widget.id}.pdf';
+      final String url = 'https://emin-teov.github.io/api/resume/${widget.freelancer ? 'freelancer' : 'cv'}_resume-${widget.id}.pdf';
       final response = await http.get(Uri.parse(url));
       final bytes = response.bodyBytes;
       final Directory? _dir = await getDownloadsDirectory();
@@ -38,7 +36,6 @@ class _CVResumeState extends State<CVResume> {
       print('File: ${file}');
       await file.writeAsBytes(bytes, flush: true);
       await OpenFile.open('${_dir?.absolute.path}/${_title}.pdf');
-      // OpenFile.open('${_dir?.absolute.path}/${_title}.pdf');
     }
 
     return Scaffold(
