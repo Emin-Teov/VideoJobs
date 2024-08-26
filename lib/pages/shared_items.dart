@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 
 import 'package:video_list/pages/shared_item.dart';
@@ -19,8 +17,6 @@ class SharedItems extends StatefulWidget {
 }
 
 class _SharedItemsState extends State<SharedItems> {
-  late List<List<Uint8List>> getThumbnails;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

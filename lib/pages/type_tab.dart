@@ -77,7 +77,7 @@ class _TypeTabState extends State<TypeTab> {
                 child: Container(
                   alignment: Alignment.center,
                   width: size.width,
-                  height: MediaQuery.of(context).orientation == Orientation.portrait ? size.height * 0.75 : size.height / 2,
+                  height: MediaQuery.of(context).orientation == Orientation.portrait ? size.height * 0.7 : size.height / 2,
                   child: category
                   ? CategoryItems(
                       items: categories,
