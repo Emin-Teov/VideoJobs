@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
+
 import 'package:video_list/pages/cv_resume.dart';
 import 'package:video_list/pages/get_text_field.dart';
 import 'package:video_list/pages/get_text_label.dart';
-import 'package:video_list/pages/video_widget.dart';
 
 class VideoItem extends StatefulWidget {
   final int id;
@@ -35,64 +36,55 @@ class _VideoItemState extends State<VideoItem> {
     'profile/freelancer_profile',
     'profile/talent'
   ];
+  late final VideoPlayerController videoController;
 
   void setDialog() {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: widget.index == 1 | 3
-                ? Theme.of(context).dialogBackgroundColor
-                : Theme.of(context).colorScheme.inversePrimary,
-            content: widget.index == 1 | 3
-                ? Column(
+            backgroundColor: widget.index == 1
+            ? Theme.of(context).dialogBackgroundColor
+            : Theme.of(context).colorScheme.inversePrimary,
+            content: widget.index == 1
+            ? Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          IconButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            icon: Icon(Icons.close),
-                          ),
-                        ],
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.close),
                       ),
-                      Center(
-                        child: GetTextField(
-                          text: widget.index == 1 ? 'Description:' : widget.user,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: widget.index == 1
-                          ? Text(
-                            widget.description,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontStyle: FontStyle.normal,
-                            ),
-                          )
-                          : Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.network(
-                                'https://emin-teov.github.io/api/poster/talent-${widget.id}.png',
-                                fit: BoxFit.cover,
-                              ),
-                            ],
-                          )
+                    ],
+                  ),
+                  Center(
+                    child: GetTextField(
+                      text: 'Description:',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        widget.description,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontStyle: FontStyle.normal,
                         ),
                       )
-                    ],
+                    ),
                   )
-                : CVResume(
-                    id: widget.id,
-                    job_seeker: widget.user,
-                    freelancer: widget.index == 2
-                  ),
+                ],
+              )
+            : CVResume(
+                id: widget.id,
+                user: widget.user,
+                index: widget.index,
+              ),
           );
         });
   }
@@ -104,13 +96,36 @@ class _VideoItemState extends State<VideoItem> {
   }
 
   @override
+  void initState() {
+    videoController = VideoPlayerController.networkUrl(Uri.parse('https://emin-teov.github.io/api/video/${video_url[widget.index]}_${widget.id}.mp4'))
+      ..initialize().then((_) {
+        videoController.play();
+        videoController.setLooping(true);
+      });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    videoController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          VideoWidget(
-              url:
-                  'https://emin-teov.github.io/api/video/${video_url[widget.index]}_${widget.id}.mp4'),
+          VideoPlayer(videoController),
+          VideoProgressIndicator(
+            videoController, 
+            allowScrubbing: true, 
+            colors: VideoProgressColors(
+              playedColor: Colors.redAccent,
+              bufferedColor: Colors.white70,
+              backgroundColor: Colors.white10,
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -133,7 +148,9 @@ class _VideoItemState extends State<VideoItem> {
                               size: 36,
                             )
                           : Icon(
-                               widget.index == 3 ? Icons.person_search : Icons.person,
+                               widget.index == 3
+                                ? Icons.person_search
+                                : Icons.person,
                               size: 50,
                               color: Colors.blueGrey,
                             );
