@@ -3,14 +3,14 @@ import 'package:video_list/pages/get_text_field.dart';
 
 class CountryItem extends StatefulWidget {
   final String title;
-  final bool located;
-  final bool selected;
+  final bool value;
+  final Function() onBoxChanged;
 
   const CountryItem({
     super.key,
     required this.title,
-    required this.located,
-    required this.selected,
+    required this.value,
+    required this.onBoxChanged,
   });
 
   @override
@@ -18,14 +18,6 @@ class CountryItem extends StatefulWidget {
 }
 
 class _CountryItemState extends State<CountryItem> {
-  late bool onBoxChanged;
-  
-  @override
-  void initState() {
-    super.initState();
-    onBoxChanged = widget.located;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -37,10 +29,12 @@ class _CountryItemState extends State<CountryItem> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Checkbox(
-              value: onBoxChanged ? widget.selected : !widget.selected,
-              onChanged: (value) => setState(() {
-                onBoxChanged = !onBoxChanged;
-              }),
+              value: widget.value,
+              onChanged: (value) => {
+                setState(() {
+                  widget.onBoxChanged();
+                }),
+              }
             ),
           ],
         ),

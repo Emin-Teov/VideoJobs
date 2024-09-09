@@ -63,11 +63,6 @@ class _HomeListState extends State<HomeList> {
   int _tab_index = 0;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[

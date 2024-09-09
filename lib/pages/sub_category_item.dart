@@ -4,13 +4,15 @@ import 'package:video_list/pages/get_text_field.dart';
 class SubCategoryItem extends StatefulWidget {
   final int index;
   final String title;
-  final bool selected;
+  final bool value;
+  final Function() onBoxChanged;
 
   const SubCategoryItem({
     super.key,
     required this.index,
     required this.title,
-    required this.selected,
+    required this.value,
+    required this.onBoxChanged,
   });
 
   @override
@@ -18,8 +20,6 @@ class SubCategoryItem extends StatefulWidget {
 }
 
 class _SubCategoryItemState extends State<SubCategoryItem> {
-  late bool onBoxChanged = true;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,12 +33,13 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Checkbox(
-                  value: onBoxChanged ? widget.selected : !widget.selected,
-                  onChanged: (value) => {
-                        setState(() {
-                          onBoxChanged = !onBoxChanged;
-                        })
-                      }),
+                value: widget.value,
+                onChanged: (value) => {
+                  setState(() {
+                    widget.onBoxChanged();
+                  }),
+                }
+              ),
             ],
           ),
           Expanded(

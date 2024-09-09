@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:video_list/pages/get_text_field.dart';
 
+// typedef OnChangeFunc = void Function(int index);
+
 class CategoryItem extends StatefulWidget {
   final int index;
   final String title;
-  final bool selected;
+  final bool value;
+  final Function() onBoxChanged;
 
   const CategoryItem({
     super.key,
     required this.index,
     required this.title,
-    required this.selected,
+    required this.value,
+    required this.onBoxChanged,
   });
 
   @override
@@ -18,8 +22,6 @@ class CategoryItem extends StatefulWidget {
 }
 
 class _CategoryItemState extends State<CategoryItem> {
-  late bool onBoxChanged = true;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,11 +35,13 @@ class _CategoryItemState extends State<CategoryItem> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Checkbox(
-                  value: onBoxChanged ? widget.selected : !widget.selected,
-                  onChanged: (value) => setState(() {
-                    onBoxChanged = !onBoxChanged;
-                  }),
-                ),
+                  value: widget.value,
+                  onChanged: (value) => {
+                    setState(() {
+                      widget.onBoxChanged();
+                    }),
+                  }
+                )
               ],
             ),
             Expanded(

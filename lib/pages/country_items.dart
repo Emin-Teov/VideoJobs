@@ -20,8 +20,22 @@ class CountryItems extends StatefulWidget {
 
 class _CountryItemsState extends State<CountryItems> {
   late Future<List<CountryModel>> futureCountries;
-  late Future<String> getCountry;
-  bool _set_items = false;
+  late List<bool> _set_items;
+
+  @override
+  void initState() {
+    super.initState();
+    _set_items = List.generate(
+      widget.items.length,
+      (index) => (widget.items[index].code == widget.code) ? true : false
+    );
+  }
+
+  void _set_countries(int index) {
+    setState(() {
+      _set_items[index] = !_set_items[index];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +51,12 @@ class _CountryItemsState extends State<CountryItems> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Checkbox(
-                      value: _set_items,
+                      value: !_set_items.contains(false),
                       onChanged: (value) => {
                             setState(() {
-                              _set_items = !_set_items;
-                            })
+                              _set_items = List.filled(widget.items.length,
+                                  _set_items.contains(false) ? true : false);
+                            }),
                           }),
                 ],
               ),
@@ -60,8 +75,8 @@ class _CountryItemsState extends State<CountryItems> {
                     padding: const EdgeInsets.only(left: 25.0),
                     child: CountryItem(
                       title: widget.items[index].title,
-                      located: (widget.items[index].code != widget.code),
-                      selected: _set_items,
+                      value: _set_items[index],
+                      onBoxChanged: () => _set_countries(index),
                     ),
                   );
                 }),
