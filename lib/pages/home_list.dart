@@ -7,6 +7,7 @@ import 'package:video_list/models/offer_model.dart';
 import 'package:video_list/models/freelancer_model.dart';
 import 'package:video_list/models/talent_model.dart';
 import 'package:video_list/pages/get_text_field.dart';
+import 'package:video_list/pages/search_field.dart';
 import 'package:video_list/pages/shared_items.dart';
 
 List<JobSeekerModel> parseJobSeekers(List<dynamic> responseBody) {
@@ -46,13 +47,17 @@ class HomeList extends StatefulWidget {
   final List offers;
   final List freelancers;
   final List talents;
+  final Set<String> country_query;
+  final Set<double> category_query;
 
   const HomeList({
     super.key,
     required this.job_seekers,
     required this.offers,
     required this.freelancers,
-    required this.talents
+    required this.talents,
+    required this.country_query,
+    required this.category_query,
   });
 
   @override
@@ -60,28 +65,24 @@ class HomeList extends StatefulWidget {
 }
 
 class _HomeListState extends State<HomeList> {
+  final searchController = TextEditingController();
   int _tab_index = 0;
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const SizedBox(
+        SizedBox(
           width: 400,
-          child: TextField(
-            scrollPadding: EdgeInsets.all(25),
-            decoration: InputDecoration(
-              hintText: "Search",
-              contentPadding: EdgeInsets.all(12),
-              icon: IconButton(
-                onPressed: null,
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.amberAccent,
-                ),
-              ),
-              border: OutlineInputBorder(),
-            ),
+          child: SearchField(
+            country_query: widget.country_query,
+            category_query: widget.category_query
           ),
         ),
         SizedBox(
@@ -92,8 +93,7 @@ class _HomeListState extends State<HomeList> {
           children: <Widget>[
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor:
-                    WidgetStateProperty.all<Color>(Colors.blueAccent),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.blueAccent),
               ),
               onPressed: () {
                 setState(() {
@@ -111,7 +111,7 @@ class _HomeListState extends State<HomeList> {
                   GetTextField(
                     text: _tab_index == 0 ? 'I need job' : '',
                     light: true,
-                    setLargeSize: false,
+                    largeSize: false,
                   ),
                 ],
               ),
@@ -137,7 +137,7 @@ class _HomeListState extends State<HomeList> {
                   GetTextField(
                     text: _tab_index == 1 ? 'Job offers' : '',
                     light: true,
-                    setLargeSize: false,
+                    largeSize: false,
                   ),
                 ],
               ),
@@ -163,7 +163,7 @@ class _HomeListState extends State<HomeList> {
                   GetTextField(
                     text: _tab_index == 2 ? 'Services' : '',
                     light: true,
-                    setLargeSize: false,
+                    largeSize: false,
                   ),
                 ],
               ),
@@ -189,7 +189,7 @@ class _HomeListState extends State<HomeList> {
                   GetTextField(
                     text: _tab_index == 3 ? 'I have talent' : '',
                     light: true,
-                    setLargeSize: false,
+                    largeSize: false,
                   ),
                 ],
               ),
@@ -211,8 +211,8 @@ class _HomeListState extends State<HomeList> {
         Visibility(
           visible: _tab_index == 1,
           child: Expanded(
-            child:
-            SharedItems(item_index: 1,
+            child: SharedItems(
+              item_index: 1,
               items: parseOffers(widget.offers),
             ),
           ),

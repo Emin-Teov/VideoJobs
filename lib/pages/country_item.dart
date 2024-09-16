@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:video_list/pages/get_text_field.dart';
 
 class CountryItem extends StatefulWidget {
+  final int id;
   final String title;
   final bool value;
   final Function() onBoxChanged;
 
   const CountryItem({
     super.key,
+    required this.id,
     required this.title,
     required this.value,
     required this.onBoxChanged,

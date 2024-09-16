@@ -64,8 +64,9 @@ class _SettingTabState extends State<SettingTab> {
                         ? themeProvider.setDarkmode()
                         : themeProvider.setLightMode();
                   },
-                  child: Text(
-                    'Get ${Theme.of(context).brightness == Brightness.light ? 'dark' : 'light'} style',
+                  child: GetTextField(
+                    text: 'Get ${Theme.of(context).brightness == Brightness.light ? 'dark' : 'light'} style',
+                    largeSize: false,
                   ),
                 ),
               ),

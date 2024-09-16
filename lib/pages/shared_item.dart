@@ -11,8 +11,9 @@ import 'package:video_list/pages/video_items.dart';
 
 Future<Uint8List> getThumbnailImage(String url) async {
   final thumbnail = await VideoThumbnail.thumbnailData(
-      video: 'https://emin-teov.github.io/api/video/${url}.mp4',
-      imageFormat: ImageFormat.PNG);
+    video: 'https://emin-teov.github.io/api/video/${url}.mp4',
+    imageFormat: ImageFormat.PNG
+  );
   return thumbnail;
 }
 
@@ -95,6 +96,7 @@ class _SharedItemState extends State<SharedItem> {
                               head: widget.user,
                               value: widget.title,
                               light: true,
+                              small: true,
                             ),
                           ),
                         ],

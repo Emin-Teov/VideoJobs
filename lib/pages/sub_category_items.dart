@@ -14,16 +14,18 @@ List<CategoryModel> parseSubCategories(List<dynamic> responseBody) {
 class SubCategoryItems extends StatefulWidget {
   final int index;
   final String title;
-  final bool value;
-  final Function() onBoxChanged;
+  final double number;
+  final Function(double) onBoxChanged;
+  final Set<double> codes;
   final List data;
 
   const SubCategoryItems({
     super.key,
     required this.index,
     required this.title,
-    required this.value,
+    required this.number,
     required this.onBoxChanged,
+    required this.codes,
     required this.data,
   });
 
@@ -33,32 +35,28 @@ class SubCategoryItems extends StatefulWidget {
 
 class _SubCategoryItemsState extends State<SubCategoryItems> {
   late List<CategoryModel> _sub_categories;
-  late List<bool> _set_sub_items;
-  late bool _check_list;
-
   @override
   void initState() {
     super.initState();
     _sub_categories = parseSubCategories(widget.data);
-    _set_sub_items = List.filled(widget.data.length, widget.value);
-    _check_list = widget.value;
-  }
-
-  void _set_sub_categories(int index) {
-    setState(() {
-      _set_sub_items[index] = !_set_sub_items[index];
-      if ((_set_sub_items.contains(false) && widget.value) ||
-          (!_set_sub_items.contains(false) && !widget.value)) {
-        widget.onBoxChanged();
-      }
-    });
   }
 
   Widget build(BuildContext context) {
-    if (_check_list != widget.value) {
-      _set_sub_items = List.filled(widget.data.length, widget.value);
-      _check_list = widget.value;
+    bool _check_sub_categories() {
+      int count = 0;
+      widget.codes.forEach((e) {
+        if (e.toInt() == widget.number.toInt()) count++;
+      });
+      return count == widget.data.length;
     }
+
+    void _change_sub_categories(bool remove) {
+      setState(() {
+        for (CategoryModel _sub_category in _sub_categories) 
+          remove ? widget.codes.remove(_sub_category.number) : widget.codes.add(_sub_category.number);
+      });
+    }
+
     return Expanded(
       child: Column(
         children: <Widget>[
@@ -71,19 +69,9 @@ class _SubCategoryItemsState extends State<SubCategoryItems> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Checkbox(
-                      value: widget.value,
-                      onChanged: (value) => {
-                            setState(() {
-                              widget.onBoxChanged();
-                              if (!widget.value) {
-                                _set_sub_items =
-                                    List.filled(widget.data.length, true);
-                              } else {
-                                _set_sub_items =
-                                    List.filled(widget.data.length, false);
-                              }
-                            }),
-                          }),
+                    value: _check_sub_categories(),
+                    onChanged: (value) => _change_sub_categories(_check_sub_categories()),
+                  ),
                 ],
               ),
               Expanded(
@@ -102,8 +90,9 @@ class _SubCategoryItemsState extends State<SubCategoryItems> {
               return SubCategoryItem(
                 index: _sub_categories[index].index,
                 title: _sub_categories[index].title,
-                value: _set_sub_items[index],
-                onBoxChanged: () => _set_sub_categories(index),
+                value: widget.codes.contains(_sub_categories[index].number),
+                onBoxChanged: () =>
+                    widget.onBoxChanged(_sub_categories[index].number),
               );
             },
           ),

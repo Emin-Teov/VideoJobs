@@ -15,31 +15,55 @@ import 'package:video_list/pages/setting_tab.dart';
 import 'package:video_list/pages/settings.dart';
 import 'package:video_list/pages/type_tab.dart';
 import 'package:video_list/models/data_model.dart';
-
-Future<DataModel> fetchData(http.Client client) async {
-  final response = await client
-      .get(Uri.parse('https://emin-teov.github.io/api/json/data.json'));
-  final json = jsonDecode(response.body) as Map<String, dynamic>;
-
-  return DataModel.fromJson(json);
-}
-
-Future<String> getCountryIp() async => await IpAddress().getCountryCode();
+import 'package:video_list/models/category_model.dart';
 
 class HomePage extends StatefulWidget {
-  final String title;
+  final String query;
 
-  HomePage({super.key, required this.title});
+  HomePage({
+    super.key,
+    this.query = '',
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<DataModel> fetchData(http.Client client) async {
+    final response = await client
+        .get(Uri.parse('https://emin-teov.github.io/api/json/data.json'));
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    DataModel data = DataModel.fromJson(json);
+    for (var category_data in data.categories) {
+      CategoryModel category = CategoryModel.fromJson(category_data);
+      if (category.children.isEmpty) {
+        _category_query.add(category.number);
+      } else {
+        for (var category_sub_data in category.children) {
+          CategoryModel sub_category =
+              CategoryModel.fromJson(category_sub_data);
+          _category_query.add(sub_category.number);
+        }
+      }
+    }
+    _category_count = _category_query.length;
+    return data;
+  }
+
+  Future<String> getCountryIp() async {
+    String code = await IpAddress().getCountryCode();
+    _country_query = {code};
+    return code;
+  }
+
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
+  Set<String> _country_query = {};
+  Set<double> _category_query = {};
+  late int _category_count;
   int _select_page_index = 0;
 
-  void selectPage(int index) {
+  void _select_page(int index) {
     setState(() {
       _select_page_index = index;
     });
@@ -50,10 +74,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     Connectivity()
-      .onConnectivityChanged
-      .listen((ConnectivityResult result) => setState(() {
-            _connectivityResult = result;
-          }));
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) => setState(() {
+              _connectivityResult = result;
+            }));
   }
 
   @override
@@ -67,8 +91,9 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return HasError(
-                title: widget.title,
-                no_internet: _connectivityResult == ConnectivityResult.none);
+              title: 'JobTube',
+              no_internet: _connectivityResult == ConnectivityResult.none,
+            );
           } else if (snapshot.hasData) {
             List _pages = [
               HomeList(
@@ -76,6 +101,8 @@ class _HomePageState extends State<HomePage> {
                 offers: snapshot.data![1].offers,
                 freelancers: snapshot.data![1].freelancers,
                 talents: snapshot.data![1].talents,
+                country_query: _country_query,
+                category_query: _category_query,
               ),
               Profile(),
               Settings()
@@ -84,27 +111,26 @@ class _HomePageState extends State<HomePage> {
               appBar: AppBar(
                 centerTitle: true,
                 backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                title: GetTextField(
-                  text: widget.title,
-                  light: true
-                ),
+                title: GetTextField(text: 'JobTube', light: true),
               ),
               drawer: Drawer(
                 backgroundColor: Colors.blueAccent,
                 child: _select_page_index == 0
-                ? TypeTab(
-                    categories: snapshot.data![1].categories,
-                    countries: snapshot.data![1].countries,
-                    country_code: snapshot.data![0],
-                  )
-                : _select_page_index == 1
-                  ? ProfileTab()
-                  : SettingTab(),
+                    ? TypeTab(
+                        categories: snapshot.data![1].categories,
+                        countries: snapshot.data![1].countries,
+                        country_codes: _country_query,
+                        category_codes: _category_query,
+                        category_count: _category_count,
+                      )
+                    : _select_page_index == 1
+                        ? ProfileTab()
+                        : SettingTab(),
               ),
               body: _pages[_select_page_index],
               bottomNavigationBar: BottomNavigationBar(
                 currentIndex: _select_page_index,
-                onTap: selectPage,
+                onTap: _select_page,
                 items: const [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),

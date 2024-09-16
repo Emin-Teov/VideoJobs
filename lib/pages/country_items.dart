@@ -5,13 +5,13 @@ import 'package:video_list/pages/country_item.dart';
 import 'package:video_list/pages/get_text_field.dart';
 
 class CountryItems extends StatefulWidget {
+  final Set<String> codes;
   final List<CountryModel> items;
-  final String code;
 
   const CountryItems({
     super.key,
+    required this.codes,
     required this.items,
-    required this.code,
   });
 
   @override
@@ -20,20 +20,12 @@ class CountryItems extends StatefulWidget {
 
 class _CountryItemsState extends State<CountryItems> {
   late Future<List<CountryModel>> futureCountries;
-  late List<bool> _set_items;
 
-  @override
-  void initState() {
-    super.initState();
-    _set_items = List.generate(
-      widget.items.length,
-      (index) => (widget.items[index].code == widget.code) ? true : false
-    );
-  }
-
-  void _set_countries(int index) {
+  void _set_countries(String code) {
     setState(() {
-      _set_items[index] = !_set_items[index];
+      widget.codes.contains(code)
+        ? widget.codes.remove(code)
+        : widget.codes.add(code);
     });
   }
 
@@ -51,13 +43,21 @@ class _CountryItemsState extends State<CountryItems> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Checkbox(
-                      value: !_set_items.contains(false),
-                      onChanged: (value) => {
-                            setState(() {
-                              _set_items = List.filled(widget.items.length,
-                                  _set_items.contains(false) ? true : false);
-                            }),
-                          }),
+                    value: widget.codes.length == widget.items.length,
+                    onChanged: (value) => {
+                      setState(() {
+                        if (widget.codes.length == widget.items.length) {
+                          widget.codes.clear();
+                        } else {
+                          for (CountryModel item in widget.items) {
+                            !widget.codes.contains(item.code)
+                              ? widget.codes.add(item.code)
+                              : null;
+                          }
+                        }
+                      }),
+                    }
+                  ),
                 ],
               ),
               Expanded(
@@ -74,9 +74,11 @@ class _CountryItemsState extends State<CountryItems> {
                   return Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: CountryItem(
+                      id: widget.items[index].id,
                       title: widget.items[index].title,
-                      value: _set_items[index],
-                      onBoxChanged: () => _set_countries(index),
+                      value: widget.codes.contains(widget.items[index].code),
+                      onBoxChanged: () =>
+                        _set_countries(widget.items[index].code),
                     ),
                   );
                 }),

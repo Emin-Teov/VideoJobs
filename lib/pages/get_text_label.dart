@@ -4,12 +4,14 @@ class GetTextLabel extends StatefulWidget {
   final String head;
   final String value;
   final bool light;
+  final bool small;
 
   const GetTextLabel({
     super.key,
     required this.head,
     required this.value,
     this.light = false,
+    this.small = false,
   });
 
   @override
@@ -23,19 +25,23 @@ class _GetTextLabelState extends State<GetTextLabel> {
       TextSpan(
         text: '${widget.head}: ',
         style: TextStyle(
-          fontSize: 18,
+          fontSize: widget.small ? 12 : 18,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.italic,
-          color: widget.light? Colors.white70 : Theme.of(context).textTheme.displayLarge?.color,
+          color: widget.light
+              ? Colors.white70
+              : Theme.of(context).textTheme.displayLarge?.color,
         ),
         children: <TextSpan>[
           TextSpan(
             text: widget.value,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: widget.small ? 14 : 20,
               fontWeight: FontWeight.w500,
               fontStyle: FontStyle.normal,
-              color: widget.light ? Colors.white70 : Theme.of(context).textTheme.displayLarge?.color,
+              color: widget.light
+                  ? Colors.white70
+                  : Theme.of(context).textTheme.displayLarge?.color,
             ),
           ),
         ],

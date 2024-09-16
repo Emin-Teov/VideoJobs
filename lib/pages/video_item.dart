@@ -69,13 +69,7 @@ class _VideoItemState extends State<VideoItem> {
                   Expanded(
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
-                      child: Text(
-                        widget.description,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      )
+                      child: GetTextField(text: widget.description, largeSize: false,),
                     ),
                   )
                 ],

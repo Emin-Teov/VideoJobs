@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'JobTube',
       theme: Provider.of<ThemeProvider>(context).currentTheme,
-      home: HomePage(title: 'JobTube'),
+      home: HomePage(),
     );
   }
 }

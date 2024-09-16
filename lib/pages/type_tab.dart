@@ -27,13 +27,17 @@ List<CountryModel> parseCountries(List<dynamic> responseBody) {
 class TypeTab extends StatefulWidget {
   final List categories;
   final List countries;
-  final String country_code;
+  final Set<String> country_codes;
+  final Set<double> category_codes;
+  final int category_count;
 
   const TypeTab({
     super.key,
     required this.categories,
     required this.countries,
-    required this.country_code
+    required this.country_codes,
+    required this.category_codes,
+    required this.category_count,
   });
 
   @override
@@ -77,15 +81,20 @@ class _TypeTabState extends State<TypeTab> {
                 child: Container(
                   alignment: Alignment.center,
                   width: size.width,
-                  height: MediaQuery.of(context).orientation == Orientation.portrait ? size.height * 0.7 : size.height / 2,
+                  height: MediaQuery.of(context).orientation ==
+                          Orientation.portrait
+                      ? size.height * 0.7
+                      : size.height / 2,
                   child: category
-                  ? CategoryItems(
-                      items: categories,
-                    )
-                  : CountryItems(
-                      items: countries,
-                      code: widget.country_code,
-                    ),
+                      ? CategoryItems(
+                          count: widget.category_count,
+                          codes: widget.category_codes,
+                          items: categories,
+                        )
+                      : CountryItems(
+                          codes: widget.country_codes,
+                          items: countries,
+                        ),
                 ),
               ),
               SizedBox.shrink(),
