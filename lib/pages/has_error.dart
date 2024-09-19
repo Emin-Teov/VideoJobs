@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:video_list/pages/get_text_field.dart';
+import '/pages/get_text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HasError extends StatelessWidget {
-  final String title;
   final bool no_internet;
 
   const HasError({
     super.key,
-    required this.title,
-    required this.no_internet,
+    this.no_internet = false,
   });
 
   @override
@@ -17,7 +16,7 @@ class HasError extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: GetTextField(text: title, light: true),
+        title: GetTextField(text: 'JobTube', light: true),
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: null,
@@ -28,7 +27,8 @@ class HasError extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(no_internet ? Icons.signal_wifi_off_outlined : Icons.error),
-            GetTextField(text: no_internet ? 'No interner' : 'An error has occurred!'),
+            GetTextField(
+                text: no_internet ? AppLocalizations.of(context).no_internet : AppLocalizations.of(context).error),
           ],
         ),
       ),

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:video_list/models/category_model.dart';
-import 'package:video_list/pages/category_item.dart';
-import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/sub_category_items.dart';
+import '/models/category_model.dart';
+import '/pages/category_item.dart';
+import '/pages/get_text_field.dart';
+import '/pages/sub_category_items.dart';
 
 class CategoryItems extends StatefulWidget {
-  final int count;
   final Set<double> codes;
   final List<CategoryModel> items;
 
   const CategoryItems({
     super.key,
-    required this.count,
     required this.codes,
     required this.items,
   });
@@ -22,9 +21,18 @@ class CategoryItems extends StatefulWidget {
 }
 
 class _CategoryItemsState extends State<CategoryItems> {
+  late int count;
+
+  @override
+  void initState() {
+    super.initState();
+
+    count = widget.codes.length;
+  }
+
   void _set_categories() {
     setState(() {
-      if (widget.codes.length == widget.count) {
+      if (widget.codes.length == count) {
         widget.codes.clear();
       } else {
         for (CategoryModel category in widget.items) {
@@ -32,7 +40,8 @@ class _CategoryItemsState extends State<CategoryItems> {
             widget.codes.add(category.number);
           } else {
             for (var category_sub_data in category.children) {
-              CategoryModel sub_category = CategoryModel.fromJson(category_sub_data);
+              CategoryModel sub_category =
+                  CategoryModel.fromJson(category_sub_data);
               widget.codes.add(sub_category.number);
             }
           }
@@ -46,6 +55,23 @@ class _CategoryItemsState extends State<CategoryItems> {
       widget.codes.contains(index)
           ? widget.codes.remove(index)
           : widget.codes.add(index);
+    });
+  }
+
+  bool _sub_categories(int number, int length) {
+    int result = 0;
+    widget.codes.forEach((e) {
+      if (e.toInt() == number) result++;
+    });
+    return result == length;
+  }
+
+  void _set_sub_categories(double number, List<CategoryModel> data) {
+    setState(() {
+      bool remove = _sub_categories(number.toInt(), data.length);
+      for (CategoryModel sub_category in data) remove
+          ? widget.codes.remove(sub_category.number)
+          : widget.codes.add(sub_category.number);
     });
   }
 
@@ -63,42 +89,49 @@ class _CategoryItemsState extends State<CategoryItems> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Checkbox(
-                    value: widget.codes.length == widget.count,
+                    value: widget.codes.length == count,
                     onChanged: (value) => _set_categories(),
                   ),
                 ],
               ),
               Expanded(
                 child: SizedBox(
-                  child: GetTextField(text: 'All'),
+                  child: GetTextField(text: AppLocalizations.of(context).all),
                 ),
               ),
             ],
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: widget.items.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
-                  child: widget.items[index].children.isEmpty
-                      ? CategoryItem(
-                          index: widget.items[index].index,
-                          title: widget.items[index].title,
-                          value: widget.codes.contains(widget.items[index].number),
-                          onBoxChanged: () => _set_category(widget.items[index].number),
-                        )
-                      : SubCategoryItems(
-                          index: widget.items[index].index,
-                          title: widget.items[index].title,
-                          number: widget.items[index].number,
-                          onBoxChanged: _set_category,
-                          codes: widget.codes,
-                          data: widget.items[index].children,
-                        ),
-                );
-              }
-            ),
+                itemCount: widget.items.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: widget.items[index].children.isEmpty
+                        ? CategoryItem(
+                            index: widget.items[index].index,
+                            title: AppLocalizations.of(context)
+                                .categories(widget.items[index].code),
+                            value: widget.codes
+                                .contains(widget.items[index].number),
+                            onBoxChanged: () =>
+                                _set_category(widget.items[index].number),
+                          )
+                        : SubCategoryItems(
+                            index: widget.items[index].index,
+                            title: AppLocalizations.of(context)
+                                .categories(widget.items[index].code),
+                            number: widget.items[index].number,
+                            value: _sub_categories(
+                                widget.items[index].number.toInt(),
+                                widget.items[index].children.length),
+                            onBoxesChanged: _set_sub_categories,
+                            onBoxChanged: _set_category,
+                            codes: widget.codes,
+                            data: widget.items[index].children,
+                          ),
+                  );
+                }),
           ),
         ],
       ),

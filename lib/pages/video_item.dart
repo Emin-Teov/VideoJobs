@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:video_list/pages/cv_resume.dart';
-import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/get_text_label.dart';
+import '/pages/cv_resume.dart';
+import '/pages/get_text_field.dart';
+import '/pages/get_text_label.dart';
 
 class VideoItem extends StatefulWidget {
   final int id;
@@ -44,41 +45,44 @@ class _VideoItemState extends State<VideoItem> {
         builder: (context) {
           return AlertDialog(
             backgroundColor: widget.index == 1
-            ? Theme.of(context).dialogBackgroundColor
-            : Theme.of(context).colorScheme.inversePrimary,
+                ? Theme.of(context).dialogBackgroundColor
+                : Theme.of(context).colorScheme.inversePrimary,
             content: widget.index == 1
-            ? Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                ? Column(
                     children: <Widget>[
-                      IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(Icons.close),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            icon: Icon(Icons.close),
+                          ),
+                        ],
                       ),
+                      Center(
+                        child: GetTextField(
+                          text: '${AppLocalizations.of(context).description}:',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: GetTextField(
+                            text: widget.description,
+                            largeSize: false,
+                          ),
+                        ),
+                      )
                     ],
-                  ),
-                  Center(
-                    child: GetTextField(
-                      text: 'Description:',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: GetTextField(text: widget.description, largeSize: false,),
-                    ),
                   )
-                ],
-              )
-            : CVResume(
-                id: widget.id,
-                user: widget.user,
-                index: widget.index,
-              ),
+                : CVResume(
+                    id: widget.id,
+                    user: widget.user,
+                    index: widget.index,
+                  ),
           );
         });
   }
@@ -91,7 +95,8 @@ class _VideoItemState extends State<VideoItem> {
 
   @override
   void initState() {
-    videoController = VideoPlayerController.networkUrl(Uri.parse('https://emin-teov.github.io/api/video/${video_url[widget.index]}_${widget.id}.mp4'))
+    videoController = VideoPlayerController.networkUrl(Uri.parse(
+        'https://emin-teov.github.io/api/video/${video_url[widget.index]}_${widget.id}.mp4'))
       ..initialize().then((_) {
         videoController.play();
         videoController.setLooping(true);
@@ -112,8 +117,8 @@ class _VideoItemState extends State<VideoItem> {
         children: <Widget>[
           VideoPlayer(videoController),
           VideoProgressIndicator(
-            videoController, 
-            allowScrubbing: true, 
+            videoController,
+            allowScrubbing: true,
             colors: VideoProgressColors(
               playedColor: Colors.redAccent,
               bufferedColor: Colors.white70,
@@ -136,18 +141,18 @@ class _VideoItemState extends State<VideoItem> {
                       errorBuilder: (BuildContext context, Object exception,
                           StackTrace? stackTrace) {
                         return widget.index == 1
-                          ? const ImageIcon(
-                              AssetImage('assets/icons/ceo.png'),
-                              color: Colors.amberAccent,
-                              size: 36,
-                            )
-                          : Icon(
-                               widget.index == 3
-                                ? Icons.person_search
-                                : Icons.person,
-                              size: 50,
-                              color: Colors.blueGrey,
-                            );
+                            ? const ImageIcon(
+                                AssetImage('assets/icons/ceo.png'),
+                                color: Colors.amberAccent,
+                                size: 36,
+                              )
+                            : Icon(
+                                widget.index == 3
+                                    ? Icons.person_search
+                                    : Icons.person,
+                                size: 50,
+                                color: Colors.blueGrey,
+                              );
                       },
                     ),
                     Expanded(
@@ -170,22 +175,23 @@ class _VideoItemState extends State<VideoItem> {
                           ),
                         ),
                         widget.index == 1
-                          ? IconButton(
-                              onPressed: setDialog,
-                              icon: Icon(
-                                Icons.attach_file,
-                                size: 36,
-                                color: Colors.amberAccent,
+                            ? IconButton(
+                                onPressed: setDialog,
+                                icon: Icon(
+                                  Icons.attach_file,
+                                  size: 36,
+                                  color: Colors.amberAccent,
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: setDialog,
+                                child: ImageIcon(
+                                  AssetImage(
+                                      "assets/icons/${widget.index == 3 ? 'talent' : 'cv'}.png"),
+                                  color: Colors.amberAccent,
+                                  size: 36,
+                                ),
                               ),
-                            )
-                          : GestureDetector(
-                              onTap: setDialog,
-                              child: ImageIcon(
-                                AssetImage("assets/icons/${widget.index == 3 ? 'talent' : 'cv'}.png"),
-                                color: Colors.amberAccent,
-                                size: 36,
-                              ),
-                            ),
                       ],
                     ),
                   ],

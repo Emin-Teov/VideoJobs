@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:public_ip_address/public_ip_address.dart';
+import 'package:video_list/models/country_model.dart';
 
-import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/home_list.dart';
-import 'package:video_list/pages/has_error.dart';
-import 'package:video_list/pages/profile.dart';
-import 'package:video_list/pages/profile_tab.dart';
-import 'package:video_list/pages/setting_tab.dart';
-import 'package:video_list/pages/settings.dart';
-import 'package:video_list/pages/type_tab.dart';
-import 'package:video_list/models/data_model.dart';
-import 'package:video_list/models/category_model.dart';
+import '/pages/get_text_field.dart';
+import '/pages/home_list.dart';
+import '/pages/has_error.dart';
+import '/pages/profile.dart';
+import '/pages/profile_tab.dart';
+import '/pages/setting_tab.dart';
+import '/pages/settings.dart';
+import '/pages/type_tab.dart';
+import '/models/data_model.dart';
+import '/models/category_model.dart';
 
 class HomePage extends StatefulWidget {
   final String query;
@@ -35,8 +36,10 @@ class _HomePageState extends State<HomePage> {
         .get(Uri.parse('https://emin-teov.github.io/api/json/data.json'));
     final json = jsonDecode(response.body) as Map<String, dynamic>;
     DataModel data = DataModel.fromJson(json);
+    _categories = [];
     for (var category_data in data.categories) {
       CategoryModel category = CategoryModel.fromJson(category_data);
+      _categories.add(category);
       if (category.children.isEmpty) {
         _category_query.add(category.number);
       } else {
@@ -47,21 +50,23 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }
-    _category_count = _category_query.length;
+    String code = await IpAddress().getCountryCode();
+    _countries = [];
+    data.countries.forEach((e) {
+      CountryModel country = CountryModel.fromJson(e);
+      _countries.add(country);
+      if (country.code == code)
+        _country_query = {country.code};
+    });
     return data;
   }
 
-  Future<String> getCountryIp() async {
-    String code = await IpAddress().getCountryCode();
-    _country_query = {code};
-    return code;
-  }
-
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
-  Set<String> _country_query = {};
-  Set<double> _category_query = {};
-  late int _category_count;
   int _select_page_index = 0;
+  Set<double> _category_query = {};
+  Set<String> _country_query = {};
+  late List<CategoryModel> _categories;
+  late List<CountryModel> _countries;
 
   void _select_page(int index) {
     setState(() {
@@ -83,24 +88,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List>(
-        future: Future.wait([
-          getCountryIp(),
-          fetchData(http.Client()),
-        ]),
+      body: FutureBuilder(
+        future: fetchData(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return HasError(
-              title: 'JobTube',
               no_internet: _connectivityResult == ConnectivityResult.none,
             );
           } else if (snapshot.hasData) {
             List _pages = [
               HomeList(
-                job_seekers: snapshot.data![1].job_seekers,
-                offers: snapshot.data![1].offers,
-                freelancers: snapshot.data![1].freelancers,
-                talents: snapshot.data![1].talents,
+                job_seekers: snapshot.data!.job_seekers,
+                offers: snapshot.data!.offers,
+                freelancers: snapshot.data!.freelancers,
+                talents: snapshot.data!.talents,
                 country_query: _country_query,
                 category_query: _category_query,
               ),
@@ -117,11 +118,10 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.blueAccent,
                 child: _select_page_index == 0
                     ? TypeTab(
-                        categories: snapshot.data![1].categories,
-                        countries: snapshot.data![1].countries,
+                        categories: _categories,
+                        countries: _countries,
                         country_codes: _country_query,
                         category_codes: _category_query,
-                        category_count: _category_count,
                       )
                     : _select_page_index == 1
                         ? ProfileTab()

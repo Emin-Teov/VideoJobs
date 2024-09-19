@@ -1,53 +1,37 @@
 import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
+
   ThemeData? currentTheme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.blueAccent,
-        brightness: Brightness.light,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.blueAccent,
+      brightness: Brightness.light,
+    ),
+    textTheme: TextTheme(
+      displayLarge: TextStyle(
+        fontSize: 72,
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.italic,
+        color: Colors.black87,
       ),
-      textTheme: TextTheme(
-        displayLarge: const TextStyle(
-          fontSize: 72,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic,
-          color: Colors.black87,
-        ),
-      ),
-      useMaterial3: true,
-    );
+    ),
+    useMaterial3: true,
+  );
 
-  setLightMode() {
+  setStyle(bool light) {
     currentTheme = ThemeData(
       colorScheme: ColorScheme.fromSeed(
         seedColor: Colors.blueAccent,
-        brightness: Brightness.light,
+        brightness: light ? Brightness.light : Brightness.dark,
       ),
       textTheme: TextTheme(
-        displayLarge: const TextStyle(
+        displayLarge: TextStyle(
           fontSize: 72,
           fontWeight: FontWeight.bold,
           fontStyle: FontStyle.italic,
-          color: Colors.black87,
-        ),
-      ),
-      useMaterial3: true,
-    );
-    notifyListeners();
-  }
-
-  setDarkmode() {
-    currentTheme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.blueAccent,
-        brightness: Brightness.dark,
-      ),
-      textTheme: TextTheme(
-        displayLarge: const TextStyle(
-          fontSize: 72,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic,
-          color: Colors.white70,
+          color: light
+            ? Colors.black87
+            : Colors.white70,
         ),
       ),
       useMaterial3: true,

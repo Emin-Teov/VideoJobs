@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/home_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '/pages/get_text_field.dart';
+import '/pages/home_page.dart';
 
 class SearchField extends StatefulWidget {
   final Set<String> country_query;
@@ -27,71 +29,69 @@ class _SearchFieldState extends State<SearchField> {
 
   void setDialog() {
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(Icons.close),
-                  ),
-                ],
-              ),
-              Center(
-                child: GetTextField(
-                  text: 'Warning',
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(Icons.close),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        widget.category_query.isEmpty
-                            ? ListTile(
-                                title: GetTextField(
-                                  text:
-                                      'At least one category must be selected.',
-                                  largeSize: false,
-                                ),
-                                leading: Icon(
-                                  Icons.notifications,
-                                  color: Colors.red,
-                                  size: 14,
-                                ),
-                              )
-                            : SizedBox(),
-                        widget.country_query.isEmpty
-                            ? ListTile(
-                                title: GetTextField(
-                                  text:
-                                      'At least one country must be selected.',
-                                  largeSize: false,
-                                ),
-                                leading: Icon(
-                                  Icons.notifications,
-                                  color: Colors.red,
-                                  size: 14,
-                                ),
-                              )
-                            : SizedBox(),
-                      ],
-                    )),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+                Center(
+                  child: GetTextField(
+                    text: AppLocalizations.of(context).warning,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          widget.category_query.isEmpty
+                              ? ListTile(
+                                  title: GetTextField(
+                                    text:
+                                        AppLocalizations.of(context).warning_category,
+                                    largeSize: false,
+                                  ),
+                                  leading: Icon(
+                                    Icons.notifications,
+                                    color: Colors.red,
+                                    size: 14,
+                                  ),
+                                )
+                              : SizedBox(),
+                          widget.country_query.isEmpty
+                              ? ListTile(
+                                  title: GetTextField(
+                                    text: AppLocalizations.of(context).warning_country,
+                                    largeSize: false,
+                                  ),
+                                  leading: Icon(
+                                    Icons.notifications,
+                                    color: Colors.red,
+                                    size: 14,
+                                  ),
+                                )
+                              : SizedBox(),
+                        ],
+                      )),
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   @override
@@ -103,7 +103,8 @@ class _SearchFieldState extends State<SearchField> {
         hintText: "Search",
         contentPadding: EdgeInsets.all(12),
         icon: IconButton(
-          onPressed: () => widget.category_query.isNotEmpty && widget.country_query.isNotEmpty
+          onPressed: () => widget.category_query.isNotEmpty &&
+                  widget.country_query.isNotEmpty
               ? Navigator.push(
                   context,
                   MaterialPageRoute(

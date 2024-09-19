@@ -1,35 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_elevated_button/button_style.dart';
 import 'package:gradient_elevated_button/gradient_elevated_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:video_list/models/category_model.dart';
-import 'package:video_list/models/country_model.dart';
-import 'package:video_list/pages/category_items.dart';
-import 'package:video_list/pages/country_items.dart';
-import 'package:video_list/pages/get_text_field.dart';
-
-List<CategoryModel> parseCategories(List<dynamic> responseBody) {
-  List<CategoryModel> parsed = [];
-  for (dynamic body in responseBody) {
-    parsed.add(CategoryModel.fromJson(body));
-  }
-  return parsed;
-}
-
-List<CountryModel> parseCountries(List<dynamic> responseBody) {
-  List<CountryModel> parsed = [];
-  for (dynamic body in responseBody) {
-    parsed.add(CountryModel.fromJson(body));
-  }
-  return parsed;
-}
+import '/models/category_model.dart';
+import '/models/country_model.dart';
+import '/pages/category_items.dart';
+import '/pages/country_items.dart';
+import '/pages/get_text_field.dart';
 
 class TypeTab extends StatefulWidget {
-  final List categories;
-  final List countries;
+  final List<CategoryModel> categories;
+  final List<CountryModel> countries;
   final Set<String> country_codes;
   final Set<double> category_codes;
-  final int category_count;
 
   const TypeTab({
     super.key,
@@ -37,7 +21,6 @@ class TypeTab extends StatefulWidget {
     required this.countries,
     required this.country_codes,
     required this.category_codes,
-    required this.category_count,
   });
 
   @override
@@ -45,18 +28,6 @@ class TypeTab extends StatefulWidget {
 }
 
 class _TypeTabState extends State<TypeTab> {
-  bool get_remote_context = false;
-  late List<CategoryModel> categories;
-  late List<CountryModel> countries;
-
-  @override
-  void initState() {
-    super.initState();
-
-    categories = parseCategories(widget.categories);
-    countries = parseCountries(widget.countries);
-  }
-
   void setDialog(bool category) {
     showDialog(
       context: context,
@@ -87,13 +58,12 @@ class _TypeTabState extends State<TypeTab> {
                       : size.height / 2,
                   child: category
                       ? CategoryItems(
-                          count: widget.category_count,
                           codes: widget.category_codes,
-                          items: categories,
+                          items: widget.categories,
                         )
                       : CountryItems(
                           codes: widget.country_codes,
-                          items: countries,
+                          items: widget.countries,
                         ),
                 ),
               ),
@@ -112,7 +82,7 @@ class _TypeTabState extends State<TypeTab> {
         DrawerHeader(
           padding: EdgeInsets.only(top: 100.0),
           child: GetTextField(
-            text: "Set Job types",
+            text: AppLocalizations.of(context).search,
             light: true,
           ),
         ),
@@ -133,7 +103,7 @@ class _TypeTabState extends State<TypeTab> {
                 ),
               ),
               child: GetTextField(
-                text: "Job Categories",
+                text: AppLocalizations.of(context).select_type,
                 light: true,
               ),
             ),
@@ -156,7 +126,7 @@ class _TypeTabState extends State<TypeTab> {
                 ),
               ),
               child: GetTextField(
-                text: "Countries",
+                text: AppLocalizations.of(context).select_country,
                 light: true,
               ),
             ),

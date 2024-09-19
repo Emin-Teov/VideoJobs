@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:video_list/pages/get_text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '/pages/get_text_field.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -7,12 +9,14 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.person),
-            GetTextField(text: "Guest",),
+            GetTextField(
+              text: AppLocalizations.of(context).guest,
+            ),
           ],
         ),
       ),

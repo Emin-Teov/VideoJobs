@@ -3,6 +3,7 @@ class CategoryModel {
   final int index;
   final double number;
   final String title;
+  final String code;
   final List children;
 
   const CategoryModel({
@@ -10,6 +11,7 @@ class CategoryModel {
     required this.index,
     required this.number,
     required this.title,
+    required this.code,
     required this.children,
   });
 
@@ -19,7 +21,8 @@ class CategoryModel {
       index: json['index'] as int,
       number: json['number'] as double,
       title: json['title'] as String,
-      children: json['children'] as List,
+      code: json['code'] as String,
+      children: json['children'] as List, 
     );
   }
 }

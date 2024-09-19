@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get_thumbnail_video/index.dart';
 import 'package:get_thumbnail_video/video_thumbnail.dart';
 
-import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/get_text_label.dart';
-import 'package:video_list/pages/video_items.dart';
+import '/pages/has_error.dart';
+import '/pages/get_text_label.dart';
+import '/pages/video_items.dart';
 
 Future<Uint8List> getThumbnailImage(String url) async {
   final thumbnail = await VideoThumbnail.thumbnailData(
-    video: 'https://emin-teov.github.io/api/video/${url}.mp4',
-    imageFormat: ImageFormat.PNG
-  );
+      video: 'https://emin-teov.github.io/api/video/${url}.mp4',
+      imageFormat: ImageFormat.PNG);
   return thumbnail;
 }
 
@@ -54,15 +53,7 @@ class _SharedItemState extends State<SharedItem> {
         future: thumbnail,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.error),
-                  GetTextField(text: "An error has occurred!"),
-                ],
-              ),
-            );
+            return HasError();
           } else if (snapshot.hasData) {
             return GestureDetector(
               onTap: () => Navigator.push(

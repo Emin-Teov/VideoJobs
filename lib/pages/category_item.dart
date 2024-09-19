@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_list/pages/get_text_field.dart';
+import '/pages/get_text_field.dart';
 
 // typedef OnChangeFunc = void Function(int index);
 
@@ -35,18 +35,17 @@ class _CategoryItemState extends State<CategoryItem> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Checkbox(
-                  value: widget.value,
-                  onChanged: (value) => {
-                    setState(() {
-                      widget.onBoxChanged();
-                    }),
-                  }
-                )
+                    value: widget.value,
+                    onChanged: (value) => {
+                          setState(() {
+                            widget.onBoxChanged();
+                          }),
+                        })
               ],
             ),
             Expanded(
               child: SizedBox(
-                child: GetTextField(text: widget.title),
+                child: GetTextField(text: widget.title, largeSize: false,),
               ),
             ),
           ],

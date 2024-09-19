@@ -1,0 +1,134 @@
+{
+    "@@locale" : "en",
+
+    "search": "Select job types",
+    "@search": {
+        "description": "Hint of searcch field"
+    },
+
+    "select": "Select job types",
+    "@select": {
+        "description": "Tab of home page"
+    },
+
+    "select_type": "Job types",
+    "@select_type": {
+        "description": "Select job types"
+    },
+
+    "select_country": "Countries",
+    "@select_country": {
+        "description": "Select location"
+    },
+
+    "all": "All",
+    "@all": {
+        "description": "All items"
+    },
+
+    "job": "I need job",
+    "@job": {
+        "description": "Get job seekers"
+    },
+
+    "service": "Services",
+    "@service": {
+        "description": "Get services"
+    },
+
+    "talent": "I have talent",
+    "@talent": {
+        "description": "Get talent offers"
+    },
+
+    "offer": "Job offers",
+    "@offer": {
+        "description": "Get job offers"
+    },
+
+    "home": "Home",
+    "@home": {
+        "description": "Go to home page"
+    },
+
+    "profile": "Profile",
+    "@profile": {
+        "description": "Go to profile page"
+    },
+
+    "settings": "Settings",
+    "@settings": {
+        "description": "Go to settings page"
+    },
+
+    "style": "Set style",
+    "@style": {
+        "description": "Change style"
+    },
+
+    "description": "Description",
+    "@description": {
+        "description": "Job description"
+    },
+
+    "guest": "Guest",
+    "@guest": {
+        "description": "Default user"
+    },
+
+    "change": "Get {style, plural, =1{dark} other{light}} style",
+    "@change": {
+        "description": "Change style",
+        "placeholders": {
+            "style": {
+            "type": "num",
+            "format": "compact"
+            }
+        }
+    },
+
+    "categories": "{category, select, admin{Administration, business and management} financial{Financial services} loan{Loan officer} operative{Operative} branch{Branch Manager} external_control{External control} leasing{Leasing} problem_loans{Problem loans} financial_advisor{Financial Advisor} retail_customer{Retail and customer services} engineering{Engineering} computing{Computing and IT} web_development{Web development} mobile_development{Mobile development} network{Network} development{Development} help_desk{Help desk} it_security{IT security} system_administrator{System administrator} qa_tester{QA tester} head_it{Head of IT} marketing_advertising_print{Marketing and advertising, print and publishing} transport_distribution_logistics{Transport, distribution and logistics} driver{Driver} Warehouseman{Warehouseman} logistics{Logistics} courier{Courier} healthcare{Healthcare} doctor{Doctor} pharmacist{Pharmacist} nurse{Nurse} psychologist{Psychologist} dentist{Dentist} laboratory_assistant{Laboratory assistant} medicine_brother{Medicine brother} medical_representative{Medical representative} education_training{Education and training} legal_court{Legal and court services} facilities_property{Facilities and property services} design_arts_crafts{Design, arts and crafts} graphic_designer{Graphic designer} interior_designer{Interior designer} marketing_sales{Marketing and Sales} content_manager{Content manager} seller{Seller} sales_representative{Sales representative} smm{SMM} copywriter{copywriter} chef{Chef} service{Service} mechanic{Mechanic} technician{Technician} electricity{Electricity} tour_manager{Tour manager} protection{protection} locksmith{Locksmith} welder{Welder} carpenter{Carpenter} showman{Showman} musician{Musician} singer{Singer} dancer{Dancer} professional_model{Professional model} student{Student} other{{category}}}",
+    "@categories": {
+        "description": "Category title",
+        "placeholders": {
+            "category": {
+            "type": "String"
+            }
+        }
+    },
+
+    "countries": "{country, select, AZ{Azerbaijan} GE{Georgia} IR{Iran} KZ{Kazakhstan} KG{Kyrgyzstan} TR{Turkey} UZ{Uzbekistan} other{{country}}}",
+    "@countries": {
+        "description": "Country title",
+        "placeholders": {
+            "country": {
+            "type": "String"
+            }
+        }
+    },
+
+    "warning": "Warning",
+    "@warning": {
+        "description": "Header of warning message."
+    },
+
+    "warning_category": "At least one category must be selected.",
+    "@warning_category": {
+        "description": "Warning message about selected category"
+    },
+
+    "warning_country": "At least one country must be selected.",
+    "@warning_country": {
+        "description": "Warning message about selected country"
+    },
+
+    "no_internet": "No interner",
+    "@no_internet": {
+        "description": "No internet connection"
+    },
+
+    "error": "An error has occurred",
+    "@error": {
+        "description": "Could not get information from the network"
+    }
+}

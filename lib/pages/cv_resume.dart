@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:video_list/pages/get_text_field.dart';
+import '/pages/get_text_field.dart';
 
 class CVResume extends StatefulWidget {
   final int id;
@@ -24,14 +24,20 @@ class CVResume extends StatefulWidget {
 }
 
 class _CVResumeState extends State<CVResume> {
-  List<String> pdf_url = ['cv_resume', 'description', 'freelancer_resume', 'poster'];
+  List<String> pdf_url = [
+    'cv_resume',
+    'description',
+    'freelancer_resume',
+    'poster'
+  ];
 
   @override
   Widget build(BuildContext context) {
     String _title = widget.user.replaceAll(' ', '_');
 
     Future<void> loadPdf() async {
-      final String url = 'https://emin-teov.github.io/api/pdf/${pdf_url[widget.index]}-${widget.id}.pdf';
+      final String url =
+          'https://emin-teov.github.io/api/pdf/${pdf_url[widget.index]}-${widget.id}.pdf';
       final response = await http.get(Uri.parse(url));
       final bytes = response.bodyBytes;
       final Directory? _dir = await getDownloadsDirectory();
@@ -58,7 +64,8 @@ class _CVResumeState extends State<CVResume> {
         ],
       ),
       body: Container(
-        child: SfPdfViewer.network('https://emin-teov.github.io/api/pdf/${pdf_url[widget.index]}-${widget.id}.pdf'),
+        child: SfPdfViewer.network(
+            'https://emin-teov.github.io/api/pdf/${pdf_url[widget.index]}-${widget.id}.pdf'),
       ),
     );
   }

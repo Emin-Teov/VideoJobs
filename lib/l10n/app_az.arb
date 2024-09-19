@@ -1,0 +1,55 @@
+{
+    "@@locale" : "az",
+
+    "search": "İş növlərini seçin",
+    "select": "İş növlərini seçin",
+    "select_type": "İş növləri",
+    "select_country": "Ölkələr",
+    "all": "Hamısı",
+    "job": "işə ehtiyacım var",
+    "service": "Xidmətlər",
+    "talent": "Mənim istedadım var",
+    "offer": "İş təklifləri",
+    "home": "Ev",
+    "profile": "Profil",
+    "settings": "Parametrlər",
+    "style": "Stil təyin et",
+    "description": "Təsvir",
+    "guest": "Qonaq",
+
+    "change": "{style, plural, =1{Qaranlıq} other{İşıqlı}} stili seç",
+    "@change": {
+        "description": "Change style",
+        "placeholders": {
+            "style": {
+            "type": "num",
+            "format": "compact"
+            }
+        }
+    },
+
+    "categories": "{category, select, admin{İdarəetmə, biznes və idarəetmə} financial{Maliyyə xidmətləri} loan{Kredit mütəxəssisi} operative{Operativ} branch{Filial meneceri} external_control{Xarici nəzarət} leasing{Lizinq} problem_loans{Problemli kreditlər} financial_advisor{Financial Advisor} retail_customer{Pərakəndə və müştəri xidmətləri} engineering{Mühəndislik} computing{Hesablama və İT} web_development{Web development} mobile_development{Mobil development} network{Şəbəkə} development{Development} help_desk{Help desk} it_security{IT təhlükəsizlik} system_administrator{System administrator} qa_tester{QA tester} head_it{IT Qrup rəhbəri} marketing_advertising_print{Marketinq və reklam, çap və nəşriyyat} transport_distribution_logistics{Nəqliyyat, paylama və logistika} driver{Sürücü} Warehouseman{Anbardar} logistics{Logistika} courier{Kuryer} healthcare{Səhiyyə} doctor{Həkim} pharmacist{Əczaçı} nurse{Tibb bacısı} psychologist{Psixoloq} dentist{Diş həkimi} laboratory_assistant{Laborant} medicine_brother{Tibb qardaşı} medical_representative{Tibbi nümayəndə} education_training{Təhsil və təlim} legal_court{Hüquq və məhkəmə xidmətləri} facilities_property{Obyektlər və əmlak xidmətləri} design_arts_crafts{Dizayn və sənətkarlıq} graphic_designer{Qrafik dizayner} interior_designer{İnteryer dizayneri} marketing_sales{Marketinq və Satış} content_manager{Kontent meneceri} seller{Satıcı} sales_representative{Satış nümayəndəsi} smm{SMM} copywriter{Kopirayter} chef{Aşbaz} service{Xidmət} mechanic{Mexanik} technician{Texnik} electricity{Elektrik} tour_manager{Tur meneceri} protection{Mühafizəçi} locksmith{Çilingər} welder{Qaynaqçır} carpenter{Dülgər} showman{Şoumen} musician{Musiqiçi} singer{Singer} dancer{Rəqqas} professional_model{Peşəkar model} student{Tələbə} other{{category}}}",
+    "@categories": {
+        "description": "Category title",
+        "placeholders": {
+            "category": {
+            "type": "String"
+            }
+        }
+    },
+
+    "countries": "{country, select, AZ{Azərbaycan} GE{Gürcüstan} IR{İran} KZ{Qazaxstan} KG{Qırğızıstan} TR{Türkiyə} UZ{Özbəkistan} other{{country}}}",
+    "@countries": {
+        "placeholders": {
+            "country": {
+            "type": "String"
+            }
+        }
+    },
+
+    "warning": "Xəbərdarlıq",
+    "warning_category": "Ən azı bir kateqoriya seçilməlidir.",
+    "warning_country": "Ən azı bir ölkə seçilməlidir.",
+    "no_internet": "İnternet yoxdur",
+    "error": "Xəta baş verdi"
+}

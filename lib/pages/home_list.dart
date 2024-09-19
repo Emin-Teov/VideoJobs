@@ -1,14 +1,15 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:video_list/models/job_seeker_model.dart';
-import 'package:video_list/models/offer_model.dart';
-import 'package:video_list/models/freelancer_model.dart';
-import 'package:video_list/models/talent_model.dart';
-import 'package:video_list/pages/get_text_field.dart';
-import 'package:video_list/pages/search_field.dart';
-import 'package:video_list/pages/shared_items.dart';
+import '/models/job_seeker_model.dart';
+import '/models/offer_model.dart';
+import '/models/freelancer_model.dart';
+import '/models/talent_model.dart';
+import '/pages/get_text_field.dart';
+import '/pages/search_field.dart';
+import '/pages/shared_items.dart';
 
 List<JobSeekerModel> parseJobSeekers(List<dynamic> responseBody) {
   List<JobSeekerModel> parsed = [];
@@ -81,9 +82,8 @@ class _HomeListState extends State<HomeList> {
         SizedBox(
           width: 400,
           child: SearchField(
-            country_query: widget.country_query,
-            category_query: widget.category_query
-          ),
+              country_query: widget.country_query,
+              category_query: widget.category_query),
         ),
         SizedBox(
           height: 5,
@@ -93,7 +93,8 @@ class _HomeListState extends State<HomeList> {
           children: <Widget>[
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all<Color>(Colors.blueAccent),
+                backgroundColor:
+                    WidgetStateProperty.all<Color>(Colors.blueAccent),
               ),
               onPressed: () {
                 setState(() {
@@ -109,7 +110,7 @@ class _HomeListState extends State<HomeList> {
                     size: 18,
                   ),
                   GetTextField(
-                    text: _tab_index == 0 ? 'I need job' : '',
+                    text: _tab_index == 0 ? AppLocalizations.of(context).job : '',
                     light: true,
                     largeSize: false,
                   ),
@@ -135,7 +136,7 @@ class _HomeListState extends State<HomeList> {
                     size: 18,
                   ),
                   GetTextField(
-                    text: _tab_index == 1 ? 'Job offers' : '',
+                    text: _tab_index == 1 ? AppLocalizations.of(context).offer : '',
                     light: true,
                     largeSize: false,
                   ),
@@ -161,7 +162,7 @@ class _HomeListState extends State<HomeList> {
                     size: 18,
                   ),
                   GetTextField(
-                    text: _tab_index == 2 ? 'Services' : '',
+                    text: _tab_index == 2 ? AppLocalizations.of(context).service : '',
                     light: true,
                     largeSize: false,
                   ),
@@ -187,7 +188,7 @@ class _HomeListState extends State<HomeList> {
                     size: 18,
                   ),
                   GetTextField(
-                    text: _tab_index == 3 ? 'I have talent' : '',
+                    text: _tab_index == 3 ? AppLocalizations.of(context).talent : '',
                     light: true,
                     largeSize: false,
                   ),

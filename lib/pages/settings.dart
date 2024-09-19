@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:video_list/pages/get_text_field.dart';
+import '/pages/get_text_field.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -8,12 +9,14 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.settings),
-            GetTextField(text: "Settings",),
+            GetTextField(
+              text: AppLocalizations.of(context).settings,
+            ),
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_list/pages/get_text_field.dart';
+import '/pages/get_text_field.dart';
 
 class CountryItem extends StatefulWidget {
   final int id;
@@ -33,16 +33,16 @@ class _CountryItemState extends State<CountryItem> {
             Checkbox(
               value: widget.value,
               onChanged: (value) => {
-                setState(() {
-                  widget.onBoxChanged();
-                }),
+                  setState(() {
+                    widget.onBoxChanged();
+                  }),
               }
             ),
           ],
         ),
         Expanded(
           child: SizedBox(
-            child: GetTextField(text: widget.title),
+            child: GetTextField(text: widget.title, largeSize: false,),
           ),
         ),
       ],

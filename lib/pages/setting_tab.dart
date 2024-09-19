@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:video_list/themes/theme_provider.dart';
-import 'package:video_list/pages/get_text_field.dart';
+import '/themes/theme_provider.dart';
+import '/pages/get_text_field.dart';
 
 class SettingTab extends StatefulWidget {
   const SettingTab({super.key});
@@ -12,18 +13,18 @@ class SettingTab extends StatefulWidget {
 }
 
 class _SettingTabState extends State<SettingTab> {
-  bool _is_darkmode = false;
   bool _is_clicked_style_button = false;
 
   @override
   Widget build(BuildContext context) {
+    bool _is_darkmode  = Theme.of(context).brightness == Brightness.dark;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         DrawerHeader(
           padding: EdgeInsets.only(top: 100.0),
           child: GetTextField(
-            text: "Settings",
+            text: AppLocalizations.of(context).settings,
             light: true,
           ),
         ),
@@ -40,40 +41,49 @@ class _SettingTabState extends State<SettingTab> {
                   });
                 },
                 child: GetTextField(
-                    text: 'Set style',
-                    light: true),
+                    text: AppLocalizations.of(context).style, light: true),
               ),
             ),
           ],
         ),
         _is_clicked_style_button
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 24.0),
-                child: TextButton(
-                  onPressed: () {
-                    final themeProvider =
-                        Provider.of<ThemeProvider>(context, listen: false);
-                    setState(() {
-                      _is_darkmode = !_is_darkmode;
-                    });
-                    _is_darkmode
-                        ? themeProvider.setDarkmode()
-                        : themeProvider.setLightMode();
-                  },
-                  child: GetTextField(
-                    text: 'Get ${Theme.of(context).brightness == Brightness.light ? 'dark' : 'light'} style',
-                    largeSize: false,
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 24.0),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          Provider.of<ThemeProvider>(context, listen: false).setStyle(_is_darkmode);
+                        });
+                      },
+                      child: GetTextField(
+                        text: AppLocalizations.of(context).change(_is_darkmode ? 0 : 1),
+                        largeSize: false,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          )
-        : SizedBox.shrink(),
+                ],
+              )
+            : SizedBox.shrink(),
         Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                setState(() {});
+              },
+              child: GetTextField(
+                text: 'Set language',
+                light: true,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
