@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:public_ip_address/public_ip_address.dart';
-import 'package:video_list/models/country_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '/pages/get_text_field.dart';
 import '/pages/home_list.dart';
@@ -17,6 +17,7 @@ import '/pages/settings.dart';
 import '/pages/type_tab.dart';
 import '/models/data_model.dart';
 import '/models/category_model.dart';
+import '/models/country_model.dart';
 
 class HomePage extends StatefulWidget {
   final String query;
@@ -36,37 +37,37 @@ class _HomePageState extends State<HomePage> {
         .get(Uri.parse('https://emin-teov.github.io/api/json/data.json'));
     final json = jsonDecode(response.body) as Map<String, dynamic>;
     DataModel data = DataModel.fromJson(json);
-    _categories = [];
+    categories = [];
     for (var category_data in data.categories) {
       CategoryModel category = CategoryModel.fromJson(category_data);
-      _categories.add(category);
+      categories.add(category);
       if (category.children.isEmpty) {
-        _category_query.add(category.number);
+        categoryQuery.add(category.number);
       } else {
         for (var category_sub_data in category.children) {
           CategoryModel sub_category =
               CategoryModel.fromJson(category_sub_data);
-          _category_query.add(sub_category.number);
+          categoryQuery.add(sub_category.number);
         }
       }
     }
     String code = await IpAddress().getCountryCode();
-    _countries = [];
+    countries = [];
     data.countries.forEach((e) {
       CountryModel country = CountryModel.fromJson(e);
-      _countries.add(country);
+      countries.add(country);
       if (country.code == code)
-        _country_query = {country.code};
+        countryQuery = {country.code};
     });
     return data;
   }
 
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
   int _select_page_index = 0;
-  Set<double> _category_query = {};
-  Set<String> _country_query = {};
-  late List<CategoryModel> _categories;
-  late List<CountryModel> _countries;
+  Set<double> categoryQuery = {};
+  Set<String> countryQuery = {};
+  late List<CategoryModel> categories;
+  late List<CountryModel> countries;
 
   void _select_page(int index) {
     setState(() {
@@ -102,8 +103,8 @@ class _HomePageState extends State<HomePage> {
                 offers: snapshot.data!.offers,
                 freelancers: snapshot.data!.freelancers,
                 talents: snapshot.data!.talents,
-                country_query: _country_query,
-                category_query: _category_query,
+                country_query: countryQuery,
+                category_query: categoryQuery,
               ),
               Profile(),
               Settings()
@@ -118,10 +119,10 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.blueAccent,
                 child: _select_page_index == 0
                     ? TypeTab(
-                        categories: _categories,
-                        countries: _countries,
-                        country_codes: _country_query,
-                        category_codes: _category_query,
+                        categories: categories,
+                        countries: countries,
+                        country_codes: countryQuery,
+                        category_codes: categoryQuery,
                       )
                     : _select_page_index == 1
                         ? ProfileTab()
@@ -131,18 +132,18 @@ class _HomePageState extends State<HomePage> {
               bottomNavigationBar: BottomNavigationBar(
                 currentIndex: _select_page_index,
                 onTap: _select_page,
-                items: const [
+                items: [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
-                    label: 'Home',
+                    label: AppLocalizations.of(context).home,
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.person),
-                    label: 'Profile',
+                    label: AppLocalizations.of(context).profile,
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.settings),
-                    label: 'Settings',
+                    label: AppLocalizations.of(context).settings,
                   ),
                 ],
               ),

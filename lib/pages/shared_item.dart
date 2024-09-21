@@ -37,13 +37,13 @@ class SharedItem extends StatefulWidget {
 }
 
 class _SharedItemState extends State<SharedItem> {
-  List<String> url = ['job_seeker', 'job_offer', 'freelancer', 'talent'];
+  List<String> _url = ['job_seeker', 'job_offer', 'freelancer', 'talent'];
   late Future<Uint8List> thumbnail;
 
   @override
   void initState() {
     super.initState();
-    thumbnail = getThumbnailImage('${url[widget.index]}_${widget.id}');
+    thumbnail = getThumbnailImage('${_url[widget.index]}_${widget.id}');
   }
 
   @override

@@ -3,8 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'l10n/l10n.dart';
-import '/services/database_service.dart';
-import '/themes/theme_provider.dart';
+import 'settrings/settrings_provider.dart';
 import '/pages/home_page.dart';
 
 void main() async {
@@ -12,7 +11,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => ThemeProvider(),
+          create: (_) => SettringsProvider(),
         )
       ],
       child: MyApp(),
@@ -23,18 +22,16 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final DatabaseService _databaseService = DatabaseService.instance;
-
   @override
   Widget build(BuildContext context) {
-    _databaseService.deleteDatabase();
+    var _provider = Provider.of<SettringsProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'JobTube',
-      theme: Provider.of<ThemeProvider>(context).currentTheme,
+      theme: _provider.currentTheme,
       supportedLocales: L10n.all,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      locale: Locale('en'),
+      locale: Locale(_provider.language.toLowerCase()),
       home: HomePage(),
     );
   }

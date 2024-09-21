@@ -66,6 +66,11 @@
         "description": "Change style"
     },
 
+    "language": "Set language",
+    "@language": {
+        "description": "Change language"
+    },
+
     "description": "Description",
     "@description": {
         "description": "Job description"

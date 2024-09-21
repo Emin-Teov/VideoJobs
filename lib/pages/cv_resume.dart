@@ -24,7 +24,7 @@ class CVResume extends StatefulWidget {
 }
 
 class _CVResumeState extends State<CVResume> {
-  List<String> pdf_url = [
+  List<String> _pdf_url = [
     'cv_resume',
     'description',
     'freelancer_resume',
@@ -37,7 +37,7 @@ class _CVResumeState extends State<CVResume> {
 
     Future<void> loadPdf() async {
       final String url =
-          'https://emin-teov.github.io/api/pdf/${pdf_url[widget.index]}-${widget.id}.pdf';
+          'https://emin-teov.github.io/api/pdf/${_pdf_url[widget.index]}-${widget.id}.pdf';
       final response = await http.get(Uri.parse(url));
       final bytes = response.bodyBytes;
       final Directory? _dir = await getDownloadsDirectory();
@@ -65,7 +65,7 @@ class _CVResumeState extends State<CVResume> {
       ),
       body: Container(
         child: SfPdfViewer.network(
-            'https://emin-teov.github.io/api/pdf/${pdf_url[widget.index]}-${widget.id}.pdf'),
+            'https://emin-teov.github.io/api/pdf/${_pdf_url[widget.index]}-${widget.id}.pdf'),
       ),
     );
   }

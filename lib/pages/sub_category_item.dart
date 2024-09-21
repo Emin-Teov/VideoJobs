@@ -43,7 +43,7 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
           ),
           Expanded(
             child: SizedBox(
-              child: GetTextField(text: widget.title, largeSize: false,),
+              child: GetTextField(text: widget.title, smallSize: true,),
             ),
           ),
         ],

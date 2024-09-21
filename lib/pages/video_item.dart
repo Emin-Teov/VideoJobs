@@ -30,8 +30,8 @@ class VideoItem extends StatefulWidget {
 
 class _VideoItemState extends State<VideoItem> {
   bool _like_clicked = false;
-  List<String> video_url = ['job_seeker', 'job_offer', 'freelancer', 'talent'];
-  List<String> image_url = [
+  List<String> _video_url = ['job_seeker', 'job_offer', 'freelancer', 'talent'];
+  List<String> _image_url = [
     'profile/profile_image',
     'logo/photo_logo',
     'profile/freelancer_profile',
@@ -72,7 +72,7 @@ class _VideoItemState extends State<VideoItem> {
                           scrollDirection: Axis.vertical,
                           child: GetTextField(
                             text: widget.description,
-                            largeSize: false,
+                            smallSize: true,
                           ),
                         ),
                       )
@@ -96,7 +96,7 @@ class _VideoItemState extends State<VideoItem> {
   @override
   void initState() {
     videoController = VideoPlayerController.networkUrl(Uri.parse(
-        'https://emin-teov.github.io/api/video/${video_url[widget.index]}_${widget.id}.mp4'))
+        'https://emin-teov.github.io/api/video/${_video_url[widget.index]}_${widget.id}.mp4'))
       ..initialize().then((_) {
         videoController.play();
         videoController.setLooping(true);
@@ -137,7 +137,7 @@ class _VideoItemState extends State<VideoItem> {
                     Image.network(
                       width: 50,
                       height: 50,
-                      'https://emin-teov.github.io/api/${image_url[widget.index]}-${widget.index == 1 ? widget.employer_id : widget.id}.png',
+                      'https://emin-teov.github.io/api/${_image_url[widget.index]}-${widget.index == 1 ? widget.employer_id : widget.id}.png',
                       errorBuilder: (BuildContext context, Object exception,
                           StackTrace? stackTrace) {
                         return widget.index == 1

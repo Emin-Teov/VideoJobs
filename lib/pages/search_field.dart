@@ -61,9 +61,8 @@ class _SearchFieldState extends State<SearchField> {
                           widget.category_query.isEmpty
                               ? ListTile(
                                   title: GetTextField(
-                                    text:
-                                        AppLocalizations.of(context).warning_category,
-                                    largeSize: false,
+                                    text: AppLocalizations.of(context).warning_category,
+                                    smallSize: true,
                                   ),
                                   leading: Icon(
                                     Icons.notifications,
@@ -71,12 +70,12 @@ class _SearchFieldState extends State<SearchField> {
                                     size: 14,
                                   ),
                                 )
-                              : SizedBox(),
+                              : SizedBox.shrink(),
                           widget.country_query.isEmpty
                               ? ListTile(
                                   title: GetTextField(
                                     text: AppLocalizations.of(context).warning_country,
-                                    largeSize: false,
+                                    smallSize: true,
                                   ),
                                   leading: Icon(
                                     Icons.notifications,
@@ -84,7 +83,7 @@ class _SearchFieldState extends State<SearchField> {
                                     size: 14,
                                   ),
                                 )
-                              : SizedBox(),
+                              : SizedBox.shrink(),
                         ],
                       )),
                 ),
@@ -103,8 +102,7 @@ class _SearchFieldState extends State<SearchField> {
         hintText: "Search",
         contentPadding: EdgeInsets.all(12),
         icon: IconButton(
-          onPressed: () => widget.category_query.isNotEmpty &&
-                  widget.country_query.isNotEmpty
+          onPressed: () => widget.category_query.isNotEmpty && widget.country_query.isNotEmpty
               ? Navigator.push(
                   context,
                   MaterialPageRoute(

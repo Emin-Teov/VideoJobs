@@ -40,11 +40,11 @@ class SubCategoryItems extends StatefulWidget {
 }
 
 class _SubCategoryItemsState extends State<SubCategoryItems> {
-  late List<CategoryModel> _sub_categories;
+  late List<CategoryModel> subCategories;
   @override
   void initState() {
     super.initState();
-    _sub_categories = parseSubCategories(widget.data);
+    subCategories = parseSubCategories(widget.data);
   }
 
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _SubCategoryItemsState extends State<SubCategoryItems> {
                 children: <Widget>[
                   Checkbox(
                     value: widget.value,
-                    onChanged: (value) => widget.onBoxesChanged(widget.number, _sub_categories),
+                    onChanged: (value) => widget.onBoxesChanged(widget.number, subCategories),
                   ),
                 ],
               ),
@@ -69,7 +69,7 @@ class _SubCategoryItemsState extends State<SubCategoryItems> {
                 child: SizedBox(
                   child: GetTextField(
                     text: widget.title,
-                    largeSize: false,
+                    smallSize: true,
                   ),
                 ),
               ),
@@ -77,17 +77,17 @@ class _SubCategoryItemsState extends State<SubCategoryItems> {
           ),
           Divider(),
           ListView.builder(
-            itemCount: _sub_categories.length,
+            itemCount: subCategories.length,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return SubCategoryItem(
-                index: _sub_categories[index].index,
+                index: subCategories[index].index,
                 title: AppLocalizations.of(context)
-                    .categories(_sub_categories[index].code),
-                value: widget.codes.contains(_sub_categories[index].number),
+                    .categories(subCategories[index].code),
+                value: widget.codes.contains(subCategories[index].number),
                 onBoxChanged: () =>
-                    widget.onBoxChanged(_sub_categories[index].number),
+                    widget.onBoxChanged(subCategories[index].number),
               );
             },
           ),

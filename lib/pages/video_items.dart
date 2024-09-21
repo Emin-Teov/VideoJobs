@@ -16,12 +16,12 @@ class VideoItems extends StatefulWidget {
 }
 
 class _VideoItemsState extends State<VideoItems> {
-  late PageController _controller;
+  late PageController controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = PageController(initialPage: 0);
+    controller = PageController(initialPage: 0);
   }
 
   getReel(var size) {
@@ -62,7 +62,7 @@ class _VideoItemsState extends State<VideoItems> {
           height: size.height,
           child: PageView(
             scrollDirection: Axis.vertical,
-            controller: _controller,
+            controller: controller,
             children: getReel(size),
           ),
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:public_ip_address/public_ip_address.dart';
 
 import '/models/country_model.dart';
 import '/pages/country_item.dart';
@@ -29,11 +28,6 @@ class _CountryItemsState extends State<CountryItems> {
           ? widget.codes.remove(code)
           : widget.codes.add(code);
     });
-  }
-
-  Future<String> getCountryIp() async {
-    String code = await IpAddress().getCountry();
-    return code;
   }
 
   @override

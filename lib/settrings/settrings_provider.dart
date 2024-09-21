@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class ThemeProvider extends ChangeNotifier {
-
+class SettringsProvider extends ChangeNotifier {
+  final List<String> languages = ['EN', 'AZ'];
+  String language = 'EN';
   ThemeData? currentTheme = ThemeData(
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.blueAccent,
@@ -18,6 +19,11 @@ class ThemeProvider extends ChangeNotifier {
     useMaterial3: true,
   );
 
+  setLang(int index) {
+    language = languages[index];
+    notifyListeners();
+  }
+
   setStyle(bool light) {
     currentTheme = ThemeData(
       colorScheme: ColorScheme.fromSeed(
@@ -29,9 +35,7 @@ class ThemeProvider extends ChangeNotifier {
           fontSize: 72,
           fontWeight: FontWeight.bold,
           fontStyle: FontStyle.italic,
-          color: light
-            ? Colors.black87
-            : Colors.white70,
+          color: light ? Colors.black87 : Colors.white70,
         ),
       ),
       useMaterial3: true,

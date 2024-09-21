@@ -112,7 +112,7 @@ class _HomeListState extends State<HomeList> {
                   GetTextField(
                     text: _tab_index == 0 ? AppLocalizations.of(context).job : '',
                     light: true,
-                    largeSize: false,
+                    smallSize: true,
                   ),
                 ],
               ),
@@ -138,7 +138,7 @@ class _HomeListState extends State<HomeList> {
                   GetTextField(
                     text: _tab_index == 1 ? AppLocalizations.of(context).offer : '',
                     light: true,
-                    largeSize: false,
+                    smallSize: true,
                   ),
                 ],
               ),
@@ -164,7 +164,7 @@ class _HomeListState extends State<HomeList> {
                   GetTextField(
                     text: _tab_index == 2 ? AppLocalizations.of(context).service : '',
                     light: true,
-                    largeSize: false,
+                    smallSize: true,
                   ),
                 ],
               ),
@@ -190,7 +190,7 @@ class _HomeListState extends State<HomeList> {
                   GetTextField(
                     text: _tab_index == 3 ? AppLocalizations.of(context).talent : '',
                     light: true,
-                    largeSize: false,
+                    smallSize: true,
                   ),
                 ],
               ),
