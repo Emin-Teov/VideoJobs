@@ -16,6 +16,7 @@
     "style": "Stili təyin et",
     "language": "Dili təyin et",
     "description": "Təsvir",
+    "send_email": "Göndər",
     "guest": "Qonaq",
     "login": "Giriş",
     "sign": "Qeydiyyat",
@@ -58,7 +59,7 @@
         }
     },
 
-    "user_hints": "{hint, select, user{İstifadəçi adı və ya e-poçt} password{Parol} surname{Ad} lastname{Soyad} username{İstifadəçi adı} email{Email} confirm_email{Emailinizi təstiqləyin} password{Parol} confirm_password{Parolunuzu təsdiqləyin} other{{hint}}}",
+    "user_hints": "{hint, select, email{Email} password{Parol} surname{Ad} lastname{Soyad} username{İstifadəçi adı} password{Parol} confirm_password{Parolunuzu təsdiqləyin} other{{hint}}}",
     "@user_hint": {
         "placeholders": {
             "country": {

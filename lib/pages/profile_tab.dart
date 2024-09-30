@@ -72,12 +72,12 @@ class _ProfileTabState extends State<ProfileTab> {
             Size size = MediaQuery.of(context).size;
             return AlertDialog(
               surfaceTintColor: Colors.transparent,
-              actionsPadding:
-                  EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+              actionsPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
               insetPadding: EdgeInsets.all(2.0),
               contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))
+              ),
               actions: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -85,7 +85,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   children: <Widget>[
                     !login && _sign_index != 1
                         ? DropdownMenu<CategoryModel>(
-                            initialSelection: widget.categories.first,
+                            initialSelection: dropdown_value,
                             onSelected: (CategoryModel? value) {
                               setState(() {
                                 dropdown_value = value!;
@@ -106,6 +106,7 @@ class _ProfileTabState extends State<ProfileTab> {
                                     ),
                                   ),
                                   label: AppLocalizations.of(context).categories(value.code),
+                                  trailingIcon: Icon(Icons.person_add),
                                 );
                               }
                             ).toList(),
@@ -150,7 +151,7 @@ class _ProfileTabState extends State<ProfileTab> {
                           style: ButtonStyle(
                             shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                borderRadius: BorderRadius.all(Radius.circular(24.0)),
                                 side: BorderSide(
                                   color: Colors.black,
                                   width: 0.2

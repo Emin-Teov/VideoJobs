@@ -44,6 +44,7 @@ class _VideoItemsState extends State<VideoItems> {
                     : widget.data[i].username,
             title: AppLocalizations.of(context).categories(widget.data[i].employment),
             description: widget.index == 1 ? widget.data[i].description : '',
+            email: widget.data[i].email,
           ),
         ),
       );

@@ -76,6 +76,11 @@
         "description": "Job description"
     },
 
+    "send_email": "Send to",
+    "@send_email": {
+        "description": "Send your resume to the employer's email"
+    },
+
     "guest": "Guest",
     "@guest": {
         "description": "Default user"
@@ -133,7 +138,7 @@
         }
     },
 
-    "user_hints": "{hint, select, user{Username or email} password{Password} surname{Surname} lastname{Lastname} username{Username} email{Email} confirm_email{Confirm your email} password{Password} confirm_password{Confirm your password} other{{hint}}}",
+    "user_hints": "{hint, select,  email{Email} password{Password} surname{Surname} lastname{Lastname} username{Username} password{Password} confirm_password{Confirm your password} other{{hint}}}",
     "@user_hint": {
         "description": "Hints of user fields",
         "placeholders": {

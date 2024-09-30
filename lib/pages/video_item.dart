@@ -13,6 +13,7 @@ class VideoItem extends StatefulWidget {
   final String username;
   final String title;
   final String description;
+  final String email;
 
   const VideoItem({
     super.key,
@@ -22,6 +23,7 @@ class VideoItem extends StatefulWidget {
     required this.username,
     required this.title,
     required this.description,
+    required this.email,
   });
 
   @override
@@ -41,61 +43,75 @@ class _VideoItemState extends State<VideoItem> {
 
   void setDialog() {
     showDialog(
-      context: context,
-      builder: (context) {
-        Size size = MediaQuery.of(context).size;
-        return AlertDialog(
-          backgroundColor: widget.index == 1
-              ? Theme.of(context).dialogBackgroundColor
-              : Theme.of(context).colorScheme.inversePrimary,
-          surfaceTintColor: Colors.transparent,
-          actionsPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-          insetPadding: EdgeInsets.all(8.0),
-          contentPadding: EdgeInsets.all(10.0),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
-          content: widget.index == 1
-              ? Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          icon: Icon(Icons.close),
-                        ),
-                      ],
-                    ),
-                    Center(
-                      child: GetTextField(
-                        text: '${AppLocalizations.of(context).description}:',
+        context: context,
+        builder: (context) {
+          Size size = MediaQuery.of(context).size;
+          return AlertDialog(
+            backgroundColor: widget.index == 1
+                ? Theme.of(context).dialogBackgroundColor
+                : Theme.of(context).colorScheme.inversePrimary,
+            surfaceTintColor: Colors.transparent,
+            actionsPadding:
+                EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+            insetPadding: EdgeInsets.all(8.0),
+            contentPadding: EdgeInsets.all(10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GetTextLabel(
+                    head: AppLocalizations.of(context).send_email,
+                    value: widget.email,
+                  ),
+                ],
+              ),
+            ],
+            content: widget.index == 1
+                ? Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            icon: Icon(Icons.close),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: size.width * .8,
-                          height: MediaQuery.of(context).orientation == Orientation.portrait
-                              ? size.height * .7
-                              : size.height / 2,
-                          child: GetTextField(
-                            text: widget.description,
-                            smallSize: true,
+                      Center(
+                        child: GetTextField(
+                          text: '${widget.title}:',
+                        ),
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: size.width * .8,
+                            height: MediaQuery.of(context).orientation ==
+                                    Orientation.portrait
+                                ? size.height * .7
+                                : size.height / 2,
+                            child: GetTextField(
+                              text: widget.description,
+                              smallSize: true,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                )
-              : CVResume(
-                  id: widget.id,
-                  username: widget.username,
-                  index: widget.index,
-                ),
-        );
-      }
-    );
+                      )
+                    ],
+                  )
+                : CVResume(
+                    id: widget.id,
+                    username: widget.username,
+                    index: widget.index,
+                  ),
+          );
+        });
   }
 
   void liked() {
@@ -106,9 +122,9 @@ class _VideoItemState extends State<VideoItem> {
 
   @override
   void initState() {
-    videoController = VideoPlayerController.networkUrl(
-      Uri.parse('https://emin-teov.github.io/api/video/${_video_url[widget.index]}_${widget.id}.mp4')
-    )..initialize().then((_) {
+    videoController = VideoPlayerController.networkUrl(Uri.parse(
+        'https://emin-teov.github.io/api/video/${_video_url[widget.index]}_${widget.id}.mp4'))
+      ..initialize().then((_) {
         videoController.play();
         videoController.setLooping(true);
       });
@@ -148,10 +164,9 @@ class _VideoItemState extends State<VideoItem> {
                     Image.network(
                       width: 50,
                       height: 50,
-                      'https://emin-teov.github.io/api/${_image_url[widget.index]}-${widget.index == 1
-                          ? widget.employer
-                          : widget.id}.png',
-                      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                      'https://emin-teov.github.io/api/${_image_url[widget.index]}-${widget.index == 1 ? widget.employer : widget.id}.png',
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
                         return widget.index == 1
                             ? const ImageIcon(
                                 AssetImage('assets/icons/ceo.png'),
