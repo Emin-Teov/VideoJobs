@@ -1,7 +1,7 @@
 {
     "@@locale" : "en",
 
-    "search": "Select job types",
+    "search": "Search",
     "@search": {
         "description": "Hint of searcch field"
     },
@@ -81,6 +81,27 @@
         "description": "Default user"
     },
 
+    "login": "Login",
+    "@login": {
+        "description": "Login user account"
+    },
+
+    "sign": "Sign in",
+    "@sign": {
+        "description": "Create an account"
+    },
+
+    "sign_user": "Sign in as {user, plural, =0{a job seeker} =1{an employer} =2{a freelancer} other{a talented person}}",
+    "@sign_user": {
+        "description": "Sign in as an user",
+        "placeholders": {
+            "style": {
+            "type": "num",
+            "format": "compact"
+            }
+        }
+    },
+
     "change": "Get {style, plural, =1{dark} other{light}} style",
     "@change": {
         "description": "Change style",
@@ -105,6 +126,16 @@
     "countries": "{country, select, AZ{Azerbaijan} GE{Georgia} IR{Iran} KZ{Kazakhstan} KG{Kyrgyzstan} TR{Turkey} UZ{Uzbekistan} other{{country}}}",
     "@countries": {
         "description": "Country title",
+        "placeholders": {
+            "country": {
+            "type": "String"
+            }
+        }
+    },
+
+    "user_hints": "{hint, select, user{Username or email} password{Password} surname{Surname} lastname{Lastname} username{Username} email{Email} confirm_email{Confirm your email} password{Password} confirm_password{Confirm your password} other{{hint}}}",
+    "@user_hint": {
+        "description": "Hints of user fields",
         "placeholders": {
             "country": {
             "type": "String"

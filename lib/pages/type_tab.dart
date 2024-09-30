@@ -31,45 +31,55 @@ class _TypeTabState extends State<TypeTab> {
   void setDialog(bool category) {
     showDialog(
       context: context,
-      builder: (context) {
-        var size = MediaQuery.of(context).size;
-        return AlertDialog(
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            Size size = MediaQuery.of(context).size;
+            return AlertDialog(
+              surfaceTintColor: Colors.transparent,
+              actionsPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              insetPadding: EdgeInsets.all(8.0),
+              contentPadding: EdgeInsets.all(10.0),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(Icons.close),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.close),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: size.width * .8,
+                        height: MediaQuery.of(context).orientation == Orientation.portrait
+                            ? size.height * .7
+                            : size.height / 2,
+                        child: category
+                            ? CategoryItems(
+                                codes: widget.category_codes,
+                                items: widget.categories,
+                              )
+                            : CountryItems(
+                                codes: widget.country_codes,
+                                items: widget.countries,
+                              ),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  alignment: Alignment.center,
-                  width: size.width,
-                  height: MediaQuery.of(context).orientation ==
-                          Orientation.portrait
-                      ? size.height * 0.7
-                      : size.height / 2,
-                  child: category
-                      ? CategoryItems(
-                          codes: widget.category_codes,
-                          items: widget.categories,
-                        )
-                      : CountryItems(
-                          codes: widget.country_codes,
-                          items: widget.countries,
-                        ),
-                ),
-              ),
-              SizedBox.shrink(),
-            ],
-          ),
+            );
+          }
         );
       }
     );

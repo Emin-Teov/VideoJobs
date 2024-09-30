@@ -29,99 +29,126 @@ class _SearchFieldState extends State<SearchField> {
 
   void setDialog() {
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.close),
-                    ),
-                  ],
-                ),
-                Center(
-                  child: GetTextField(
-                    text: AppLocalizations.of(context).warning,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            Size size = MediaQuery.of(context).size;
+            return AlertDialog(
+              surfaceTintColor: Colors.transparent,
+              actionsPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              insetPadding: EdgeInsets.all(8.0),
+              contentPadding: EdgeInsets.all(10.0),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.close),
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
+                  Center(
+                    child: GetTextField(
+                      text: AppLocalizations.of(context).warning,
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          widget.category_query.isEmpty
-                              ? ListTile(
-                                  title: GetTextField(
-                                    text: AppLocalizations.of(context).warning_category,
-                                    smallSize: true,
-                                  ),
-                                  leading: Icon(
-                                    Icons.notifications,
-                                    color: Colors.red,
-                                    size: 14,
-                                  ),
-                                )
-                              : SizedBox.shrink(),
-                          widget.country_query.isEmpty
-                              ? ListTile(
-                                  title: GetTextField(
-                                    text: AppLocalizations.of(context).warning_country,
-                                    smallSize: true,
-                                  ),
-                                  leading: Icon(
-                                    Icons.notifications,
-                                    color: Colors.red,
-                                    size: 14,
-                                  ),
-                                )
-                              : SizedBox.shrink(),
-                        ],
-                      )),
-                ),
-              ],
-            ),
-          );
-        });
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: size.width * .8,
+                        height: MediaQuery.of(context).orientation == Orientation.portrait
+                            ? size.height * .7
+                            : size.height / 2,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            widget.category_query.isEmpty
+                                ? ListTile(
+                                    title: GetTextField(
+                                      text: AppLocalizations.of(context)
+                                          .warning_category,
+                                      smallSize: true,
+                                    ),
+                                    leading: Icon(
+                                      Icons.notifications,
+                                      color: Colors.red,
+                                      size: 14,
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            widget.country_query.isEmpty
+                                ? ListTile(
+                                    title: GetTextField(
+                                      text: AppLocalizations.of(context)
+                                          .warning_country,
+                                      smallSize: true,
+                                    ),
+                                    leading: Icon(
+                                      Icons.notifications,
+                                      color: Colors.red,
+                                      size: 14.0,
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        );
+      }
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      scrollPadding: const EdgeInsets.all(25),
-      controller: searchController,
-      decoration: InputDecoration(
-        hintText: "Search",
-        contentPadding: EdgeInsets.all(12),
-        icon: IconButton(
-          onPressed: () => widget.category_query.isNotEmpty && widget.country_query.isNotEmpty
-              ? Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(
-                      query: '', //searchController.text
-                    ),
-                  ),
-                )
-              : {
-                  setState(() {
-                    setDialog();
-                  }),
-                },
-          icon: const Icon(
-            Icons.search,
-            color: Colors.amberAccent,
+    return Center(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8.0),
+        width: MediaQuery.of(context).size.width * .8,
+        child: TextField(
+          scrollPadding: EdgeInsets.all(25.0),
+          controller: searchController,
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context).search,
+            contentPadding: EdgeInsets.all(12.0),
+            icon: IconButton(
+              onPressed: () => widget.category_query.isNotEmpty &&
+                      widget.country_query.isNotEmpty
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(
+                          query: '', //searchController.text
+                        ),
+                      ),
+                    )
+                  : {
+                      setState(() {
+                        setDialog();
+                      }),
+                    },
+              icon: const Icon(
+                Icons.search,
+                color: Colors.amberAccent,
+              ),
+            ),
+            border: const OutlineInputBorder(),
           ),
         ),
-        border: const OutlineInputBorder(),
       ),
     );
   }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '/pages/get_text_field.dart';
 
-// typedef OnChangeFunc = void Function(int index);
-
 class CategoryItem extends StatefulWidget {
   final int index;
   final String title;
@@ -35,12 +33,13 @@ class _CategoryItemState extends State<CategoryItem> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Checkbox(
-                    value: widget.value,
-                    onChanged: (value) => {
-                          setState(() {
-                            widget.onBoxChanged();
-                          }),
-                        })
+                  value: widget.value,
+                  onChanged: (value) => {
+                    setState(() {
+                      widget.onBoxChanged();
+                    }),
+                  }
+                ),
               ],
             ),
             Expanded(

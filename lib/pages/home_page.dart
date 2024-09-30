@@ -33,8 +33,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<DataModel> fetchData(http.Client client) async {
-    final response = await client
-        .get(Uri.parse('https://emin-teov.github.io/api/json/data.json'));
+    final response = await client.get(Uri.parse('https://emin-teov.github.io/api/json/data.json'));
     final json = jsonDecode(response.body) as Map<String, dynamic>;
     DataModel data = DataModel.fromJson(json);
     categories = [];
@@ -125,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                         category_codes: categoryQuery,
                       )
                     : _select_page_index == 1
-                        ? ProfileTab()
+                        ? ProfileTab(categories: categories,)
                         : SettingTab(),
               ),
               body: _pages[_select_page_index],

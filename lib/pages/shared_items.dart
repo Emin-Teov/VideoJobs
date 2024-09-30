@@ -36,7 +36,7 @@ class _SharedItemsState extends State<SharedItems> {
                     ? '${widget.items[index].name} ${widget.items[index].surname}'
                     : widget.item_index == 1
                         ? widget.items[index].ceo
-                        : widget.items[index].user,
+                        : widget.items[index].username,
                 title: AppLocalizations.of(context).categories(widget.items[index].employment),
                 data: widget.items.sublist(index, widget.items.length),
               );

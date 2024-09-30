@@ -9,13 +9,13 @@ import '/pages/get_text_field.dart';
 
 class CVResume extends StatefulWidget {
   final int id;
-  final String user;
+  final String username;
   final int index;
 
   const CVResume({
     super.key,
     required this.id,
-    required this.user,
+    required this.username,
     required this.index,
   });
 
@@ -33,11 +33,10 @@ class _CVResumeState extends State<CVResume> {
 
   @override
   Widget build(BuildContext context) {
-    String _title = widget.user.replaceAll(' ', '_');
+    String _title = widget.username.replaceAll(' ', '_');
 
     Future<void> loadPdf() async {
-      final String url =
-          'https://emin-teov.github.io/api/pdf/${_pdf_url[widget.index]}-${widget.id}.pdf';
+      final String url = 'https://emin-teov.github.io/api/pdf/${_pdf_url[widget.index]}-${widget.id}.pdf';
       final response = await http.get(Uri.parse(url));
       final bytes = response.bodyBytes;
       final Directory? _dir = await getDownloadsDirectory();
@@ -50,7 +49,7 @@ class _CVResumeState extends State<CVResume> {
     return Scaffold(
       appBar: AppBar(
         title: GetTextField(
-          text: widget.user,
+          text: widget.username,
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -64,8 +63,7 @@ class _CVResumeState extends State<CVResume> {
         ],
       ),
       body: Container(
-        child: SfPdfViewer.network(
-            'https://emin-teov.github.io/api/pdf/${_pdf_url[widget.index]}-${widget.id}.pdf'),
+        child: SfPdfViewer.network('https://emin-teov.github.io/api/pdf/${_pdf_url[widget.index]}-${widget.id}.pdf'),
       ),
     );
   }

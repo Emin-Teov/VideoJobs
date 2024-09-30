@@ -80,21 +80,18 @@ class _HomeListState extends State<HomeList> {
     return Column(
       children: <Widget>[
         SizedBox(
-          width: 400,
+          width: 400.0,
           child: SearchField(
-              country_query: widget.country_query,
-              category_query: widget.category_query),
-        ),
-        SizedBox(
-          height: 5,
+            country_query: widget.country_query,
+            category_query: widget.category_query,
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor:
-                    WidgetStateProperty.all<Color>(Colors.blueAccent),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.blueAccent),
               ),
               onPressed: () {
                 setState(() {
@@ -107,10 +104,12 @@ class _HomeListState extends State<HomeList> {
                   Icon(
                     Icons.person_pin_rounded,
                     color: Colors.white70,
-                    size: 18,
+                    size: 18.0,
                   ),
                   GetTextField(
-                    text: _tab_index == 0 ? AppLocalizations.of(context).job : '',
+                    text: _tab_index == 0
+                        ? AppLocalizations.of(context).job
+                        : '',
                     light: true,
                     smallSize: true,
                   ),
@@ -119,8 +118,7 @@ class _HomeListState extends State<HomeList> {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor:
-                    WidgetStateProperty.all<Color>(Colors.blueAccent),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.blueAccent),
               ),
               onPressed: () {
                 setState(() {
@@ -133,10 +131,12 @@ class _HomeListState extends State<HomeList> {
                   Icon(
                     Icons.local_offer,
                     color: Colors.white70,
-                    size: 18,
+                    size: 18.0,
                   ),
                   GetTextField(
-                    text: _tab_index == 1 ? AppLocalizations.of(context).offer : '',
+                    text: _tab_index == 1
+                        ? AppLocalizations.of(context).offer
+                        : '',
                     light: true,
                     smallSize: true,
                   ),
@@ -145,8 +145,7 @@ class _HomeListState extends State<HomeList> {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor:
-                    WidgetStateProperty.all<Color>(Colors.blueAccent),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.blueAccent),
               ),
               onPressed: () {
                 setState(() {
@@ -159,10 +158,12 @@ class _HomeListState extends State<HomeList> {
                   Icon(
                     Icons.home_repair_service,
                     color: Colors.white70,
-                    size: 18,
+                    size: 18.0,
                   ),
                   GetTextField(
-                    text: _tab_index == 2 ? AppLocalizations.of(context).service : '',
+                    text: _tab_index == 2
+                        ? AppLocalizations.of(context).service 
+                        : '',
                     light: true,
                     smallSize: true,
                   ),
@@ -171,8 +172,7 @@ class _HomeListState extends State<HomeList> {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor:
-                    WidgetStateProperty.all<Color>(Colors.blueAccent),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.blueAccent),
               ),
               onPressed: () {
                 setState(() {
@@ -185,10 +185,12 @@ class _HomeListState extends State<HomeList> {
                   Icon(
                     Icons.person_search,
                     color: Colors.white70,
-                    size: 18,
+                    size: 18.0,
                   ),
                   GetTextField(
-                    text: _tab_index == 3 ? AppLocalizations.of(context).talent : '',
+                    text: _tab_index == 3
+                        ? AppLocalizations.of(context).talent
+                        : '',
                     light: true,
                     smallSize: true,
                   ),

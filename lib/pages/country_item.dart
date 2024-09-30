@@ -33,9 +33,9 @@ class _CountryItemState extends State<CountryItem> {
             Checkbox(
               value: widget.value,
               onChanged: (value) => {
-                  setState(() {
-                    widget.onBoxChanged();
-                  }),
+                setState(() {
+                  widget.onBoxChanged();
+                }),
               }
             ),
           ],

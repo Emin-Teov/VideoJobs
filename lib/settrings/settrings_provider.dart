@@ -32,7 +32,7 @@ class SettringsProvider extends ChangeNotifier {
       ),
       textTheme: TextTheme(
         displayLarge: TextStyle(
-          fontSize: 72,
+          fontSize: 72.0,
           fontWeight: FontWeight.bold,
           fontStyle: FontStyle.italic,
           color: light ? Colors.black87 : Colors.white70,

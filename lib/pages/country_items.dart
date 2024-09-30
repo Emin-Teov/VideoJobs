@@ -44,20 +44,21 @@ class _CountryItemsState extends State<CountryItems> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Checkbox(
-                      value: widget.codes.length == widget.items.length,
-                      onChanged: (value) => {
-                            setState(() {
-                              if (widget.codes.length == widget.items.length) {
-                                widget.codes.clear();
-                              } else {
-                                for (CountryModel item in widget.items) {
-                                  !widget.codes.contains(item.code)
-                                      ? widget.codes.add(item.code)
-                                      : null;
-                                }
-                              }
-                            }),
-                          }),
+                    value: widget.codes.length == widget.items.length,
+                    onChanged: (value) => {
+                      setState(() {
+                        if (widget.codes.length == widget.items.length) {
+                          widget.codes.clear();
+                        } else {
+                          for (CountryModel item in widget.items) {
+                            !widget.codes.contains(item.code)
+                                ? widget.codes.add(item.code)
+                                : null;
+                          }
+                        }
+                      }),
+                    }
+                  ),
                 ],
               ),
               Expanded(
@@ -69,21 +70,22 @@ class _CountryItemsState extends State<CountryItems> {
           ),
           Expanded(
             child: ListView.builder(
-                itemCount: widget.items.length,
-                itemBuilder: (BuildContext context, int index) {
+              itemCount: widget.items.length,
+              itemBuilder: (BuildContext context, int index) {
 
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 25.0),
-                    child: CountryItem(
-                      id: widget.items[index].id,
-                      title: AppLocalizations.of(context)
-                          .countries(widget.items[index].code),
-                      value: widget.codes.contains(widget.items[index].code),
-                      onBoxChanged: () =>
-                          _set_countries(widget.items[index].code),
-                    ),
-                  );
-                }),
+                return Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: CountryItem(
+                    id: widget.items[index].id,
+                    title: AppLocalizations.of(context)
+                        .countries(widget.items[index].code),
+                    value: widget.codes.contains(widget.items[index].code),
+                    onBoxChanged: () =>
+                        _set_countries(widget.items[index].code),
+                  ),
+                );
+              }
+            ),
           ),
         ],
       ),

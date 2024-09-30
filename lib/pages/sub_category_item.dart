@@ -23,7 +23,7 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 25),
+      padding: EdgeInsets.only(left: 25.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -33,12 +33,13 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Checkbox(
-                  value: widget.value,
-                  onChanged: (value) => {
-                        setState(() {
-                          widget.onBoxChanged();
-                        }),
-                      }),
+                value: widget.value,
+                onChanged: (value) => {
+                  setState(() {
+                    widget.onBoxChanged();
+                  }),
+                }
+              ),
             ],
           ),
           Expanded(

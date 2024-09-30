@@ -40,8 +40,7 @@ class _CategoryItemsState extends State<CategoryItems> {
             widget.codes.add(category.number);
           } else {
             for (var category_sub_data in category.children) {
-              CategoryModel sub_category =
-                  CategoryModel.fromJson(category_sub_data);
+              CategoryModel sub_category = CategoryModel.fromJson(category_sub_data);
               widget.codes.add(sub_category.number);
             }
           }
@@ -103,35 +102,32 @@ class _CategoryItemsState extends State<CategoryItems> {
           ),
           Expanded(
             child: ListView.builder(
-                itemCount: widget.items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 25.0),
-                    child: widget.items[index].children.isEmpty
-                        ? CategoryItem(
-                            index: widget.items[index].index,
-                            title: AppLocalizations.of(context)
-                                .categories(widget.items[index].code),
-                            value: widget.codes
-                                .contains(widget.items[index].number),
-                            onBoxChanged: () =>
-                                _set_category(widget.items[index].number),
-                          )
-                        : SubCategoryItems(
-                            index: widget.items[index].index,
-                            title: AppLocalizations.of(context)
-                                .categories(widget.items[index].code),
-                            number: widget.items[index].number,
-                            value: _sub_categories(
-                                widget.items[index].number.toInt(),
-                                widget.items[index].children.length),
-                            onBoxesChanged: _set_sub_categories,
-                            onBoxChanged: _set_category,
-                            codes: widget.codes,
-                            data: widget.items[index].children,
-                          ),
-                  );
-                }),
+              itemCount: widget.items.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: widget.items[index].children.isEmpty
+                      ? CategoryItem(
+                          index: widget.items[index].index,
+                          title: AppLocalizations.of(context).categories(widget.items[index].code),
+                          value: widget.codes.contains(widget.items[index].number),
+                          onBoxChanged: () => _set_category(widget.items[index].number),
+                        )
+                      : SubCategoryItems(
+                          index: widget.items[index].index,
+                          title: AppLocalizations.of(context).categories(widget.items[index].code),
+                          number: widget.items[index].number,
+                          value: _sub_categories(
+                              widget.items[index].number.toInt(),
+                              widget.items[index].children.length),
+                          onBoxesChanged: _set_sub_categories,
+                          onBoxChanged: _set_category,
+                          codes: widget.codes,
+                          data: widget.items[index].children,
+                        ),
+                );
+              }
+            ),
           ),
         ],
       ),

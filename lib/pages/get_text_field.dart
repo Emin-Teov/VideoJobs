@@ -4,14 +4,14 @@ class GetTextField extends StatefulWidget {
   final String text;
   final bool smallSize;
   final bool light;
-  final bool overline;
+  final bool underline;
 
   const GetTextField({
     super.key,
     required this.text,
     this.smallSize = false,
     this.light = false,
-    this.overline = false,
+    this.underline = false,
   });
 
   @override
@@ -24,8 +24,8 @@ class _GetTextFieldState extends State<GetTextField> {
     return Text(
       widget.text,
       style: TextStyle(
-        fontSize: widget.smallSize ? 14 : 25,
-        decoration: widget.overline ? TextDecoration.overline : null,
+        fontSize: widget.smallSize ? 14.0 : 25.0,
+        decoration: widget.underline ? TextDecoration.underline : null,
         fontStyle: FontStyle.italic,
         color: widget.light
             ? Colors.white70

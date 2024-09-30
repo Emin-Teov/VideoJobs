@@ -83,11 +83,9 @@ class _SubCategoryItemsState extends State<SubCategoryItems> {
             itemBuilder: (context, index) {
               return SubCategoryItem(
                 index: subCategories[index].index,
-                title: AppLocalizations.of(context)
-                    .categories(subCategories[index].code),
+                title: AppLocalizations.of(context).categories(subCategories[index].code),
                 value: widget.codes.contains(subCategories[index].number),
-                onBoxChanged: () =>
-                    widget.onBoxChanged(subCategories[index].number),
+                onBoxChanged: () => widget.onBoxChanged(subCategories[index].number),
               );
             },
           ),

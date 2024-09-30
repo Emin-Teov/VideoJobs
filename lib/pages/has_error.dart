@@ -28,7 +28,10 @@ class HasError extends StatelessWidget {
           children: <Widget>[
             Icon(no_internet ? Icons.signal_wifi_off_outlined : Icons.error),
             GetTextField(
-                text: no_internet ? AppLocalizations.of(context).no_internet : AppLocalizations.of(context).error),
+              text: no_internet
+                  ? AppLocalizations.of(context).no_internet
+                  : AppLocalizations.of(context).error,
+            ),
           ],
         ),
       ),

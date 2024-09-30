@@ -25,7 +25,7 @@ class _GetTextLabelState extends State<GetTextLabel> {
       TextSpan(
         text: '${widget.head}: ',
         style: TextStyle(
-          fontSize: widget.small ? 12 : 18,
+          fontSize: widget.small ? 12.0 : 18.0,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.italic,
           color: widget.light
@@ -36,7 +36,7 @@ class _GetTextLabelState extends State<GetTextLabel> {
           TextSpan(
             text: widget.value,
             style: TextStyle(
-              fontSize: widget.small ? 14 : 20,
+              fontSize: widget.small ? 14.0 : 20.0,
               fontWeight: FontWeight.w500,
               fontStyle: FontStyle.normal,
               color: widget.light

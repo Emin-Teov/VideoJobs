@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '/pages/video_item.dart';
 
 class VideoItems extends StatefulWidget {
@@ -28,19 +30,19 @@ class _VideoItemsState extends State<VideoItems> {
     List<Widget> reel = [];
     for (int i = 0; i < widget.data.length; i++) {
       reel.add(
-        Container(
+        SizedBox(
           height: size.height,
           width: size.width,
           child: VideoItem(
             id: widget.data[i].id,
             index: widget.index,
-            employer_id: widget.index == 1 ? widget.data[i].employer_id : 0,
-            user: widget.index == 0
+            employer: widget.index == 1 ? widget.data[i].employer : 0,
+            username: widget.index == 0
                 ? '${widget.data[i].name} ${widget.data[i].surname}'
                 : widget.index == 1
                     ? widget.data[i].ceo
-                    : widget.data[i].user,
-            title: widget.data[i].title,
+                    : widget.data[i].username,
+            title: AppLocalizations.of(context).categories(widget.data[i].employment),
             description: widget.index == 1 ? widget.data[i].description : '',
           ),
         ),
@@ -51,11 +53,11 @@ class _VideoItemsState extends State<VideoItems> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).orientation == Orientation.portrait
               ? size.width
               : size.width / 3,

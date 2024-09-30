@@ -23,6 +23,7 @@ class _SettingTabState extends State<SettingTab> {
       scrollDirection: Axis.vertical,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           DrawerHeader(
             padding: EdgeInsets.only(top: 100.0),
@@ -77,7 +78,7 @@ class _SettingTabState extends State<SettingTab> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: <Widget>[
               TextButton(
                 onPressed: () {
                   setState(() {
@@ -113,7 +114,7 @@ class _SettingTabState extends State<SettingTab> {
                           child: GetTextField(
                             text: _provider.languages[index],
                             smallSize: true,
-                            overline: _provider.languages[index] == _provider.language,
+                            underline: _provider.languages[index] == _provider.language,
                           ),
                         ),
                       );

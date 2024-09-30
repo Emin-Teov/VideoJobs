@@ -11,8 +11,9 @@ import '/pages/video_items.dart';
 
 Future<Uint8List> getThumbnailImage(String url) async {
   final thumbnail = await VideoThumbnail.thumbnailData(
-      video: 'https://emin-teov.github.io/api/video/${url}.mp4',
-      imageFormat: ImageFormat.PNG);
+    video: 'https://emin-teov.github.io/api/video/${url}.mp4',
+    imageFormat: ImageFormat.PNG
+  );
   return thumbnail;
 }
 
