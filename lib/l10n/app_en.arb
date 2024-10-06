@@ -96,6 +96,11 @@
         "description": "Create an account"
     },
 
+    "employer": "employer's name",
+    "@employer": {
+        "description": "Set employer's name"
+    },
+
     "sign_user": "Sign in as {user, plural, =0{a job seeker} =1{an employer} =2{a freelancer} other{a talented person}}",
     "@sign_user": {
         "description": "Sign in as an user",

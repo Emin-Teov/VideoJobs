@@ -20,6 +20,7 @@
     "guest": "Qonaq",
     "login": "Giriş",
     "sign": "Qeydiyyat",
+    "employer": "işəgötürənin adı",
 
     "change": "{style, plural, =1{Qaranlıq} other{İşıqlı}} stili seç",
     "@change": {

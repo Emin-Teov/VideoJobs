@@ -92,8 +92,7 @@ class _VideoItemState extends State<VideoItem> {
                           child: Container(
                             alignment: Alignment.center,
                             width: size.width * .8,
-                            height: MediaQuery.of(context).orientation ==
-                                    Orientation.portrait
+                            height: MediaQuery.of(context).orientation == Orientation.portrait
                                 ? size.height * .7
                                 : size.height / 2,
                             child: GetTextField(

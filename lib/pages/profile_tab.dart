@@ -72,132 +72,66 @@ class _ProfileTabState extends State<ProfileTab> {
             Size size = MediaQuery.of(context).size;
             return AlertDialog(
               surfaceTintColor: Colors.transparent,
-              actionsPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+              actionsPadding:
+                  EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
               insetPadding: EdgeInsets.all(2.0),
               contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8.0))
               ),
               actions: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    !login && _sign_index != 1
-                        ? DropdownMenu<CategoryModel>(
-                            initialSelection: dropdown_value,
-                            onSelected: (CategoryModel? value) {
-                              setState(() {
-                                dropdown_value = value!;
-                              });
-                            },
-                            dropdownMenuEntries: widget.categories.map<DropdownMenuEntry<CategoryModel>>(
-                              (CategoryModel value) {
-                                return DropdownMenuEntry<CategoryModel>(
-                                  value: value,
-                                  labelWidget: SizedBox(
-                                    width: size.width * .5,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 2.0),
-                                      child: GetTextField(
-                                        text: AppLocalizations.of(context).categories(value.code),
-                                        smallSize: true,
-                                      ),
-                                    ),
-                                  ),
-                                  label: AppLocalizations.of(context).categories(value.code),
-                                  trailingIcon: Icon(Icons.person_add),
-                                );
-                              }
-                            ).toList(),
-                          )
-                        : SizedBox.shrink(),
-                    login
-                        ? SizedBox.shrink()
-                        : Container(
-                            width: size.width * .8,
-                            height: 50,
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 4,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 4.0),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Checkbox(
-                                        value: _sign_index == index,
-                                        onChanged: (value) => setState(() {
-                                          _sign_index = index;
-                                        }),
-                                      ),
-                                      GetTextField(
-                                        text: AppLocalizations.of(context).sign_user(0, index),
-                                        smallSize: true,
-                                        underline: _sign_index == index,
-                                      ),
-                                    ]
-                                  ),
-                                );
-                              }
-                            ),
-                          ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        OutlinedButton.icon(
-                          style: ButtonStyle(
-                            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(24.0)),
-                                side: BorderSide(
-                                  color: Colors.black,
-                                  width: 0.2
-                                ),
+                    OutlinedButton.icon(
+                      style: ButtonStyle(
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                            side: BorderSide(
+                                color: Colors.black, width: 0.2
                               ),
-                            ),
-                            backgroundColor: WidgetStateProperty.all(Colors.blueAccent),
-                            elevation: WidgetStateProperty.all(1.0),
-                            shadowColor: WidgetStateProperty.all(Colors.white),
-                            minimumSize: WidgetStateProperty.all(Size(12.0, 45.0)),
-                          ),
-                          label: GetTextField(
-                            text: login
-                                ? AppLocalizations.of(context).login
-                                : AppLocalizations.of(context).sign,
-                            light: true,
-                          ),
-                          icon: Icon(
-                            login ? Icons.login : Icons.manage_accounts,
-                          ),
-                          onPressed: () {
-                            setState(login
-                                ? () {
-                                    // test = _login_text_controllers['user']!.text;
-                                  }
-                                : () {
-                                    // test = _sign_text_controllers['username']!.text;
-                                  });
-                          },
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              login = !login;
-                            });
-                          },
-                          child: GetTextField(
-                            text: login
-                                ? AppLocalizations.of(context).sign
-                                : AppLocalizations.of(context).login,
-                            underline: true,
                           ),
                         ),
-                      ],
+                        backgroundColor: WidgetStateProperty.all(Colors.blueAccent),
+                        elevation: WidgetStateProperty.all(1.0),
+                        shadowColor: WidgetStateProperty.all(Colors.white),
+                        minimumSize: WidgetStateProperty.all(Size(12.0, 45.0)),
+                      ),
+                      label: GetTextField(
+                        text: login
+                            ? AppLocalizations.of(context).login
+                            : AppLocalizations.of(context).sign,
+                        light: true,
+                      ),
+                      icon: Icon(
+                        login ? Icons.login : Icons.person_add,
+                      ),
+                      onPressed: () {
+                        setState(login
+                            ? () {
+                                // test = _login_text_controllers['user']!.text;
+                              }
+                            : () {
+                                // test = _sign_text_controllers['username']!.text;
+                              });
+                      },
                     ),
-                  ]
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          login = !login;
+                        });
+                      },
+                      child: GetTextField(
+                        text: login
+                            ? AppLocalizations.of(context).sign
+                            : AppLocalizations.of(context).login,
+                        underline: true,
+                      ),
+                    ),
+                  ],
                 ),
               ],
               content: Column(
@@ -257,8 +191,11 @@ class _ProfileTabState extends State<ProfileTab> {
                                         ? _sign_job_seeker_text_controllers[key]
                                         : _sign_text_controllers[key],
                                 decoration: InputDecoration(
-                                  hintText: AppLocalizations.of(context)
-                                      .user_hints(key),
+                                  hintText: _sign_index == 1 && index == 0
+                                      ? AppLocalizations.of(context)
+                                          .user_hints(key) + ' (${AppLocalizations.of(context).employer})'
+                                      : AppLocalizations.of(context)
+                                          .user_hints(key),
                                   contentPadding: EdgeInsets.all(12.0),
                                   border: const OutlineInputBorder(),
                                 ),
@@ -269,6 +206,69 @@ class _ProfileTabState extends State<ProfileTab> {
                       ),
                     ),
                   ),
+                  !login && _sign_index != 1
+                      ? DropdownMenu<CategoryModel>(
+                          initialSelection: dropdown_value,
+                          hintText: AppLocalizations.of(context).select,
+                          onSelected: (CategoryModel? value) {
+                            setState(() {
+                              dropdown_value = value!;
+                            });
+                          },
+                          dropdownMenuEntries: widget.categories
+                              .map<DropdownMenuEntry<CategoryModel>>(
+                                  (CategoryModel value) {
+                            return DropdownMenuEntry<CategoryModel>(
+                              value: value,
+                              labelWidget: SizedBox(
+                                width: size.width * .4,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 2.0),
+                                  child: GetTextField(
+                                    text: AppLocalizations.of(context)
+                                        .categories(value.code),
+                                    smallSize: true,
+                                  ),
+                                ),
+                              ),
+                              label: AppLocalizations.of(context)
+                                  .categories(value.code),
+                              trailingIcon: Icon(Icons.manage_accounts),
+                            );
+                          }).toList(),
+                        )
+                      : SizedBox.shrink(),
+                  login
+                      ? SizedBox.shrink()
+                      : Container(
+                          width: size.width * .8,
+                          height: 50,
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                                child: Row(children: <Widget>[
+                                  Checkbox(
+                                    value: _sign_index == index,
+                                    onChanged: (value) => setState(() {
+                                      _sign_index = index;
+                                    }),
+                                  ),
+                                  GetTextField(
+                                    text: AppLocalizations.of(context)
+                                        .sign_user(0, index),
+                                    smallSize: true,
+                                    underline: _sign_index == index,
+                                  ),
+                                ]),
+                              );
+                            }
+                          ),
+                        ),
                 ],
               ),
             );
