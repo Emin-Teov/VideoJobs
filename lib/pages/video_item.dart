@@ -39,6 +39,7 @@ class _VideoItemState extends State<VideoItem> {
     'profile/freelancer_profile',
     'profile/talent'
   ];
+  
   late final VideoPlayerController videoController;
 
   void setDialog() {
@@ -151,6 +152,20 @@ class _VideoItemState extends State<VideoItem> {
               backgroundColor: Colors.white10,
             ),
           ),
+          widget.index == 3 
+              ? SizedBox.shrink()
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(36.0, 36.0, 5.0, 12.0),
+                      child: GetTextField(
+                        text: widget.title,
+                        light: true,
+                      ),
+                    ),
+                  ]
+                ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -158,68 +173,99 @@ class _VideoItemState extends State<VideoItem> {
                 padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 12.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Image.network(
-                      width: 50,
-                      height: 50,
-                      'https://emin-teov.github.io/api/${_image_url[widget.index]}-${widget.index == 1 ? widget.employer : widget.id}.png',
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                        return widget.index == 1
-                            ? const ImageIcon(
-                                AssetImage('assets/icons/ceo.png'),
-                                color: Colors.amberAccent,
-                                size: 36,
-                              )
-                            : Icon(
-                                widget.index == 3
-                                    ? Icons.person_search
-                                    : Icons.person,
-                                size: 50.0,
-                                color: Colors.blueGrey,
-                              );
-                      },
+                    IconButton(
+                      onPressed: liked,
+                      icon: Icon(
+                        Icons.handshake,
+                        size: 36.0,
+                        color: _like_clicked ? Colors.red : Colors.blueGrey,
+                      ),
+                    ),
+                    GetTextField(
+                      text: 226.toString(),
+                      light: true,
+                      smallSize: true,
+                    ),
+                    SizedBox(
+                      width: 12.0,
                     ),
                     Expanded(
-                      child: GetTextLabel(
-                        head: widget.username,
-                        value: widget.title,
+                      child: GetTextField(
+                        text: widget.username,
+                        smallSize: true,
                         light: true,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          onPressed: liked,
-                          icon: Icon(
-                            Icons.handshake,
-                            size: 36.0,
-                            color: _like_clicked ? Colors.red : Colors.blueGrey,
-                          ),
-                        ),
-                        widget.index == 1
-                            ? IconButton(
-                                onPressed: setDialog,
-                                icon: Icon(
-                                  Icons.attach_file,
-                                  size: 36.0,
-                                  color: Colors.amberAccent,
-                                ),
-                              )
-                            : GestureDetector(
-                                onTap: setDialog,
-                                child: ImageIcon(
-                                  AssetImage(
-                                      "assets/icons/${widget.index == 3 ? 'talent' : 'cv'}.png"),
-                                  color: Colors.amberAccent,
-                                  size: 36.0,
-                                ),
-                              ),
-                      ],
+                    IconButton(
+                      onPressed: null,
+                      icon: Icon(
+                        Icons.remove_red_eye,
+                        color: Colors.blueAccent,
+                        size: 36.0,
+                      ),
                     ),
+                    GetTextField(
+                      text: 126.toString(),
+                      smallSize: true,
+                      light: true,
+                    ),
+                    widget.index == 1
+                        ? IconButton(
+                            onPressed: setDialog,
+                            icon: Icon(
+                              Icons.attach_file,
+                              size: 42.0,
+                              color: Colors.amberAccent,
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: setDialog,
+                            child: ImageIcon(
+                              AssetImage(
+                                  "assets/icons/${widget.index == 3 ? 'talent' : 'cv'}.png"),
+                              color: Colors.amberAccent,
+                              size: 72.0,
+                            ),
+                          ),
+
+
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.end,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     IconButton(
+                    //       onPressed: liked,
+                    //       icon: Icon(
+                    //         Icons.handshake,
+                    //         size: 36.0,
+                    //         color: _like_clicked ? Colors.red : Colors.blueGrey,
+                    //       ),
+                    //     ),
+                    //     widget.index == 1
+                    //         ? IconButton(
+                    //             onPressed: setDialog,
+                    //             icon: Icon(
+                    //               Icons.attach_file,
+                    //               size: 36.0,
+                    //               color: Colors.amberAccent,
+                    //             ),
+                    //           )
+                    //         : GestureDetector(
+                    //             onTap: setDialog,
+                    //             child: ImageIcon(
+                    //               AssetImage(
+                    //                   "assets/icons/${widget.index == 3 ? 'talent' : 'cv'}.png"),
+                    //               color: Colors.amberAccent,
+                    //               size: 36.0,
+                    //             ),
+                    //           ),
+                    //   ],
+                    // ),
+
+
+
                   ],
                 ),
               ),

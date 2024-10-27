@@ -206,7 +206,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       ),
                     ),
                   ),
-                  !login && _sign_index != 1
+                  !login && (_sign_index == 0 || _sign_index == 2)
                       ? DropdownMenu<CategoryModel>(
                           initialSelection: dropdown_value,
                           hintText: AppLocalizations.of(context).select,
